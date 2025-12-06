@@ -95,6 +95,18 @@ mod tests {
         async fn update_node(&self, node: Node) -> Result<(), GraphError> {
             self.graph.update_node(node).await
         }
+
+        async fn query_by_partition(&self, partition_id: &str) -> Result<Vec<Node>, GraphError> {
+            self.graph.query_by_partition(partition_id).await
+        }
+
+        async fn get_neighbors_in_partition(
+            &self,
+            id: &str,
+            partition_id: &str,
+        ) -> Result<Vec<(Edge, Node)>, GraphError> {
+            self.graph.get_neighbors_in_partition(id, partition_id).await
+        }
     }
 
     #[async_trait]
@@ -120,11 +132,13 @@ mod tests {
             id: "1".to_string(),
             label: "Doc".to_string(),
             properties: serde_json::json!({}),
+            partition_id: "default".to_string(),
         };
         let node2 = Node {
             id: "2".to_string(),
             label: "Doc".to_string(),
             properties: serde_json::json!({}),
+            partition_id: "default".to_string(),
         };
         store.add_node(node1.clone()).await.unwrap();
         store.add_node(node2.clone()).await.unwrap();

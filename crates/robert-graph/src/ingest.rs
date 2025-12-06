@@ -20,7 +20,7 @@ impl<S: GraphStore + VectorStore> IngestionPipeline<S> {
         })
     }
 
-    pub async fn process_document(&self, title: &str, content: &str) -> Result<String, GraphError> {
+    pub async fn process_document(&self, title: &str, content: &str, partition_id: &str) -> Result<String, GraphError> {
         let doc_id = Uuid::new_v4().to_string();
 
         // 1. Create Document Node
@@ -32,6 +32,7 @@ impl<S: GraphStore + VectorStore> IngestionPipeline<S> {
                 "content_preview": content.chars().take(100).collect::<String>(),
                 "length": content.len()
             }),
+            partition_id: partition_id.to_string(),
         };
         self.store.add_node(node).await?;
 
@@ -102,6 +103,18 @@ mod tests {
         async fn update_node(&self, node: Node) -> Result<(), GraphError> {
             self.graph.update_node(node).await
         }
+
+        async fn query_by_partition(&self, partition_id: &str) -> Result<Vec<Node>, GraphError> {
+            self.graph.query_by_partition(partition_id).await
+        }
+
+        async fn get_neighbors_in_partition(
+            &self,
+            id: &str,
+            partition_id: &str,
+        ) -> Result<Vec<(Edge, Node)>, GraphError> {
+            self.graph.get_neighbors_in_partition(id, partition_id).await
+        }
     }
 
     #[async_trait]
@@ -128,7 +141,7 @@ mod tests {
         let pipeline = IngestionPipeline::new(store);
         if let Ok(pipeline) = pipeline {
             let doc_id = pipeline
-                .process_document("Test Doc", "This is some content.")
+                .process_document("Test Doc", "This is some content.", "personal")
                 .await
                 .unwrap();
 

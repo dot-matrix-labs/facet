@@ -78,6 +78,7 @@ mod tests {
             id: id.to_string(),
             label: "Test".to_string(),
             properties: json!({}),
+            partition_id: "default".to_string(),
         }
     }
 
@@ -87,6 +88,7 @@ mod tests {
             target: target.to_string(),
             relation: "LINKS".to_string(),
             weight: 1.0,
+            partition_id: "default".to_string(),
         }
     }
 

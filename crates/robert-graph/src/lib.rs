@@ -236,12 +236,14 @@ mod tests {
             id: "1".to_string(),
             label: "Person".to_string(),
             properties: serde_json::json!({"name": "Alice"}),
+            partition_id: "personal".to_string(),
         };
 
         let node2 = Node {
             id: "2".to_string(),
             label: "Person".to_string(),
             properties: serde_json::json!({"name": "Bob"}),
+            partition_id: "personal".to_string(),
         };
 
         let edge = Edge {
@@ -249,6 +251,7 @@ mod tests {
             target: "2".to_string(),
             relation: "KNOWS".to_string(),
             weight: 1.0,
+            partition_id: "personal".to_string(),
         };
 
         store.add_node(node1.clone()).await.unwrap();

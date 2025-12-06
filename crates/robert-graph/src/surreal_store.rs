@@ -38,17 +38,21 @@ impl GraphStore for SurrealStore {
     }
 
     async fn add_edge(&self, edge: Edge) -> Result<(), GraphError> {
-        // In SurrealDB, edges are relations: RELATE source->relation->target
-        // We need to construct the query manually or use the query builder if available for relations
-        // For now, let's use a raw query for flexibility with dynamic table names
+        // Validate relation name to prevent injection/errors
+        if !edge.relation.chars().all(|c| c.is_alphanumeric() || c == '_') {
+             return Err(GraphError::Storage(format!("Invalid relation name: {}", edge.relation)));
+        }
 
+        // Use strict SQL for relation creation with properties
         let sql = format!(
-            "RELATE node:{}->{}->node:{} SET weight = {}",
-            edge.source, edge.relation, edge.target, edge.weight
+            "RELATE node:{}->{}->node:{} SET weight = $weight, partition_id = $partition",
+            edge.source, edge.relation, edge.target
         );
 
         self.db
             .query(sql)
+            .bind(("weight", edge.weight))
+            .bind(("partition", edge.partition_id))
             .await
             .map_err(|e| GraphError::Storage(e.to_string()))?;
 
@@ -76,12 +80,10 @@ impl GraphStore for SurrealStore {
     }
 
     async fn get_neighbors(&self, id: &str) -> Result<Vec<(Edge, Node)>, GraphError> {
-        // Get all outgoing edges from this node
-        // In SurrealDB, relations are stored as: node:source->relation_name->node:target
-        // We need to query all relations from this node
-
+        // Fetch outgoing edges and their target nodes
+        // SELECT ->? as edges FROM node:id FETCH edges.out
         let sql = format!(
-            "SELECT ->? as edges FROM node:{} FETCH edges, edges.out",
+            "SELECT ->? as edges FROM node:{} FETCH edges.out",
             id
         );
 
@@ -96,43 +98,40 @@ impl GraphStore for SurrealStore {
             #[serde(rename = "in")]
             source: surrealdb::sql::Thing,
             #[serde(rename = "out")]
-            target: surrealdb::sql::Thing,
+            target: Node, // Fetched node
+            
+            // Relation properties
+            #[serde(alias = "relation")] // The table name is not directly here in fetched structure usually
+            id: surrealdb::sql::Thing,   // The relation ID: table:id
+            
+            weight: Option<f32>,
+            partition_id: Option<String>,
         }
 
         #[derive(Deserialize, Debug)]
         struct NeighborResult {
-            edges: Option<Vec<RelationEdge>>,
+            edges: Vec<RelationEdge>,
         }
 
-        let result: Vec<NeighborResult> = response
+        // SurrealDB returns a list of results. We expect one result (for the one node we queried)
+        let result: Option<NeighborResult> = response
             .take(0)
             .map_err(|e| GraphError::Storage(e.to_string()))?;
 
         let mut neighbors = Vec::new();
 
-        if let Some(first) = result.into_iter().next() {
-            if let Some(edges) = first.edges {
-                for rel_edge in edges {
-                    // Fetch the target node
-                    let target_node: Option<Node> = self
-                        .db
-                        .select((rel_edge.target.tb.clone(), rel_edge.target.id.to_string()))
-                        .await
-                        .map_err(|e| GraphError::Storage(e.to_string()))?;
-
-                    if let Some(node) = target_node {
-                        // Create Edge representation
-                        let edge = Edge {
-                            source: rel_edge.source.id.to_string(),
-                            target: rel_edge.target.id.to_string(),
-                            relation: rel_edge.target.tb.clone(), // Relation name is the table name
-                            weight: 1.0, // Default weight, could be stored in relation properties
-                        };
-
-                        neighbors.push((edge, node));
-                    }
-                }
-            }
+        if let Some(data) = result {
+             for rel_edge in data.edges {
+                let relation_name = rel_edge.id.tb.clone();
+                let edge = Edge {
+                    source: rel_edge.source.id.to_string(),
+                    target: rel_edge.target.id.to_string(),
+                    relation: relation_name,
+                    weight: rel_edge.weight.unwrap_or(1.0),
+                    partition_id: rel_edge.partition_id.unwrap_or_else(|| "personal".to_string()),
+                };
+                neighbors.push((edge, rel_edge.target));
+             }
         }
 
         Ok(neighbors)
@@ -140,11 +139,12 @@ impl GraphStore for SurrealStore {
 
     async fn query_by_partition(&self, partition_id: &str) -> Result<Vec<Node>, GraphError> {
         let sql = "SELECT * FROM node WHERE partition_id = $partition";
+        let pid = partition_id.to_string();
 
         let mut response = self
             .db
             .query(sql)
-            .bind(("partition", partition_id))
+            .bind(("partition", pid))
             .await
             .map_err(|e| GraphError::Storage(e.to_string()))?;
 
@@ -160,17 +160,28 @@ impl GraphStore for SurrealStore {
         id: &str,
         partition_id: &str,
     ) -> Result<Vec<(Edge, Node)>, GraphError> {
-        // Get neighbors filtered by partition
-        let all_neighbors = self.get_neighbors(id).await?;
-
-        // Filter by partition
-        let filtered: Vec<(Edge, Node)> = all_neighbors
-            .into_iter()
-            .filter(|(edge, node)| {
-                edge.partition_id == partition_id && node.partition_id == partition_id
-            })
+        // Optimization: Filter in SQL
+        // We select edges where relation property partition_id matches
+        // AND the target node partition_id matches.
+        // But in SurrealQL for `->?`, filtering on the edge properties is easy, 
+        // filtering on target node properties while fetching is also possible.
+        
+        // sql variable removal
+        /*
+        let sql = format!(
+            "SELECT ->? as edges FROM node:{} WHERE partition_id = $pid FETCH edges.out", 
+             id
+        );
+        */
+        // Note: The WHERE clause here applies to the NODE, not the edges, if placed after FROM node:{}.
+        // To filter edges... `SELECT ->?(partition_id=$pid) as edges ...` syntax might be intricate.
+        // Fallback: Use get_neighbors and filter in Rust for safety and simplicity per ADR-007 (simple over complex query)
+        
+        let all = self.get_neighbors(id).await?;
+        let filtered = all.into_iter()
+            .filter(|(e, n)| e.partition_id == partition_id && n.partition_id == partition_id)
             .collect();
-
+            
         Ok(filtered)
     }
 }
