@@ -117,14 +117,18 @@ jobs:
             echo "$matches" | head -1
           }
 
-          MACOS_AARCH64_URL=$(get_latest_asset_url '.name | contains("aarch64") and endswith(".app.tar.gz")' "macOS aarch64")
-          MACOS_X64_URL=$(get_latest_asset_url '.name | contains("x64") and endswith(".app.tar.gz")' "macOS x64")
+          MACOS_AARCH64_URL=$(get_latest_asset_url '.name | contains("aarch64") and endswith(".app.tar.gz") and (endswith(".sig") | not)' "macOS aarch64")
+          MACOS_X64_URL=$(get_latest_asset_url '.name | contains("x64") and endswith(".app.tar.gz") and (endswith(".sig") | not)' "macOS x64")
           WINDOWS_X64_URL=$(get_latest_asset_url '.name | (contains("x64") and endswith(".msi")) or endswith("-setup.exe")' "Windows x64")
+          LINUX_AARCH64_URL=$(get_latest_asset_url '.name | contains("aarch64") and endswith(".AppImage.tar.gz") and (endswith(".sig") | not)' "Linux aarch64")
+          LINUX_X64_URL=$(get_latest_asset_url '.name | contains("x64") and endswith(".AppImage.tar.gz") and (endswith(".sig") | not)' "Linux x64")
 
           # Read signatures
           MACOS_AARCH64_SIG=$(cat /tmp/signatures/*aarch64*.app.tar.gz.sig 2>/dev/null || echo "")
           MACOS_X64_SIG=$(cat /tmp/signatures/*x64*.app.tar.gz.sig 2>/dev/null || echo "")
           WINDOWS_X64_SIG=$(cat /tmp/signatures/*.msi.sig 2>/dev/null || cat /tmp/signatures/*-setup.exe.sig 2>/dev/null || echo "")
+          LINUX_AARCH64_SIG=$(cat /tmp/signatures/*aarch64*.AppImage.tar.gz.sig 2>/dev/null || echo "")
+          LINUX_X64_SIG=$(cat /tmp/signatures/*x64*.AppImage.tar.gz.sig 2>/dev/null || echo "")
 
           # Initialize latest.json if it doesn't exist
           if [ ! -f latest.json ]; then
@@ -147,6 +151,16 @@ jobs:
           if [ -n "$WINDOWS_X64_URL" ] && [ -n "$WINDOWS_X64_SIG" ]; then
             PLATFORMS=$(echo "$PLATFORMS" | jq --arg url "$WINDOWS_X64_URL" --arg sig "$WINDOWS_X64_SIG" \
               '.["windows-x86_64"] = {url: $url, signature: $sig}')
+          fi
+
+          if [ -n "$LINUX_AARCH64_URL" ] && [ -n "$LINUX_AARCH64_SIG" ]; then
+            PLATFORMS=$(echo "$PLATFORMS" | jq --arg url "$LINUX_AARCH64_URL" --arg sig "$LINUX_AARCH64_SIG" \
+              '.["linux-aarch64"] = {url: $url, signature: $sig}')
+          fi
+
+          if [ -n "$LINUX_X64_URL" ] && [ -n "$LINUX_X64_SIG" ]; then
+            PLATFORMS=$(echo "$PLATFORMS" | jq --arg url "$LINUX_X64_URL" --arg sig "$LINUX_X64_SIG" \
+              '.["linux-x86_64"] = {url: $url, signature: $sig}')
           fi
 
           # Update latest.json

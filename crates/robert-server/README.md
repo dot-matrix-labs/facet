@@ -1,15 +1,64 @@
-# Robert Server
+# robert-server
 
-Remote execution server for the Robert desktop application. Receives SSL-encrypted requests and forwards them to headless claude-cli processes.
+REST API server that provides the interface for interacting with Robert's AI capabilities. Instantiates and manages `robert-core` instances, which handle memory management, RAG, and all AI functionality.
 
-## Features
+## Overview
 
-- **REST API** with Server-Sent Events (SSE) streaming
-- **Authentication** via bearer tokens with rate limiting
-- **Session Management** for tracking concurrent executions
-- **Mock Mode** for testing without claude-cli installed
-- **Development Mode** with HTTP support for local testing
-- **Production Ready** with TLS support and comprehensive error handling
+`robert-server` is the server component that:
+- Provides REST API endpoints for client applications (desktop app, CLI, API consumers)
+- Manages authentication and authorization
+- Instantiates and lifecycle-manages `robert-core` instances
+- Handles concurrent sessions from multiple clients
+- Provides server-side encryption and security
+- Streams responses back to clients
+
+## Architecture
+
+```
+┌─────────────────┐         HTTPS/REST          ┌──────────────────┐
+│   Robert App    │ ◄──────────────────────────► │  Robert Server   │
+│   (Desktop)     │    (SSL Encrypted)           │   (Rust/Warp)    │
+└─────────────────┘                              └──────────────────┘
+                                                          │
+                                                          │ Instantiates
+                                                          ▼
+                                                 ┌──────────────────┐
+                                                 │   robert-core    │
+                                                 │  (AI/RAG Engine) │
+                                                 └──────────────────┘
+                                                          │
+                                                          │ Uses
+                                                          ▼
+                                                 ┌──────────────────┐
+                                                 │  robert-graph    │
+                                                 │ (DB Management)  │
+                                                 └──────────────────┘
+```
+
+## Deployment Modes
+
+### Mode 1: Local (Default)
+Desktop app automatically spawns a local server:
+```bash
+# Started by robert-app automatically on launch
+robert-server --mode local --host 127.0.0.1 --port 8443
+```
+- User doesn't need to manually start the server
+- Server lifecycle managed by the desktop app
+- Local-only access (127.0.0.1)
+
+### Mode 2: Remote Server (Teams/Headless/Cloud)
+Started via robert-cli for shared access or headless deployments:
+```bash
+# Start server for team/remote/headless use
+robert-cli server start --host 0.0.0.0 --port 8443
+
+# Or with explicit config
+robert-cli server start --config /etc/robert/config.toml
+```
+- Multiple clients can connect (desktop apps, CLI clients, APIs)
+- Suitable for team deployments, cloud hosting, CI/CD
+- Managed via robert-cli (start, stop, status commands)
 
 ## Quick Start
 
@@ -19,9 +68,6 @@ Remote execution server for the Robert desktop application. Receives SSL-encrypt
 # Run with default dev configuration
 cargo run --bin robert-server -- --dev
 
-# Run with mock executor (no claude-cli required)
-cargo run --bin robert-server -- --dev --mock
-
 # Server listens on http://127.0.0.1:8443
 ```
 
@@ -29,7 +75,7 @@ cargo run --bin robert-server -- --dev --mock
 
 ```bash
 # Use custom config file
-cargo run --bin robert-server -- --config /path/to/config.toml
+cargo run --bin robert-server -- --config config.dev.toml
 ```
 
 ## API Endpoints
@@ -43,73 +89,115 @@ GET /api/v1/health
 {
   "status": "healthy",
   "version": "1.0.0",
-  "claude_cli_available": true,
+  "components": {
+    "robert_core": "healthy",
+    "robert_graph": "healthy",
+    "database": "connected"
+  },
   "uptime_seconds": 12345
 }
 ```
 
-### Execute Request
+### Inference Request
 
 ```bash
-POST /api/v1/execute
+POST /api/v1/inference
 Authorization: Bearer <token>
 Content-Type: application/json
 Accept: text/event-stream
 
-# Request body - see specification for full schema
+# Request body
 {
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "query": "Analyze this codebase structure",
   "context": {
-    "screenshots": [...],
-    "dom_state": {...},
-    "user_intent": "Click the login button"
+    "screenshots": [],
+    "documents": [],
+    "memory_filter": {}
   },
-  "prompt": "Help me log in to this website",
   "options": {
     "timeout_seconds": 300,
     "max_tokens": 100000,
-    "stream": true
+    "stream": true,
+    "use_rag": true
   }
 }
 
 # Response (Server-Sent Events)
-event: content
-data: {"type":"content","text":"Analyzing screenshot..."}
+event: thinking
+data: {"message":"Retrieving relevant context..."}
 
-event: tool_use
-data: {"type":"tool_use","tool":"cdp_command","params":{...}}
+event: rag_results
+data: {"chunks":[...],"relevance_scores":[...]}
+
+event: content
+data: {"type":"text","text":"Based on the codebase..."}
 
 event: complete
-data: {"type":"complete","session_id":"...","status":"success"}
+data: {"session_id":"...","status":"success"}
 ```
 
-### Get Session Status
+### Document Ingestion
 
 ```bash
+POST /api/v1/ingest
+Authorization: Bearer <token>
+Content-Type: application/json
+
+# Request body
+{
+  "source": "file",
+  "content": "...",
+  "metadata": {
+    "title": "API Documentation",
+    "tags": ["docs", "api"],
+    "category": "documentation"
+  },
+  "options": {
+    "chunking_strategy": "semantic",
+    "embedding_model": "default"
+  }
+}
+
+# Response
+{
+  "ingestion_id": "uuid",
+  "status": "completed",
+  "chunks_created": 42,
+  "graph_nodes_added": 15
+}
+```
+
+### Memory Search
+
+```bash
+GET /api/v1/memory/search?q=authentication&limit=10&category=docs
+Authorization: Bearer <token>
+
+# Response
+{
+  "results": [
+    {
+      "id": "uuid",
+      "content": "...",
+      "relevance_score": 0.95,
+      "metadata": {...}
+    }
+  ],
+  "total_results": 42
+}
+```
+
+### Session Management
+
+```bash
+# Get session status
 GET /api/v1/sessions/:session_id
 Authorization: Bearer <token>
 
-# Response
-{
-  "session_id": "550e8400-e29b-41d4-a716-446655440000",
-  "status": "running",
-  "started_at": "2025-10-17T10:30:00Z",
-  "completed_at": null,
-  "error": null
-}
-```
-
-### Cancel Session
-
-```bash
+# Cancel session
 DELETE /api/v1/sessions/:session_id
 Authorization: Bearer <token>
-
-# Response
-{
-  "session_id": "550e8400-e29b-41d4-a716-446655440000",
-  "status": "cancelled"
-}
 ```
 
 ## Configuration
@@ -118,26 +206,33 @@ See `config.dev.toml` for an example configuration file.
 
 ```toml
 [server]
+mode = "local"  # local | remote | headless
 host = "127.0.0.1"
 port = 8443
-dev_mode = true
-enable_tls = false
+enable_tls = false  # Use HTTP for localhost
+tls_cert = "/path/to/cert.pem"
+tls_key = "/path/to/key.pem"
 
 [auth]
 dev_token = "dev-token-12345"
-require_auth = false
-rate_limit_per_minute = 100
+require_auth = false  # Optional for local dev
+rate_limit_per_minute = 60
 
-[claude]
-binary_path = "claude"
-mock_mode = false
-default_timeout_seconds = 300
+[core]
 max_concurrent_sessions = 20
+default_timeout_seconds = 300
+enable_rag = true
+embedding_model = "fastembed"
+
+[graph]
+database_path = "./dev-data"
+enable_encryption = false  # Disable for easier debugging
+sync_enabled = false
 
 [limits]
 max_request_size_mb = 50
-max_screenshot_count = 10
-max_prompt_length = 50000
+max_memory_chunks = 10000
+max_prompt_length = 100000
 
 [logging]
 level = "debug"
@@ -154,8 +249,8 @@ cargo test -p robert-server --lib
 # Run with verbose output
 cargo test -p robert-server --lib -- --nocapture
 
-# Run specific test
-cargo test -p robert-server --lib test_mock_executor_success
+# Run integration tests
+cargo test -p robert-server --test integration_tests
 ```
 
 ## Project Structure
@@ -173,16 +268,15 @@ robert-server/
 │   ├── api/
 │   │   ├── mod.rs
 │   │   ├── health.rs        # Health endpoint
-│   │   ├── execute.rs       # Execute endpoint
+│   │   ├── execute.rs       # Inference endpoint
+│   │   ├── inference.rs     # AI inference handlers
 │   │   └── sessions.rs      # Session endpoints
 │   └── claude/
 │       ├── mod.rs
-│       ├── executor.rs      # Real Claude CLI executor
+│       ├── executor.rs      # Claude CLI integration
 │       └── mock.rs          # Mock executor for testing
 ├── tests/
 │   └── integration_tests.rs
-├── benches/
-│   └── streaming_benchmark.rs
 ├── Cargo.toml
 ├── config.dev.toml
 └── README.md
@@ -200,27 +294,32 @@ The codebase follows strict Rust best practices:
 - **Async/Await**: Non-blocking I/O throughout
 - **Type Safety**: Leverages Rust's type system for correctness
 
-### Test Coverage
+### Dependencies
 
-- **106 unit tests** covering all core functionality
-- **Mock executor** for rapid testing without dependencies
-- **Integration tests** for end-to-end flows
-- **Benchmark tests** for performance validation
+```toml
+[dependencies]
+# Robert dependencies
+robert-core = { path = "../robert-core" }
+robert-graph = { path = "../robert-graph" }
+robert-types = { workspace = true }
 
-## Architecture
+# Web framework
+warp = { workspace = true }
+tokio = { workspace = true }
 
-```
-┌─────────────────┐         HTTPS/SSE          ┌──────────────────┐
-│   Robert App    │ ◄─────────────────────────► │  Robert Server   │
-│   (Desktop)     │                              │   (Rust/Warp)    │
-└─────────────────┘                              └──────────────────┘
-                                                          │
-                                                          │ Spawns
-                                                          ▼
-                                                 ┌──────────────────┐
-                                                 │   claude-cli     │
-                                                 │   (Headless)     │
-                                                 └──────────────────┘
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Authentication & Security
+argon2 = { workspace = true }
+aes-gcm = { workspace = true }
+
+# Utilities
+uuid = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
 ```
 
 ## Security
@@ -229,21 +328,41 @@ The codebase follows strict Rust best practices:
 - **Rate Limiting**: Per-token request limits prevent abuse
 - **Input Validation**: Comprehensive validation of all request fields
 - **TLS Support**: Production deployments use TLS 1.3 encryption
-- **Resource Limits**: Configurable limits on request size, screenshot count, etc.
+- **Resource Limits**: Configurable limits on request size, memory usage, etc.
+- **Audit Logging**: Complete audit trail of all operations
 
 ## Performance
 
 - **Async/Non-blocking**: Tokio-based async runtime for high concurrency
 - **Streaming**: Server-Sent Events for efficient real-time updates
-- **Low Overhead**: <100ms forwarding latency
+- **Low Overhead**: <50ms API overhead
 - **Scalable**: Handles 10-50 concurrent sessions per instance
+- **Connection Pooling**: Efficient database connection management
 
-## License
+## Deployment
 
-MIT
+### Docker
+
+```dockerfile
+FROM rust:1.75 as builder
+WORKDIR /app
+COPY . .
+RUN cargo build --release --bin robert-server
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y ca-certificates
+COPY --from=builder /app/target/release/robert-server /usr/local/bin/
+EXPOSE 8443
+CMD ["robert-server"]
+```
+
+### Kubernetes (Teams)
+
+See [deployment documentation](../../docs/architecture/robert-server-specification.md#kubernetes-deployment-teams) for Kubernetes manifests.
 
 ## See Also
 
-- [Full Specification](/home/jeef/robert/docs/ROBERT_SERVER_SPECIFICATION.md)
-- [Robert App](/home/jeef/robert/crates/robert-app)
-- [Robert CLI](/home/jeef/robert/crates/robert-cli)
+- [Full Specification](../../docs/architecture/robert-server-specification.md)
+- [Robert Core](../robert-core/README.md)
+- [Robert Graph](../robert-graph/README.md)
+- [Architecture Decisions](../../docs/architecture/architecture-decisions.md)

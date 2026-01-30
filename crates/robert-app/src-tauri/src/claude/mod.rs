@@ -8,8 +8,6 @@ use thiserror::Error;
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::process::Command;
 
-pub use health::{ClaudeHealthCheck, HealthStatus};
-
 /// Errors that can occur when calling Claude CLI
 #[derive(Debug, Error)]
 #[allow(dead_code)] // Some variants are defined for future use

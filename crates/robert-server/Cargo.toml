@@ -7,6 +7,11 @@ description = "Remote execution server for Robert desktop application - forwards
 license = "MIT"
 
 [dependencies]
+# Robert internal dependencies
+robert-core = { path = "../robert-core" }
+robert-types = { workspace = true }
+
+# Web framework
 warp = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true, features = ["derive"] }

@@ -1,18 +1,18 @@
 mod agent;
-pub mod browser;
 mod developer_mode;
 mod feedback;
 mod logging;
 mod profiles;
+pub mod query;
 
 pub use agent::*;
-// Note: browser module is pub mod so we can selectively export commands to avoid conflicts
 pub use developer_mode::*;
 pub use feedback::*;
 pub use logging::*;
 pub use profiles::*;
+// Note: query module is pub mod so we can selectively export commands to avoid conflicts
 
-use crate::claude::ClaudeHealthCheck;
+use crate::claude::health::{ClaudeHealthCheck, HealthStatus};
 use crate::events::*;
 use crate::state::AppState;
 use serde::{Deserialize, Serialize};
@@ -34,7 +34,7 @@ pub async fn check_claude_health(app: AppHandle) -> Result<ClaudeHealthCheck, St
 
     // Emit appropriate event based on health status
     match health.status {
-        crate::claude::HealthStatus::Healthy => {
+        HealthStatus::Healthy => {
             emit_claude_ready(
                 &app,
                 health.version.as_deref().unwrap_or("unknown"),
@@ -43,7 +43,7 @@ pub async fn check_claude_health(app: AppHandle) -> Result<ClaudeHealthCheck, St
             )
             .ok();
         }
-        crate::claude::HealthStatus::Warning | crate::claude::HealthStatus::Error => {
+        HealthStatus::Warning | HealthStatus::Error => {
             if let Some(issue) = health.issues.first() {
                 let suggestion = health
                     .suggestions

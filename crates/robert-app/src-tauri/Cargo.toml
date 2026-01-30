@@ -16,7 +16,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 doctest = false
 
 [build-dependencies]
-tauri-build = { version = "2.5", features = [] }
+tauri-build = { workspace = true }
 
 [dependencies]
 tauri = { workspace = true }
@@ -28,7 +28,8 @@ serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 
 # Robert dependencies
-robert-types = { workspace = true}
+robert-types = { workspace = true }
+robert-server = { workspace = true }
 
 tokio = { workspace = true }
 anyhow = { workspace = true }
@@ -43,15 +44,8 @@ dirs = { workspace = true }
 log = { workspace = true }
 env_logger = { workspace = true }
 
-# User Profiles - Cryptography (Handled in robert-types)
-# argon2, aes-gcm, rand, zeroize removed (unused directly)
-
 # User Profiles - Utilities
-# uuid, once_cell removed (except once_cell used)
 once_cell = { workspace = true }
-robert-server = { workspace = true }
-# Markdown command system (Phase 3 refactor)
-# pulldown-cmark, serde_yaml removed (unused directly)
 
 [dev-dependencies]
 tempfile = { workspace = true }

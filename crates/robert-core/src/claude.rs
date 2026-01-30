@@ -1,23 +1,119 @@
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
 use tokio::process::Command;
 
-/// Health check result for Claude CLI
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ClaudeInput {
+    pub prompt: String,
+    pub images: Vec<PathBuf>,
+    pub html: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ClaudeResponse {
+    #[serde(rename = "type")]
+    pub response_type: String,
+    pub result: String,
+    #[serde(default)]
+    pub is_error: bool,
+}
+
+pub struct ClaudeClient {
+    binary_path: String,
+}
+
+impl Default for ClaudeClient {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl ClaudeClient {
+    pub fn new() -> Self {
+        Self {
+            binary_path: "claude".to_string(),
+        }
+    }
+
+    pub fn with_path(path: String) -> Self {
+        Self { binary_path: path }
+    }
+
+    pub async fn complete(&self, prompt: &str, system_prompt: Option<&str>) -> Result<String> {
+        // Claude CLI doesn't support system prompt directly in the same way as API,
+        // but we can prepend it to the prompt or use --system if available (it's not standard in CLI yet usually).
+        // We'll prepend it.
+
+        let full_prompt = if let Some(sys) = system_prompt {
+            format!("{}\n\n{}", sys, prompt)
+        } else {
+            prompt.to_string()
+        };
+
+        let input = ClaudeInput {
+            prompt: full_prompt,
+            images: vec![],
+            html: None,
+        };
+
+        let response = self.execute(input).await?;
+        Ok(response.result)
+    }
+
+    pub async fn is_available() -> bool {
+        let health = ClaudeHealthCheck::check().await;
+        health.status == HealthStatus::Healthy
+    }
+
+    pub async fn execute(&self, input: ClaudeInput) -> Result<ClaudeResponse> {
+        let mut cmd = Command::new(&self.binary_path);
+
+        cmd.arg("--print").arg("--output-format").arg("json");
+
+        // Construct prompt
+        let mut prompt_text = input.prompt.clone();
+        if let Some(html) = input.html {
+            prompt_text.push_str("\n\nHTML Context:\n```html\n");
+            prompt_text.push_str(&html);
+            prompt_text.push_str("\n```");
+        }
+
+        cmd.arg(&prompt_text);
+
+        let output = cmd.output().await.context("Failed to execute Claude CLI")?;
+
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        let stderr = String::from_utf8_lossy(&output.stderr);
+
+        if !output.status.success() {
+            anyhow::bail!(
+                "Claude CLI failed with status {}: {}",
+                output.status,
+                stderr
+            );
+        }
+
+        // Parse JSON
+        let response: ClaudeResponse = serde_json::from_str(&stdout)
+            .context(format!("Failed to parse Claude response: {}", stdout))?;
+
+        if response.is_error {
+            anyhow::bail!("Claude returned error: {}", response.result);
+        }
+
+        Ok(response)
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ClaudeHealthCheck {
-    /// Whether Claude CLI is installed and accessible
     pub installed: bool,
-    /// Path to Claude CLI executable
     pub path: Option<String>,
-    /// Claude CLI version
     pub version: Option<String>,
-    /// Whether user is authenticated
     pub authenticated: bool,
-    /// List of issues found
     pub issues: Vec<String>,
-    /// List of suggestions to fix issues
     pub suggestions: Vec<String>,
-    /// Overall status
     pub status: HealthStatus,
 }
 
@@ -29,9 +125,7 @@ pub enum HealthStatus {
     Error,
 }
 
-#[allow(dead_code)] // Health check functionality preserved for future use
 impl ClaudeHealthCheck {
-    /// Perform a comprehensive health check
     pub async fn check() -> Self {
         let mut check = Self {
             installed: false,
@@ -43,13 +137,11 @@ impl ClaudeHealthCheck {
             status: HealthStatus::Error,
         };
 
-        // Check if Claude CLI is in PATH
         match Self::find_claude_path().await {
             Ok(path) => {
                 check.installed = true;
                 check.path = Some(path.clone());
 
-                // Check version
                 match Self::get_version(&path).await {
                     Ok(version) => {
                         check.version = Some(version);
@@ -61,7 +153,6 @@ impl ClaudeHealthCheck {
                     }
                 }
 
-                // Check authentication
                 match Self::check_authentication(&path).await {
                     Ok(authenticated) => {
                         check.authenticated = authenticated;
@@ -94,7 +185,6 @@ impl ClaudeHealthCheck {
             }
         }
 
-        // Determine overall status
         check.status = if check.installed && check.authenticated {
             HealthStatus::Healthy
         } else if check.installed {
@@ -106,11 +196,8 @@ impl ClaudeHealthCheck {
         check
     }
 
-    /// Find Claude CLI executable path
     async fn find_claude_path() -> Result<String> {
-        // Try 'which claude' on Unix or 'where claude' on Windows
         let cmd = if cfg!(windows) { "where" } else { "which" };
-
         let output = Command::new(cmd)
             .arg("claude")
             .output()
@@ -118,21 +205,15 @@ impl ClaudeHealthCheck {
             .context("Failed to run which/where command")?;
 
         if output.status.success() {
-            let path = String::from_utf8_lossy(&output.stdout).trim().to_string();
-            return Ok(path);
+            return Ok(String::from_utf8_lossy(&output.stdout).trim().to_string());
         }
 
-        // If not found in PATH, try common installation locations
         if let Ok(home) = std::env::var("HOME") {
             let common_paths = vec![
-                // User-specific installation (common for claude CLI)
-                format!("{home}/.claude/local/claude"),
-                // NPM global installation
-                format!("{home}/.npm-global/bin/claude"),
+                format!("{}/.claude/local/claude", home),
+                format!("{}/.npm-global/bin/claude", home),
                 "/usr/local/bin/claude".to_string(),
-                // Homebrew installations
                 "/opt/homebrew/bin/claude".to_string(),
-                "/usr/local/Homebrew/bin/claude".to_string(),
             ];
 
             for path in common_paths {
@@ -142,102 +223,39 @@ impl ClaudeHealthCheck {
             }
         }
 
-        anyhow::bail!("Claude CLI not found in PATH or common installation locations")
+        anyhow::bail!("Claude CLI not found")
     }
 
-    /// Get Claude CLI version
-    async fn get_version(claude_path: &str) -> Result<String> {
-        let output = Command::new(claude_path)
+    async fn get_version(path: &str) -> Result<String> {
+        let output = Command::new(path)
             .arg("--version")
             .output()
             .await
             .context("Failed to get version")?;
 
         if output.status.success() {
-            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
-            Ok(version)
+            Ok(String::from_utf8_lossy(&output.stdout).trim().to_string())
         } else {
             anyhow::bail!("Failed to get version")
         }
     }
 
-    /// Check if Claude CLI is authenticated
-    async fn check_authentication(claude_path: &str) -> Result<bool> {
-        // Try a simple command that requires authentication
-        let output = Command::new(claude_path)
+    async fn check_authentication(path: &str) -> Result<bool> {
+        let output = Command::new(path)
             .arg("--print")
             .arg("test")
             .output()
             .await
             .context("Failed to check authentication")?;
 
-        // If the command succeeds or returns a specific error about the prompt,
-        // we're authenticated. If it fails with auth error, we're not.
         let stderr = String::from_utf8_lossy(&output.stderr);
-
-        // Check for authentication errors
         if stderr.contains("not authenticated")
             || stderr.contains("login")
             || stderr.contains("setup-token")
         {
             Ok(false)
         } else {
-            // If we get any other response, we're likely authenticated
             Ok(true)
-        }
-    }
-
-    /// Get a human-readable status message
-    #[allow(dead_code)]
-    pub fn status_message(&self) -> String {
-        match self.status {
-            HealthStatus::Healthy => "Claude CLI is ready".to_string(),
-            HealthStatus::Warning => {
-                format!("Claude CLI has issues: {}", self.issues.join(", "))
-            }
-            HealthStatus::Error => {
-                format!("Claude CLI is not available: {}", self.issues.join(", "))
-            }
-        }
-    }
-
-    /// Get setup instructions
-    #[allow(dead_code)]
-    pub fn setup_instructions(&self) -> Vec<String> {
-        let mut instructions = Vec::new();
-
-        if !self.installed {
-            instructions.push("1. Install Claude CLI:".to_string());
-            instructions.push("   npm install -g @anthropic-ai/claude-code".to_string());
-            instructions.push("   OR".to_string());
-            instructions.push("   brew install claude".to_string());
-        }
-
-        if self.installed && !self.authenticated {
-            instructions.push("2. Authenticate Claude CLI:".to_string());
-            instructions.push("   claude setup-token".to_string());
-        }
-
-        if self.installed && self.authenticated {
-            instructions.push("Claude CLI is ready to use!".to_string());
-        }
-
-        instructions
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[tokio::test]
-    async fn test_health_check() {
-        let check = ClaudeHealthCheck::check().await;
-        println!("Health check result: {:?}", check);
-        println!("Status message: {}", check.status_message());
-        println!("Setup instructions:");
-        for instruction in check.setup_instructions() {
-            println!("  {}", instruction);
         }
     }
 }

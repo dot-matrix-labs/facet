@@ -8,5 +8,19 @@ name = "robert"
 path = "src/main.rs"
 
 [dependencies]
+# Robert internal dependencies
+robert-server = { workspace = true }
+robert-core = { path = "../robert-core" }
+robert-types = { workspace = true }
+
+# CLI framework
 tokio = { workspace = true }
 clap = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Utilities
+dirs = { workspace = true }
+toml = { workspace = true }
