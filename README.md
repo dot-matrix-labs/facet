@@ -1,6 +1,6 @@
 # Facet: The Memory Layer for AI
 
-> **Just as the Browser unbundled the OS from the Web, Facet unbundles Memory from the Model—becoming the trusted gateway that ensures AI serves the user, not the other way around.**
+> **Facet unbundles Memory from the Model, so that your knowledge base is your gateway to AI (and not the inference provider).**
 
 Facet is the neutral, trusted **"Context OS"** that sits between users and AI reasoning providers—combining sophisticated memory control with platform-agnostic access. While tools like ChatGPT and Claude vertically integrate memory with reasoning, Facet separates them: your memory stays personal, portable, and under your control. The reasoning remains commoditized, ephemeral, and interchangeable.
 

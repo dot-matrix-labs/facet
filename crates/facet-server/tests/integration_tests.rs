@@ -14,7 +14,7 @@ use facet_server::{
     auth::{with_auth, AuthState},
     claude::{Executor, MockClaudeExecutor},
     models::{
-        ClaudeEvent, DomState, RequestContext, RequestOptions, FacetRequest, Screenshot,
+        ClaudeEvent, DomState, FacetRequest, RequestContext, RequestOptions, Screenshot,
         ScreenshotMetadata, Viewport,
     },
     session::SessionManager,

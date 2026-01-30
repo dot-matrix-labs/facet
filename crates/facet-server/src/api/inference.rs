@@ -7,7 +7,7 @@
 use crate::claude::Executor;
 use crate::config::Config;
 use crate::models::{
-    ClaudeEvent, DomState, RequestContext, RequestOptions, FacetRequest, Screenshot,
+    ClaudeEvent, DomState, FacetRequest, RequestContext, RequestOptions, Screenshot,
     ScreenshotMetadata, Viewport,
 };
 use futures::StreamExt;

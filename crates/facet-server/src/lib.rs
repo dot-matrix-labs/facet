@@ -39,6 +39,6 @@ pub mod session;
 pub use config::Config;
 pub use error::{ErrorResponse, FacetError};
 pub use models::{
-    ClaudeEvent, HealthResponse, RequestContext, FacetRequest, Screenshot, SessionState,
+    ClaudeEvent, FacetRequest, HealthResponse, RequestContext, Screenshot, SessionState,
     SessionStatus,
 };
