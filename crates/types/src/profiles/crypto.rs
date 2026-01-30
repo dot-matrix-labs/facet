@@ -167,12 +167,12 @@ impl std::fmt::Debug for EncryptionKey {
 ///
 /// # Example
 /// ```no_run
-/// use robert_app_lib::profiles::crypto::derive_key;
+/// use facet_app_lib::profiles::crypto::derive_key;
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
 /// // First time: generate new salt
 /// let (key, salt) = derive_key("my_password", None)?;
-/// // Store salt in user directory: ~/.robert/users/alice/.salt
+/// // Store salt in user directory: ~/.facet/users/alice/.salt
 ///
 /// // Later: use stored salt to derive same key
 /// let (key, _) = derive_key("my_password", Some(&salt))?;
@@ -304,7 +304,7 @@ fn constant_time_compare(a: &[u8], b: &[u8]) -> bool {
 ///
 /// # Example
 /// ```no_run
-/// use robert_app_lib::profiles::crypto::{derive_key, encrypt_file};
+/// use facet_app_lib::profiles::crypto::{derive_key, encrypt_file};
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
 /// let (key, salt) = derive_key("password", None)?;
@@ -359,7 +359,7 @@ pub fn encrypt_file(plaintext: &[u8], key: &EncryptionKey) -> Result<Vec<u8>> {
 ///
 /// # Example
 /// ```no_run
-/// use robert_app_lib::profiles::crypto::{derive_key, decrypt_file};
+/// use facet_app_lib::profiles::crypto::{derive_key, decrypt_file};
 ///
 /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
 /// # let stored_salt = vec![0u8; 16]; // Previously saved salt

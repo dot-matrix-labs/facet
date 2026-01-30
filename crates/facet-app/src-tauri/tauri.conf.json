@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "facet",
+  "version": "0.1.1",
+  "identifier": "com.facet",
+  "build": {
+    "beforeDevCommand": "bun run frontend:dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "bun run frontend:build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Facet",
+        "width": 480,
+        "height": 1080,
+        "resizable": true,
+        "fullscreen": false,
+        "x": null,
+        "y": 0
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "createUpdaterArtifacts": true,
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://raw.githubusercontent.com/facet-agent/facet-releases-canary/refs/heads/main/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEE4RTg2MDAzNEI0MzI1RDgKUldUWUpVTkxBMkRvcU1QNGdBZWhlVGJWb0tyQmM5UDNRQnM3ZEpDMEVyQTNPbFZJem5Mc092WGMK",
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  }
+}

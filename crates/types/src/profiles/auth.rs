@@ -112,7 +112,7 @@ impl AuthService {
     ///
     /// # Example
     /// ```no_run
-    /// use robert_app_lib::profiles::auth::AuthService;
+    /// use facet_app_lib::profiles::auth::AuthService;
     ///
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let session = AuthService::login("alice", "password123", None)?;
@@ -192,7 +192,7 @@ impl AuthService {
     ///
     /// # Example
     /// ```no_run
-    /// use robert_app_lib::profiles::auth::AuthService;
+    /// use facet_app_lib::profiles::auth::AuthService;
     ///
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let session = AuthService::create_and_login("alice", "secure_password", None)?;
@@ -320,7 +320,7 @@ mod tests {
     fn test_login_user_not_found() {
         let temp_dir = TempDir::new().unwrap();
         let base_dir = temp_dir.path();
-        std::fs::create_dir_all(base_dir.join(".robert/users")).unwrap();
+        std::fs::create_dir_all(base_dir.join(".facet/users")).unwrap();
 
         let result = AuthService::login("nonexistent", "password", Some(base_dir));
         assert!(matches!(
