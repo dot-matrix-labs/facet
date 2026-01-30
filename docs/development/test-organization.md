@@ -1,4 +1,4 @@
-# Robert WebDriver Test Suite Organization
+# Facet WebDriver Test Suite Organization
 
 ## Test Categories
 
@@ -13,7 +13,7 @@
 - `meta_test_server_wait_ready` - Server readiness detection
 
 ```bash
-cargo test --package robert-webdriver --test meta_infrastructure_test
+cargo test --package facet-webdriver --test meta_infrastructure_test
 ```
 
 ---
@@ -26,7 +26,7 @@ cargo test --package robert-webdriver --test meta_infrastructure_test
 Tests the CDP script validation system without needing Chrome.
 
 ```bash
-cargo test --package robert-webdriver validation
+cargo test --package facet-webdriver validation
 ```
 
 ---
@@ -43,7 +43,7 @@ All use CDP commands for reliable navigation with local test server.
 - `test_get_page_source` - Get full page HTML source
 
 ```bash
-cargo test --package robert-webdriver --test e2e -- --test-threads=1
+cargo test --package facet-webdriver --test e2e -- --test-threads=1
 ```
 
 ---
@@ -60,7 +60,7 @@ cargo test --package robert-webdriver --test e2e -- --test-threads=1
 - `test_multiple_commands_headless` - Multiple CDP commands
 
 ```bash
-cargo test --package robert-webdriver --test headless_integration -- --test-threads=1
+cargo test --package facet-webdriver --test headless_integration -- --test-threads=1
 ```
 
 ---
@@ -81,7 +81,7 @@ All tests use local test server for complete isolation from external sites.
 - `test_manual_chat_ui_injection` - Test manual injection control
 
 ```bash
-cargo test --package robert-webdriver --test chat_ui_test
+cargo test --package facet-webdriver --test chat_ui_test
 ```
 
 ---
@@ -99,7 +99,7 @@ cargo test --package robert-webdriver --test chat_ui_test
 - `test_send_cdp_command_unsupported` - Test error handling for unsupported CDP commands
 
 ```bash
-cargo test --package robert-webdriver --test cdp_execution_test
+cargo test --package facet-webdriver --test cdp_execution_test
 ```
 
 ---
@@ -116,7 +116,7 @@ cargo test --package robert-webdriver --test cdp_execution_test
 - `test_execute_cdp_script_from_file` - File-based script execution
 
 ```bash
-cargo test --package robert-webdriver --test cdp_script_execution_test
+cargo test --package facet-webdriver --test cdp_script_execution_test
 ```
 
 ---
@@ -129,7 +129,7 @@ cargo test --package robert-webdriver --test cdp_script_execution_test
 Tests the CDP script validation system without Chrome or AI integration.
 
 ```bash
-cargo test --package robert-webdriver --test cdp_generator_test
+cargo test --package facet-webdriver --test cdp_generator_test
 ```
 
 ---
@@ -188,15 +188,15 @@ E2E tests use CDP commands directly (not high-level `navigate()`) because:
 
 ```bash
 # All tests (fully parallel, no restrictions!)
-cargo test --package robert-webdriver
+cargo test --package facet-webdriver
 
 # Fast tests only (no Chrome, ~instant)
-cargo test --package robert-webdriver validation
-cargo test --package robert-webdriver --test meta_infrastructure_test
+cargo test --package facet-webdriver validation
+cargo test --package facet-webdriver --test meta_infrastructure_test
 
 # Chrome tests only
-cargo test --package robert-webdriver --test e2e
-cargo test --package robert-webdriver --test headless_integration
+cargo test --package facet-webdriver --test e2e
+cargo test --package facet-webdriver --test headless_integration
 
 # Linting
 cargo clippy --workspace --all-targets --all-features -- -D warnings

@@ -1,10 +1,10 @@
-# Robert: Go-To-Market Strategy
+# Facet: Go-To-Market Strategy
 
 **This is a Series A-ready Go-To-Market (GTM) Strategy.**
 
 Most seed-stage founders pitch "everyone." We pitch a **"Trojan Horse"** strategy: Start as a **developer utility** (bottom-up), evolve into a **team productivity tool** (mid-market), and land as **enterprise compliance infrastructure** (top-down).
 
-This is the GTM playbook tailored to Robert's "Firewalled Architecture."
+This is the GTM playbook tailored to Facet's "Firewalled Architecture."
 
 ---
 
@@ -48,7 +48,7 @@ Instead of a single Product Hunt launch, execute a **5-day "Feature Drop" week**
 - Release VS Code extension
 - Feature: Query your local repo + local docs *without* sending code to GitHub Copilot
 - Value prop: "Stop leaking your startup's IP to Microsoft"
-- Demo video: Developer using Robert for codebase search across 3 repos
+- Demo video: Developer using Facet for codebase search across 3 repos
 - **Goal**: 1,000 installs in 24 hours
 
 **Day 3: The "Obsidian/Notion" Bridge**
@@ -58,7 +58,7 @@ Instead of a single Product Hunt launch, execute a **5-day "Feature Drop" week**
 - **Goal**: 50 tweets from #PKM community
 
 **Day 4: The "GraphRAG" Benchmark**
-- Publish white paper: "Robert beats standard RAG by 30% on complex queries"
+- Publish white paper: "Facet beats standard RAG by 30% on complex queries"
 - Methodology: Blind A/B testing with 100 real-world questions
 - Open source the benchmark suite (builds credibility)
 - **Goal**: Shared by AI researchers, cited in papers
@@ -100,7 +100,7 @@ Target the "Local-First" (#LoFi) movement:
 
 **Weekly Technical Posts** (alternating):
 - Week 1: Architecture deep-dives (GraphRAG internals, zero-knowledge sync)
-- Week 2: Use cases (how professionals use Robert)
+- Week 2: Use cases (how professionals use Facet)
 - Week 3: Industry critique (problems with current AI landscape)
 - Week 4: Open source contributions and benchmarks
 
@@ -149,7 +149,7 @@ Target the "Local-First" (#LoFi) movement:
 Copy **Figma's growth loop**: Collaboration creates viral adoption.
 
 **Scenario**:
-- A freelance designer/developer uses Robert to organize a 6-month project
+- A freelance designer/developer uses Facet to organize a 6-month project
 - Project includes: research docs, client meetings, design rationale, code patterns
 - When they finish, client wants to understand the full context
 - Freelancer needs to "hand off" the Context Graph
@@ -157,7 +157,7 @@ Copy **Figma's growth loop**: Collaboration creates viral adoption.
 **The Feature**: "Transfer Context Ownership"
 - Freelancer exports their project-specific context as a self-contained graph
 - Client receives deep, searchable history of the entire project *instantly*
-- To access it, client must create a Robert Team account
+- To access it, client must create a Facet Team account
 - Client sees value immediately (6 months of context in searchable format)
 - Client invites their internal team to access the shared knowledge
 
@@ -175,9 +175,9 @@ Copy **Linear's private teams model**: Make collaboration so good that individua
 
 **Scenario**:
 - Product team has 50 conflicting PDF specs across Dropbox, Notion, emails, Slack
-- One team member imports everything into Robert
+- One team member imports everything into Facet
 - They build a unified knowledge graph with relationships between specs
-- Team member answers questions with: "Ask Robert, I synced all the specs"
+- Team member answers questions with: "Ask Facet, I synced all the specs"
 
 **The Feature**: "Team Knowledge Graph"
 - Users can "publish" local documents to Team Graph
@@ -186,8 +186,8 @@ Copy **Linear's private teams model**: Make collaboration so good that individua
 - Automatic conflict detection ("This spec contradicts the Q2 roadmap")
 
 **The Hook**: Social pressure
-- "Don't ask me where the spec is. Ask Robert."
-- Creates FOMO: Team members who aren't on Robert feel out of the loop
+- "Don't ask me where the spec is. Ask Facet."
+- Creates FOMO: Team members who aren't on Facet feel out of the loop
 - Managers see productivity gain and mandate adoption
 
 **Pricing Design**:
@@ -213,17 +213,17 @@ Copy **Linear's private teams model**: Make collaboration so good that individua
 - Exports clean personal graph for new job
 
 **Growth Mechanic**:
-- User brings Robert to new company (already hooked on personal use)
+- User brings Facet to new company (already hooked on personal use)
 - New company sees value in retaining knowledge when employees leave
 - IT/HR departments become buyers ("We need institutional knowledge retention")
 
-### 4. Viral Loops: The "Ask Robert" Share Button
+### 4. Viral Loops: The "Ask Facet" Share Button
 
 **Feature**: Shareable Query Results
 - User runs a query that surfaces great insights
 - Clicks "Share this context" → generates secure link
 - Recipient sees the query + sources + reasoning
-- To ask follow-up questions → must sign up for Robert
+- To ask follow-up questions → must sign up for Facet
 
 **Use Case**:
 - Consultant shares analysis with client
@@ -266,16 +266,16 @@ Walk into a CIO's office with data:
 "If you have 1,000 employees, that's 500,000 potentially leaky queries per year. You're one breach away from a GDPR disaster."
 
 **The Pitch**:
-"Robert isn't just a chat tool; it's a **Compliance Gateway**. We block PII *before* it hits OpenAI. We give you an audit trail of *what* your employees are asking, without exposing the answers. We are your AI Firewall."
+"Facet isn't just a chat tool; it's a **Compliance Gateway**. We block PII *before* it hits OpenAI. We give you an audit trail of *what* your employees are asking, without exposing the answers. We are your AI Firewall."
 
-### 2. The Product: "Robert Enterprise"
+### 2. The Product: "Facet Enterprise"
 
 **Not a Better ChatGPT—It's Infrastructure**
 
 **Core Features**:
 
 **1. The AI Firewall**:
-- All employee queries pass through Robert's anonymization proxy
+- All employee queries pass through Facet's anonymization proxy
 - Real-time PII detection and stripping
 - Configurable policies (e.g., "never send customer names")
 - Works with any LLM backend (OpenAI, Anthropic, Azure OpenAI)
@@ -288,8 +288,8 @@ Walk into a CIO's office with data:
 
 **3. The Zero-Knowledge Sync**:
 - Enterprise knowledge graphs stored encrypted
-- Company holds the encryption keys, not Robert
-- If government subpoenas Robert, we provide encrypted blobs (unusable)
+- Company holds the encryption keys, not Facet
+- If government subpoenas Facet, we provide encrypted blobs (unusable)
 - **The 1Password pitch**: "We can't see your data even if we wanted to"
 
 **4. Context Governance**:
@@ -306,9 +306,9 @@ Walk into a CIO's office with data:
 - **Economic Buyer**: CFO / CIO (budget holder)
 
 **The Wedge** (Bottom-Up):
-- 50+ employees already using Robert individually
+- 50+ employees already using Facet individually
 - IT discovers via expense reports or network traffic analysis
-- CISO reaches out: "What is this Robert thing?"
+- CISO reaches out: "What is this Facet thing?"
 - We respond: "Your employees love it. Let us make it compliant for you."
 
 **The Pitch Sequence**:
@@ -316,7 +316,7 @@ Walk into a CIO's office with data:
 **Meeting 1: The Diagnosis**
 - Show anonymized data on their Shadow AI usage
 - Create fear: "Here's what could leak"
-- Position Robert as the solution, not the problem
+- Position Facet as the solution, not the problem
 
 **Meeting 2: The Architecture Review**
 - Deep dive: How the firewall works
@@ -369,7 +369,7 @@ Walk into a CIO's office with data:
 
 **The Difference**:
 - ChatGPT Enterprise: "We promise not to train on your data" (trust us)
-- Robert Enterprise: "We *can't* see your data" (zero-knowledge proof)
+- Facet Enterprise: "We *can't* see your data" (zero-knowledge proof)
 
 **Market Timing**:
 - EU AI Act requires audit trails (2025-2026)
@@ -378,7 +378,7 @@ Walk into a CIO's office with data:
 - Insurance companies requiring AI governance
 
 **The Sound Bite**:
-"Robert is the 1Password for AI. You wouldn't let employees use personal passwords for company systems. Why let them use personal ChatGPT accounts?"
+"Facet is the 1Password for AI. You wouldn't let employees use personal passwords for company systems. Why let them use personal ChatGPT accounts?"
 
 ### 6. Success Metrics (Phase 3)
 
@@ -395,7 +395,7 @@ Walk into a CIO's office with data:
 
 To prove we're not hallucinating, here are industry-standard benchmarks.
 
-| Stage | Metric Focus | Benchmark (Good) | Benchmark (Great) | Robert Target |
+| Stage | Metric Focus | Benchmark (Good) | Benchmark (Great) | Facet Target |
 |:---|:---|:---|:---|:---|
 | **Seed** | **Weekly Active Context** | 20% of users | 40% of users | 40% |
 | **Seed** | **Free-to-Paid Conversion** | 2% | 5% (Slack level) | 5% |
@@ -409,18 +409,18 @@ To prove we're not hallucinating, here are industry-standard benchmarks.
 
 ## The Moat: Why This Compounds
 
-**Year 1**: Individual developers use Robert for personal productivity
+**Year 1**: Individual developers use Facet for personal productivity
 
-**Year 2**: Those developers become team leads, bring Robert to their teams
+**Year 2**: Those developers become team leads, bring Facet to their teams
 
-**Year 3**: Those teams become departments, enterprise mandates Robert for compliance
+**Year 3**: Those teams become departments, enterprise mandates Facet for compliance
 
 **The Compounding Effects**:
 
 1. **Data Moat**: The longer users curate their knowledge graphs, the more valuable and irreplaceable they become
-2. **Network Effects**: Team knowledge graphs are only valuable if the whole team is on Robert
+2. **Network Effects**: Team knowledge graphs are only valuable if the whole team is on Facet
 3. **Switching Costs**: Losing your knowledge graph = losing years of professional memory
-4. **Compliance Moat**: Once Robert is the "system of record" for AI governance, ripping it out requires re-architecting compliance
+4. **Compliance Moat**: Once Facet is the "system of record" for AI governance, ripping it out requires re-architecting compliance
 
 **The "Wedding Photos" Psychology**:
 People pay for Google Photos not because storage is expensive, but because losing memories is unbearable. Business knowledge graphs trigger the same emotion—but with 10x the willingness to pay.
@@ -489,4 +489,4 @@ People pay for Google Photos not because storage is expensive, but because losin
 - Grew: Open source collaboration
 - Sold: Enterprise code governance
 
-**Robert follows the same trajectory**: Individual utility → Team productivity → Enterprise compliance infrastructure.
+**Facet follows the same trajectory**: Individual utility → Team productivity → Enterprise compliance infrastructure.

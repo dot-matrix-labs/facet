@@ -9,7 +9,7 @@ To support the "Split-Brain" architecture and "The Sarah Test" (privacy-first co
 
 ## Decision
 
-A **Local LLM is now a hard requirement** for Robert:
+A **Local LLM is now a hard requirement** for Facet:
 - The app must bundle or download a small model (e.g., via Candle or by managing an Ollama instance) on first launch
 - Core features (Ingestion, PII stripping) will fail if local inference is unavailable
 

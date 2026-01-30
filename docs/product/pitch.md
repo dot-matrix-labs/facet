@@ -1,4 +1,4 @@
-# Robert: The Unbundled AI Stack
+# Facet: The Unbundled AI Stack
 
 ## I. The Core Thesis
 
@@ -14,7 +14,7 @@ They demand a **"Firewalled Architecture"**:
 - Memory stays **Personal** (User-owned, structured, portable).
 - Reasoning remains **Commoditized** (Rented, ephemeral, interchangeable).
 
-**Robert is the Memory Layer.** We are the neutral, trusted "Context OS" that sits between the user and the models. We manage the user's digital brain, structure it into a graph, and feed only the necessary, anonymized context to the model of their choice.
+**Facet is the Memory Layer.** We are the neutral, trusted "Context OS" that sits between the user and the models. We manage the user's digital brain, structure it into a graph, and feed only the necessary, anonymized context to the model of their choice.
 
 ## II. The Problem: The "Context Control" Gap
 
@@ -26,9 +26,9 @@ Current AI interaction models suffer from a fatal flaw: **Vertical Integration c
 
 ## III. The Product: ContextOS + Agentic Autonomy
 
-Robert is not just a chat client; it is an **Operating System for Context with Agentic Execution.**
+Facet is not just a chat client; it is an **Operating System for Context with Agentic Execution.**
 
-**The Critical Distinction**: Mem.ai wants to be your "thought partner"—a better search engine for your brain. That's not enough. Robert is an **autonomous agent with domain ownership**. You delegate entire workflows, not just queries.
+**The Critical Distinction**: Mem.ai wants to be your "thought partner"—a better search engine for your brain. That's not enough. Facet is an **autonomous agent with domain ownership**. You delegate entire workflows, not just queries.
 
 ### The "Sarah" Test (Why Agency Wins)
 
@@ -36,26 +36,26 @@ Consider Sarah, an interior designer.
 
 **The Status Quo (Mem.ai, Notion AI)**: She asks for a quote. The AI retrieves data, gives her an answer. She manually creates the quote in a separate tool. Repeat every time.
 
-**The Robert Experience**: Sarah delegates the **entire pricing workflow** to Robert.
+**The Facet Experience**: Sarah delegates the **entire pricing workflow** to Facet.
 
 **Setup (One-Time)**:
-- Sarah tells Robert: "You are my pricing agent. You own the pricing domain."
-- Robert ingests pricing files, client history, margin rules
+- Sarah tells Facet: "You are my pricing agent. You own the pricing domain."
+- Facet ingests pricing files, client history, margin rules
 - Sarah sets boundaries: "Never quote below $X margin. Always use latest pricing. Flag discounts >15% for my approval."
 
 **Execution (Autonomous)**:
 1. Client emails: "Quote for Miller Kitchen remodel?"
-2. Robert detects pricing request (domain: pricing)
-3. Robert autonomously:
+2. Facet detects pricing request (domain: pricing)
+3. Facet autonomously:
    - Retrieves Miller's history (3 prior projects, preferred vendor)
    - Uses 2024 pricing (ignores archived 2019 files)
    - Applies 12% margin rule
    - Generates itemized quote in Sarah's template
    - Drafts email: "Hi Miller, here's your quote..."
-4. Robert flags for Sarah's review: "Quote ready. Margin: 12%. Under your 15% threshold—auto-approved."
+4. Facet flags for Sarah's review: "Quote ready. Margin: 12%. Under your 15% threshold—auto-approved."
 5. Sarah clicks "Send" or edits. Done.
 
-**Result**: Sarah delegated a workflow, not just a query. Robert ACTED with autonomy within defined boundaries.
+**Result**: Sarah delegated a workflow, not just a query. Facet ACTED with autonomy within defined boundaries.
 
 **We don't sell "thought partnership." We sell domain ownership and agentic autonomy.**
 
@@ -68,16 +68,16 @@ Consider Sarah, an interior designer.
 - Figma files: Design iterations
 - Linear: Sprint velocity
 
-**The Robert Solution**: Universal indexing across all tools.
+**The Facet Solution**: Universal indexing across all tools.
 
 **Setup**:
-1. Robert connects to Jira, Slack, Notion, Figma, Linear, Google Workspace
+1. Facet connects to Jira, Slack, Notion, Figma, Linear, Google Workspace
 2. Ingests data with context preservation (which tool, which team, which project)
 3. Builds unified knowledge graph: `Project_Alpha → has_requirements (Notion) → has_tickets (Jira) → discussed_in (Slack) → designed_in (Figma)`
 
 **Query**: "What's blocking Project Alpha?"
 
-**Robert's Answer** (cross-tool intelligence):
+**Facet's Answer** (cross-tool intelligence):
 - "Based on Jira: 3 tickets blocked on API review (P1)"
 - "Based on Slack: Design team flagged performance concerns in #project-alpha yesterday"
 - "Based on Linear: Sprint velocity down 20% due to dependencies"
@@ -95,20 +95,20 @@ Consider Sarah, an interior designer.
 - Single-tool silo: Can't bridge to Jira, Slack, Figma (competitive dynamics)
 - No context sharding: Everyone sees same flat knowledge base
 
-**Why Robert wins**:
+**Why Facet wins**:
 - **Tool-agnostic**: Index from anywhere (APIs, local files, browser extensions)
 - **Intelligent routing**: "This query needs Jira + Slack context, not Figma"
 - **Sophisticated boundaries**: Team graphs, personal graphs, project-specific contexts that span tools
 
 ## IV. The Architecture: Personal + Firewalled
 
-We reject the naive notion that "Local AI" means "Offline AI." Real-world workflows require cloud scale. Robert employs a **Hybrid Firewall Architecture**:
+We reject the naive notion that "Local AI" means "Offline AI." Real-world workflows require cloud scale. Facet employs a **Hybrid Firewall Architecture**:
 
 ### 1. The Local Kernel (User Device)
 - **Keys & UI**: Encryption keys never leave the device. Final rendering happens here.
 - **Hot Memory**: Immediate context for low-latency tasks.
 
-### 2. The Trusted Proxy (Robert Cloud)
+### 2. The Trusted Proxy (Facet Cloud)
 - **Heavy Lift**: When a user adds 5,000 PDFs, we spin up an Ephemeral Container to generate embeddings and graph nodes. The data is processed and immediately destroyed. We never train on it.
 - **Sync**: An end-to-end encrypted blob store allowing seamless state transfer between iPhone and Desktop.
 - **The Firewall**: Before a prompt hits OpenAI, our proxy strips PII, obfuscates unique identifiers, and injects "poison pills" (canary tokens) to detect leakage.
@@ -120,9 +120,9 @@ We treat GPT-4 as a CPU. We send it anonymized tokens; we receive raw intelligen
 
 ### Why RAG is Dead (The Memory Part)
 
-**What Robert enables**: We answer questions like *"How has our strategy changed since last year?"*—a question that breaks standard RAG.
+**What Facet enables**: We answer questions like *"How has our strategy changed since last year?"*—a question that breaks standard RAG.
 
-**How**: Standard RAG (Retrieval Augmented Generation) is a bag-of-words search. It's insufficient for high-stakes professional work. Robert builds a **Knowledge Graph (GraphRAG)**:
+**How**: Standard RAG (Retrieval Augmented Generation) is a bag-of-words search. It's insufficient for high-stakes professional work. Facet builds a **Knowledge Graph (GraphRAG)**:
 
 - **Entities, not Keywords**: We don't just match "Project Alpha." We map `Project Alpha → owned_by_Client_X → status_Active`.
 - **Hierarchical Memory**: We implement a paging system (Hot/Warm/Cold) that mimics human memory. We don't stuff the context window; we curate it.
@@ -134,7 +134,7 @@ We treat GPT-4 as a CPU. We send it anonymized tokens; we receive raw intelligen
 
 **The problem**: This is retrieval, not action. Users still manually execute the workflow after getting an answer.
 
-**Robert's approach**: **Domain-specific autonomous agents** that execute workflows end-to-end.
+**Facet's approach**: **Domain-specific autonomous agents** that execute workflows end-to-end.
 
 **Three-Layer Architecture**:
 
@@ -161,7 +161,7 @@ We treat GPT-4 as a CPU. We send it anonymized tokens; we receive raw intelligen
 
 **The difference**:
 - **Mem.ai**: "Here's what I found about pricing." (User still creates quote manually)
-- **Robert**: "Quote generated and ready for review. Send now or edit?" (Workflow executed)
+- **Facet**: "Quote generated and ready for review. Send now or edit?" (Workflow executed)
 
 ## VI. The Business Model: Git for Corporate Intelligence
 
@@ -195,7 +195,7 @@ People pay for Google Photos subscriptions before their internet bill. Why? The 
 
 **Answer: The Neutrality Trap + Agency Gap + Walled Garden Problem.**
 
-| Player | Why They Can't Build Robert | Robert's Advantage |
+| Player | Why They Can't Build Facet | Facet's Advantage |
 |--------|---------------------------|-------------------|
 | **OpenAI/Anthropic** | Business model relies on mining user data for training and advertising revenue. Cannot credibly offer provider-neutral switching—it would cannibalize their reasoning service. | We have no conflict: protecting user data *is* our business model. |
 | **Apple/Microsoft/Google** | Platform lock-in is their strategy. Apple Intelligence works beautifully—but only on Apple devices. They structurally cannot bridge their own ecosystems (competitive dynamics). | We are platform-agnostic by design. The Dropbox lesson: "storage is a feature" failed because cross-platform interoperability mattered. |
@@ -203,17 +203,17 @@ People pay for Google Photos subscriptions before their internet bill. Why? The 
 | **Mem.ai** | "Thought partner" positioning = retrieval, not action. Users still manually execute workflows. No domain ownership or agentic autonomy. | We provide **domain-specific agents** that execute end-to-end workflows. Pricing agent generates quotes. Research agent monitors competitors. We act, not just retrieve. |
 | **Dropbox** | The most natural competitor and likely acquirer. They should build this—it's their next product line. | **Speed to market.** We're purpose-built for ContextOS. Dropbox must pivot their organization, hire AI teams, and redesign products. We are nimble, AI-native, and have no legacy business to protect. **Acquisition thesis**: We are building Dropbox's strategic evolution from "cross-platform storage" to "cross-platform AI memory + agents." |
 
-**Robert wins by being the Switzerland of AI**: The only platform-agnostic, model-agnostic memory layer **with agentic execution**.
+**Facet wins by being the Switzerland of AI**: The only platform-agnostic, model-agnostic memory layer **with agentic execution**.
 
 ## VIII. The Opportunity
 
-If we are right, Robert becomes the primary interface for how humanity interacts with Artificial Intelligence—the trusted gateway that ensures the AI serves the user, not the other way around.
+If we are right, Facet becomes the primary interface for how humanity interacts with Artificial Intelligence—the trusted gateway that ensures the AI serves the user, not the other way around.
 
-**Just as the Browser unbundled the OS from the Web, Robert unbundles Memory from the Model.**
+**Just as the Browser unbundled the OS from the Web, Facet unbundles Memory from the Model.**
 
 The stakes:
 - **Commercially**: A multi-trillion-dollar AI market bifurcates. The memory layer has stronger moats than commoditized reasoning.
-- **Strategically**: Robert keeps hyperscale providers in check by enabling one-click provider switching, preventing monopoly lock-in.
+- **Strategically**: Facet keeps hyperscale providers in check by enabling one-click provider switching, preventing monopoly lock-in.
 - **For Users**: Portability, agency, and the ability to move their curated intelligence across jobs, platforms, and providers.
 
 **The alternative**: Fragmented AI experiences siloed across corporate platforms, forced ecosystem choices ("all Apple" or "all Microsoft"), and surveillance-driven personalization as the only option.

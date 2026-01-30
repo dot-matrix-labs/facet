@@ -1,6 +1,6 @@
 # Linux Development Setup
 
-Complete guide for setting up the Robert browser automation project on Linux.
+Complete guide for setting up the Facet browser automation project on Linux.
 
 ## Quick Setup
 
@@ -49,10 +49,10 @@ The validation tests don't use Chrome at all, so they always work! ✅
 cargo build
 
 # Run validation tests (always work, no Chrome needed)
-cargo test --package robert-webdriver validation
+cargo test --package facet-webdriver validation
 
 # Run headless tests (work with sandbox restrictions)
-cargo test --package robert-webdriver --test headless_integration
+cargo test --package facet-webdriver --test headless_integration
 
 # Run clippy
 cargo clippy --workspace --all-targets -- -D warnings
@@ -75,7 +75,7 @@ pkg-config --modversion gtk+-3.0
 cargo --version
 
 # Test validation (fastest, no Chrome)
-cargo test --package robert-webdriver validation
+cargo test --package facet-webdriver validation
 
 # Should see: test result: ok. 20 passed
 ```

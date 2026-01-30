@@ -1,57 +1,57 @@
-# Robert Server Specification
+# Facet Server Specification
 
 ## Overview
 
-The Robert Server is a Rust-based web service built with the Warp framework that provides a REST API for interacting with Robert's core AI capabilities. It instantiates and manages `robert-core` instances, which handle memory management, prompt engineering, RAG loops, and all main functionality of the application.
+The Facet Server is a Rust-based web service built with the Warp framework that provides a REST API for interacting with Facet's core AI capabilities. It instantiates and manages `facet-core` instances, which handle memory management, prompt engineering, RAG loops, and all main functionality of the application.
 
 ## Architecture
 
 ```
 ┌─────────────────┐         HTTPS/REST           ┌──────────────────┐
-│   Robert App    │ ◄──────────────────────────► │  Robert Server   │
+│   Facet App    │ ◄──────────────────────────► │  Facet Server   │
 │   (Desktop)     │    (SSL Encrypted)           │   (Rust/Warp)    │
 └─────────────────┘                              └──────────────────┘
                                                            │
                                                            │ Instantiates
                                                            ▼
                                                   ┌──────────────────┐
-                                                  │   robert-core    │
+                                                  │   facet-core    │
                                                   │  (AI/RAG Engine) │
                                                   └──────────────────┘
                                                            │
                                                            │ Uses
                                                            ▼
                                                   ┌──────────────────┐
-                                                  │  robert-graph    │
+                                                  │  facet-graph    │
                                                   │ (DB Management)  │
                                                   └──────────────────┘
 
      OR (Headless/CLI Mode)
 
 ┌─────────────────┐                              ┌──────────────────┐
-│   robert-cli    │ ────────────────────────────► │  Robert Server   │
+│   facet-cli    │ ────────────────────────────► │  Facet Server   │
 │   (CLI Tool)    │    Starts server process     │   (Rust/Warp)    │
 └─────────────────┘                              └──────────────────┘
                                                            │
                                                            │ Instantiates
                                                            ▼
                                                   ┌──────────────────┐
-                                                  │   robert-core    │
+                                                  │   facet-core    │
                                                   │  (AI/RAG Engine) │
                                                   └──────────────────┘
 ```
 
 ## Component Responsibilities
 
-### robert-server
+### facet-server
 - Provides REST API endpoints for client applications
 - Manages authentication and authorization
-- Instantiates and lifecycle-manages robert-core instances
+- Instantiates and lifecycle-manages facet-core instances
 - Handles concurrent sessions from multiple clients
 - Provides server-side encryption and security
 - Streams responses back to clients (SSE/WebSocket)
 
-### robert-core
+### facet-core
 - Core AI/RAG engine with all main application logic
 - Memory management and context retention
 - Prompt engineering and optimization
@@ -59,7 +59,7 @@ The Robert Server is a Rust-based web service built with the Warp framework that
 - Integration with Claude CLI and other AI services
 - Business logic and workflow orchestration
 
-### robert-graph
+### facet-graph
 - Database management (SurrealDB)
 - Graph-based data storage and retrieval
 - Database encryption and security
@@ -70,13 +70,13 @@ The Robert Server is a Rust-based web service built with the Warp framework that
 
 ### Mode 1: Local Desktop (Default)
 
-The desktop app spawns a local robert-server instance automatically:
+The desktop app spawns a local facet-server instance automatically:
 
 ```
-robert-app (Tauri)
-    └─► Spawns local robert-server (127.0.0.1:8443)
-            └─► Creates robert-core instance
-                    └─► Uses local robert-graph database (~/.robert/data)
+facet-app (Tauri)
+    └─► Spawns local facet-server (127.0.0.1:8443)
+            └─► Creates facet-core instance
+                    └─► Uses local facet-graph database (~/.facet/data)
 ```
 
 **Use Cases:**
@@ -97,19 +97,19 @@ robert-app (Tauri)
 
 ### Mode 2: Remote Server (Teams/Headless)
 
-robert-cli starts a server that multiple clients can connect to:
+facet-cli starts a server that multiple clients can connect to:
 
 ```
 # Start server (typically on a remote machine or cloud)
-robert-cli server start --host 0.0.0.0 --port 8443
+facet-cli server start --host 0.0.0.0 --port 8443
 
 # Then clients connect:
-robert-app (Desktop) ──► robert-server (https://team.example.com:8443)
-                                 └─► Shared robert-core instance
-                                         └─► Shared robert-graph database
+facet-app (Desktop) ──► facet-server (https://team.example.com:8443)
+                                 └─► Shared facet-core instance
+                                         └─► Shared facet-graph database
 
 # Or use via CLI:
-robert-cli query "..." --server https://team.example.com:8443
+facet-cli query "..." --server https://team.example.com:8443
 ```
 
 **Use Cases:**
@@ -133,7 +133,7 @@ require_auth = true
 tokens = ["team-token-1", "team-token-2"]
 
 [graph]
-database_path = "/var/lib/robert/data"
+database_path = "/var/lib/facet/data"
 enable_encryption = true
 sync_enabled = false  # Or enable for multi-region sync
 ```
@@ -143,7 +143,7 @@ sync_enabled = false  # Or enable for multi-region sync
 {
   "server": {
     "mode": "remote",
-    "url": "https://robert.example.com:8443",
+    "url": "https://facet.example.com:8443",
     "api_token": "team-token-1"
   }
 }
@@ -152,11 +152,11 @@ sync_enabled = false  # Or enable for multi-region sync
 **CLI Configuration (connecting to remote):**
 ```bash
 # Set via environment or config
-export ROBERT_SERVER_URL=https://robert.example.com:8443
-export ROBERT_API_TOKEN=team-token-1
+export FACET_SERVER_URL=https://facet.example.com:8443
+export FACET_API_TOKEN=team-token-1
 
-robert-cli query "analyze this codebase"
-robert-cli ingest /path/to/docs
+facet-cli query "analyze this codebase"
+facet-cli ingest /path/to/docs
 ```
 
 ## Key Requirements
@@ -170,11 +170,11 @@ robert-cli ingest /path/to/docs
 
 ### 2. Request Flow
 
-1. Client establishes SSL connection to robert-server
+1. Client establishes SSL connection to facet-server
 2. Client sends request (query, ingestion, etc.)
 3. Server validates authentication and request format
-4. Server routes request to appropriate robert-core handler
-5. robert-core processes request using robert-graph for data access
+4. Server routes request to appropriate facet-core handler
+5. facet-core processes request using facet-graph for data access
 6. Server streams responses back to client
 7. Connection remains open for streaming or closes after response
 
@@ -266,8 +266,8 @@ Health check endpoint.
   "status": "healthy",
   "version": "1.0.0",
   "components": {
-    "robert_core": "healthy",
-    "robert_graph": "healthy",
+    "facet_core": "healthy",
+    "facet_graph": "healthy",
     "database": "connected"
   },
   "uptime_seconds": 12345
@@ -345,7 +345,7 @@ Search the knowledge graph.
 
 #### Process Isolation
 
-- Each robert-core instance runs in isolated context
+- Each facet-core instance runs in isolated context
 - Resource limits (CPU, memory, file descriptors)
 - Timeout enforcement (default: 5 minutes)
 - Automatic cleanup of stale sessions
@@ -353,7 +353,7 @@ Search the knowledge graph.
 #### Data Privacy
 
 - End-to-end encryption for remote connections
-- Local database encryption via robert-graph
+- Local database encryption via facet-graph
 - No persistent logging of sensitive content
 - Configurable data retention policies
 - GDPR compliance for team deployments
@@ -389,7 +389,7 @@ enable_rag = true
 embedding_model = "fastembed"
 
 [graph]
-database_path = "~/.robert/data"
+database_path = "~/.facet/data"
 enable_encryption = true
 sync_enabled = false
 sync_url = ""  # For team deployments
@@ -412,8 +412,8 @@ sanitize_sensitive_data = true
 - `AUTH_FAILED`: Invalid or missing authentication
 - `RATE_LIMITED`: Too many requests
 - `INVALID_REQUEST`: Malformed request body
-- `CORE_UNAVAILABLE`: robert-core initialization failed
-- `DATABASE_ERROR`: robert-graph connection issue
+- `CORE_UNAVAILABLE`: facet-core initialization failed
+- `DATABASE_ERROR`: facet-graph connection issue
 - `EXECUTION_ERROR`: Processing failed
 - `TIMEOUT`: Request exceeded timeout limit
 - `INTERNAL_ERROR`: Server-side error
@@ -438,10 +438,10 @@ sanitize_sensitive_data = true
 
 ```bash
 # Start local development server
-cargo run --bin robert-server -- --dev
+cargo run --bin facet-server -- --dev
 
 # Or with explicit configuration
-cargo run --bin robert-server -- \
+cargo run --bin facet-server -- \
   --config config.dev.toml \
   --dev-mode
 ```
@@ -485,7 +485,7 @@ pretty_print = true
 {
   "scripts": {
     "dev": "tauri dev",
-    "dev:local": "concurrently \"cargo run --bin robert-server -- --dev\" \"tauri dev\"",
+    "dev:local": "concurrently \"cargo run --bin facet-server -- --dev\" \"tauri dev\"",
     "test:e2e": "cargo test --workspace"
   }
 }
@@ -499,13 +499,13 @@ pretty_print = true
 FROM rust:1.75 as builder
 WORKDIR /app
 COPY . .
-RUN cargo build --release --bin robert-server
+RUN cargo build --release --bin facet-server
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y ca-certificates
-COPY --from=builder /app/target/release/robert-server /usr/local/bin/
+COPY --from=builder /app/target/release/facet-server /usr/local/bin/
 EXPOSE 8443
-CMD ["robert-server"]
+CMD ["facet-server"]
 ```
 
 #### Kubernetes Deployment (Teams)
@@ -514,20 +514,20 @@ CMD ["robert-server"]
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: robert-server
+  name: facet-server
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: robert-server
+      app: facet-server
   template:
     metadata:
       labels:
-        app: robert-server
+        app: facet-server
     spec:
       containers:
-      - name: robert-server
-        image: robert-server:latest
+      - name: facet-server
+        image: facet-server:latest
         ports:
         - containerPort: 8443
         env:
@@ -535,12 +535,12 @@ spec:
           value: "remote"
         volumeMounts:
         - name: config
-          mountPath: /etc/robert
+          mountPath: /etc/facet
 ```
 
 ### 10. Team/Enterprise Features
 
-For organizations deploying shared robert-server instances:
+For organizations deploying shared facet-server instances:
 
 - **Multi-tenancy**: Isolated workspaces per team
 - **Shared Knowledge Base**: Centralized memory with access control
@@ -553,10 +553,10 @@ For organizations deploying shared robert-server instances:
 
 ```toml
 [dependencies]
-# robert dependencies
-robert-core = { path = "../robert-core" }
-robert-graph = { path = "../robert-graph" }
-robert-types = { workspace = true }
+# facet dependencies
+facet-core = { path = "../facet-core" }
+facet-graph = { path = "../facet-graph" }
+facet-types = { workspace = true }
 
 # Web framework
 warp = { workspace = true }
@@ -585,13 +585,13 @@ thiserror = { workspace = true }
 - Basic REST API
 - Local server mode
 - Single session management
-- robert-core integration
+- facet-core integration
 - Development tooling
 
 ### Phase 2: Streaming & RAG
 - WebSocket/SSE streaming
 - Full RAG pipeline integration
-- Memory persistence via robert-graph
+- Memory persistence via facet-graph
 - Multi-session support
 
 ### Phase 3: Remote Mode

@@ -11,18 +11,18 @@ We are pivoting from a browser automation tool to a "Memory Layer" (ContextOS). 
 
 We will split the backend into focused crates:
 
-1. `robert-graph`: Dedicated to GraphRAG implementation (Vector store + Graph store)
-2. `robert-core`: Contains the business logic, ContextOS state management, and ingestion pipelines
-3. `robert-webdriver`: Retained for future agentic capabilities (browser control)
-4. `robert-app`: The Tauri application shell (UI + IPC layer)
-5. `robert-server`: REST API server that manages robert-core instances
+1. `facet-graph`: Dedicated to GraphRAG implementation (Vector store + Graph store)
+2. `facet-core`: Contains the business logic, ContextOS state management, and ingestion pipelines
+3. `facet-webdriver`: Retained for future agentic capabilities (browser control)
+4. `facet-app`: The Tauri application shell (UI + IPC layer)
+5. `facet-server`: REST API server that manages facet-core instances
 
 ## Consequences
 
 ### Pros
 - Clear separation of concerns
-- `robert-graph` can be tested in isolation (TDD)
-- `robert-core` orchestrates logic without being tied to UI
+- `facet-graph` can be tested in isolation (TDD)
+- `facet-core` orchestrates logic without being tied to UI
 - Clean API boundary between components
 
 ### Cons

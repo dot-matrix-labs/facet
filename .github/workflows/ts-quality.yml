@@ -4,26 +4,26 @@ on:
   push:
     branches: [main]
     paths:
-      - 'crates/robert-app/**/*.ts'
-      - 'crates/robert-app/**/*.svelte'
-      - 'crates/robert-app/**/*.js'
-      - 'crates/robert-app/package.json'
-      - 'crates/robert-app/bun.lock'
-      - 'crates/robert-app/tsconfig.json'
-      - 'crates/robert-app/eslint.config.js'
-      - 'crates/robert-app/.prettierrc.json'
+      - 'crates/facet-app/**/*.ts'
+      - 'crates/facet-app/**/*.svelte'
+      - 'crates/facet-app/**/*.js'
+      - 'crates/facet-app/package.json'
+      - 'crates/facet-app/bun.lock'
+      - 'crates/facet-app/tsconfig.json'
+      - 'crates/facet-app/eslint.config.js'
+      - 'crates/facet-app/.prettierrc.json'
       - '.github/workflows/ts-quality.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'crates/robert-app/**/*.ts'
-      - 'crates/robert-app/**/*.svelte'
-      - 'crates/robert-app/**/*.js'
-      - 'crates/robert-app/package.json'
-      - 'crates/robert-app/bun.lock'
-      - 'crates/robert-app/tsconfig.json'
-      - 'crates/robert-app/eslint.config.js'
-      - 'crates/robert-app/.prettierrc.json'
+      - 'crates/facet-app/**/*.ts'
+      - 'crates/facet-app/**/*.svelte'
+      - 'crates/facet-app/**/*.js'
+      - 'crates/facet-app/package.json'
+      - 'crates/facet-app/bun.lock'
+      - 'crates/facet-app/tsconfig.json'
+      - 'crates/facet-app/eslint.config.js'
+      - 'crates/facet-app/.prettierrc.json'
       - '.github/workflows/ts-quality.yml'
   schedule:
     - cron: '17 2 * * *'  # Run nightly at 2:17 AM UTC
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -121,7 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

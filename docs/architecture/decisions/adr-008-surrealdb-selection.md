@@ -7,7 +7,7 @@ Accepted
 2025-12-05
 
 ## Context
-"Robert" requires a data store to implement GraphRAG (Graph Retrieval-Augmented Generation). The system needs to store both graph data (nodes, edges) and vector embeddings for semantic search.
+"Facet" requires a data store to implement GraphRAG (Graph Retrieval-Augmented Generation). The system needs to store both graph data (nodes, edges) and vector embeddings for semantic search.
 
 Key constraints and requirements include:
 1.  **Local-First / Embedded**: The application is primarily a Rust desktop agent. It should ideally run as a single binary without requiring users to install and manage external server processes (like Docker or separate DB daemons).
@@ -25,7 +25,7 @@ We have decided to use **SurrealDB**.
 ## Detailed Analysis
 
 ### 1. Deployment Model (Embedded vs. Server)
-*   **SurrealDB** supports a true embedded mode (via `RocksDB` or `SurrealKV`). This allows the `robert` agent to encompass its database within the application process. This is critical for the User Experience of a local desktop tool.
+*   **SurrealDB** supports a true embedded mode (via `RocksDB` or `SurrealKV`). This allows the `facet` agent to encompass its database within the application process. This is critical for the User Experience of a local desktop tool.
 *   **Memgraph** primarily operates as a client-server architecture. While high-performance, it typically requires running a separate binary or container, which complicates distribution and management for a local user.
 
 ### 2. Multi-Model Capabilities
@@ -43,7 +43,7 @@ We have decided to use **SurrealDB**.
 ## Consequences
 *   **Positive**:
     *   Simplified "install" experience for users (no external DB setup).
-    *   Unified store for Graph and Vectors simplifies `robert-graph` code.
+    *   Unified store for Graph and Vectors simplifies `facet-graph` code.
     *   Future-proof path to team deployment via TiKV cluster without rewriting the query layer.
 *   **Negative**:
     *   SurrealDB is younger than Memgraph/Neo4j; we may encounter edge cases in complex graph algorithms (though fundamental traversals are fully supported).

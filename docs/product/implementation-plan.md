@@ -1,4 +1,4 @@
-# Implementation Plan - Robert Alpha (v0.5)
+# Implementation Plan - Facet Alpha (v0.5)
 
 ## Goal
 Deliver "ContextOS Core" with a **Split-Brain Generation Architecture**:
@@ -14,26 +14,26 @@ Deliver "ContextOS Core" with a **Split-Brain Generation Architecture**:
 ## Proposed Changes
 
 ### Phase 1: Foundation & Project Setup
-#### [MODIFY] [Project Structure](file:///Users/lucas/code/rust/robert/Cargo.toml)
-- [x] Initialize Tauri 2.0 workspace (`robert-app`)
-- [x] Create `robert-graph` (GraphRAG engine)
-- [x] Create `robert-core` (Business logic)
-- [x] Restore `robert-cli` for headless management (downloads, memory, inference).
-- [ ] **Dependency Update**: Add `rig-core` to `robert-core` for agent orchestration.
+#### [MODIFY] [Project Structure](file:///Users/lucas/code/rust/facet/Cargo.toml)
+- [x] Initialize Tauri 2.0 workspace (`facet-app`)
+- [x] Create `facet-graph` (GraphRAG engine)
+- [x] Create `facet-core` (Business logic)
+- [x] Restore `facet-cli` for headless management (downloads, memory, inference).
+- [ ] **Dependency Update**: Add `rig-core` to `facet-core` for agent orchestration.
 
 ### Phase 2: The Memory Layer (Partitioned Graph)
-#### [MODIFY] [GraphRAG Engine](file:///Users/lucas/code/rust/robert/crates/robert-graph/src/lib.rs)
+#### [MODIFY] [GraphRAG Engine](file:///Users/lucas/code/rust/facet/crates/facet-graph/src/lib.rs)
 - [x] **SurrealStore**: Embedded SurrealDB implementation.
 - [ ] **Partitioning**: Update schema to support `graph_id` (Personal, Professional, Business).
 - [ ] **Ingestion**: Ensure chunks are tagged with the correct partition.
 
-#### [NEW] [File Ingestion](file:///Users/lucas/code/rust/robert/crates/robert-core/src/ingest.rs)
+#### [NEW] [File Ingestion](file:///Users/lucas/code/rust/facet/crates/facet-core/src/ingest.rs)
 - [ ] File watcher for local folders.
 - [ ] Parsers (PDF, MD, TXT).
 - [ ] **Local Entity Extraction**: Use Local LLM to extract entities/relations during ingestion.
 
 ### Phase 3: Local Intelligence (The "Little Brain")
-#### [NEW] [Local Inference](file:///Users/lucas/code/rust/robert/crates/robert-core/src/llm/local.rs)
+#### [NEW] [Local Inference](file:///Users/lucas/code/rust/facet/crates/facet-core/src/llm/local.rs)
 - [ ] **Engine**: Integrate `candle` (or `ollama-rs` client) for running local models.
 - [ ] **Model Strategy**: Default to `Phi-4` or `Gemma 2` (quantized).
 - [ ] **Capabilities**:
@@ -42,7 +42,7 @@ Deliver "ContextOS Core" with a **Split-Brain Generation Architecture**:
     - [ ] `optimize_prompt(query, context) -> compressed_prompt`
 
 ### Phase 4: Agentic RAG Loop (The "Bridge")
-#### [NEW] [Agent Orchestration](file:///Users/lucas/code/rust/robert/crates/robert-core/src/agent.rs)
+#### [NEW] [Agent Orchestration](file:///Users/lucas/code/rust/facet/crates/facet-core/src/agent.rs)
 - [ ] **Custom Agent**: Implement a lightweight `Agent` struct.
 - [ ] **Tools**:
     - [ ] `search_graph(query, partition)`: Vector + Traversal search.
@@ -54,7 +54,7 @@ Deliver "ContextOS Core" with a **Split-Brain Generation Architecture**:
     4.  **Generate**: Send sanitized context + query to Cloud LLM (if complex) or answer locally (if simple).
 
 ### Phase 5: ContextOS Features
-#### [MODIFY] [Context Control](file:///Users/lucas/code/rust/robert/crates/robert-core/src/context.rs)
+#### [MODIFY] [Context Control](file:///Users/lucas/code/rust/facet/crates/facet-core/src/context.rs)
 - [x] Context Manager.
 - [ ] **Reactive Pruning**: Connect UI "Mark as Outdated" to graph edge weights.
 
@@ -62,8 +62,8 @@ Deliver "ContextOS Core" with a **Split-Brain Generation Architecture**:
 
 ### Automated Tests
 - **Unit Tests**:
-    - `robert-graph`: Verify partitioning (searching "Personal" doesn't return "Work" nodes).
-    - `robert-core`: Verify PII redaction (input with fake SSN -> output redacted).
+    - `facet-graph`: Verify partitioning (searching "Personal" doesn't return "Work" nodes).
+    - `facet-core`: Verify PII redaction (input with fake SSN -> output redacted).
 - **Integration Tests**:
     - `ingest_pipeline`: Ingest file -> Check SurrealDB for nodes -> Check entities extracted.
 

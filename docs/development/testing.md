@@ -5,7 +5,7 @@
 ### Validation Tests (Fastest, Always Pass)
 ```bash
 # Run all validation tests (no Chrome needed)
-cargo test --package robert-webdriver validation
+cargo test --package facet-webdriver validation
 
 # Result: 20 tests pass in ~10ms
 ```
@@ -14,7 +14,7 @@ cargo test --package robert-webdriver validation
 ```bash
 # Run headless integration tests (Chrome in headless mode)
 # IMPORTANT: Must run sequentially due to Chrome profile conflicts
-cargo test --package robert-webdriver --test headless_integration -- --test-threads=1
+cargo test --package facet-webdriver --test headless_integration -- --test-threads=1
 
 # Result: 5 tests pass in ~5 seconds
 ```
@@ -22,7 +22,7 @@ cargo test --package robert-webdriver --test headless_integration -- --test-thre
 ### Chat UI Tests
 ```bash
 # Run chat UI injection and messaging tests
-cargo test --package robert-webdriver --test chat_ui_test
+cargo test --package facet-webdriver --test chat_ui_test
 
 # Result: 7 tests pass in ~2 seconds
 # Note: Uses local test server, no external dependencies
@@ -31,15 +31,15 @@ cargo test --package robert-webdriver --test chat_ui_test
 ### Unit Tests
 ```bash
 # Run all library unit tests
-cargo test --package robert-webdriver --lib
+cargo test --package facet-webdriver --lib
 
 # Result: 15 tests pass
 ```
 
 ### All Tests
 ```bash
-# Run all tests in robert-webdriver (excluding E2E)
-cargo test --package robert-webdriver -- --test-threads=1
+# Run all tests in facet-webdriver (excluding E2E)
+cargo test --package facet-webdriver -- --test-threads=1
 
 # Result: ~40 tests (validation + headless + unit)
 ```
@@ -62,10 +62,10 @@ The headless tests must run **sequentially** (not in parallel) to avoid Chrome p
 
 ```bash
 # ✅ Correct - sequential execution
-cargo test --package robert-webdriver --test headless_integration -- --test-threads=1
+cargo test --package facet-webdriver --test headless_integration -- --test-threads=1
 
 # ❌ Wrong - parallel execution causes failures
-cargo test --package robert-webdriver --test headless_integration
+cargo test --package facet-webdriver --test headless_integration
 ```
 
 **Why?** All tests try to use `/tmp/chromiumoxide-runner` simultaneously, causing:
@@ -160,7 +160,7 @@ If it persists, check if `/tmp/chrome-for-testing/` is being deleted.
 
 ### Validation tests fail
 **Solution**: This indicates a code issue - validation tests should always pass.
-Check: `cargo test --package robert-webdriver validation --nocapture`
+Check: `cargo test --package facet-webdriver validation --nocapture`
 
 ## Performance
 
@@ -177,13 +177,13 @@ Check: `cargo test --package robert-webdriver validation --nocapture`
 ### Quick feedback loop
 ```bash
 # During development - fastest tests
-cargo test --package robert-webdriver validation
+cargo test --package facet-webdriver validation
 ```
 
 ### Before commit
 ```bash
 # Run all tests
-cargo test --package robert-webdriver -- --test-threads=1
+cargo test --package facet-webdriver -- --test-threads=1
 
 # Run linting
 cargo clippy --workspace --all-targets -- -D warnings
@@ -211,13 +211,13 @@ cargo clippy --workspace --all-targets -- -D warnings
 **Quick Commands:**
 ```bash
 # Fastest - validation only
-cargo test --package robert-webdriver validation
+cargo test --package facet-webdriver validation
 
 # Chrome tests (must be sequential)
-cargo test --package robert-webdriver --test headless_integration -- --test-threads=1
+cargo test --package facet-webdriver --test headless_integration -- --test-threads=1
 
 # Everything
-cargo test --package robert-webdriver -- --test-threads=1
+cargo test --package facet-webdriver -- --test-threads=1
 ```
 
 **Expected Results:**
