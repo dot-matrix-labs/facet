@@ -1,273 +1,378 @@
-# Robert - Local AI with Web Browser
+# Facet: The Memory Layer for AI
 
-**Privacy-first AI automation that keeps your data local and your options open.**
+> **Just as the Browser unbundled the OS from the Web, Facet unbundles Memory from the Model—becoming the trusted gateway that ensures AI serves the user, not the other way around.**
 
-Robert is a web browser and agent platform that keeps your personal knowledge base local. Build your library of workflows, configure your agents, and store your browsing history—all on your machine. Connect to any AI provider for inference without giving them access to your accumulated knowledge and context.
+Facet is the neutral, trusted **"Context OS"** that sits between users and AI reasoning providers—combining sophisticated memory control with platform-agnostic access. While tools like ChatGPT and Claude vertically integrate memory with reasoning, Facet separates them: your memory stays personal, portable, and under your control. The reasoning remains commoditized, ephemeral, and interchangeable.
 
-### The Problem with Traditional AI Tools
+## The Problem
 
-| Issue | Traditional AI Assistants | Robert |
-|-------|--------------------------|--------|
-| **Your Data** | Stored on vendor servers | Always local, encrypted |
-| **AI Provider** | Locked to one vendor | Switch freely anytime |
-| **Privacy** | Builds profile on you | Stateless, no profiling |
-| **Visibility** | Black box operations | Watch everything happen |
-| **Control** | Can't stop mid-task | Abort anytime |
-| **Vendor Lock-in** | Migrate = lose history | Portable, vendor-neutral |
-| **Background Tasks** | Cloud daemons 24/7 | Off means OFF |
+Current AI systems have fatal flaws:
 
-### Your Personal Knowledge Base Stays Local
+1. **The "Mystery Meat" Profile**: Users have no control over what AI "knows." A business owner cannot tell ChatGPT: "Remember my 2024 pricing, but explicitly forget the 2019 PDF for generation purposes."
 
-**Build context and configure agents without sharing it with AI companies.**
+2. **Platform Fragmentation**: Context is scattered across devices and platforms. Apple Intelligence only works on Apple. Copilot only works on Microsoft. No neutral layer exists.
 
-Robert keeps your accumulated knowledge, agent configurations, and browsing data local:
+3. **Vertical Integration Conflicts**: To get smart answers, you must give OpenAI your data. To keep secrets, you must use a dumb model. No middle ground.
 
-- **Knowledge Base** - Your command library, agent configurations, and workflow templates never leave your machine
-- **Agent Context** - Each agent's learned preferences and refined instructions stay with you
-- **Browsing History** - Your cookies, sessions, and history stored locally, encrypted
-- **Switch AI Vendors Freely** - Use Claude today, GPT tomorrow, local models next week—your knowledge base stays intact
-- **No Vendor Profiling** - AI providers only see individual task descriptions, not your accumulated context
-- **Multi-User Encrypted** - Each user gets their own isolated, encrypted knowledge base
+4. **No Context Control**: When you change jobs, what context is yours vs. your employer's? No way to segregate personal vs. professional contexts or prevent accidental data leakage.
 
-### Project-Driven Workflows
+## The Solution: ContextOS
 
-**Build repeatable automation that runs in the background.**
+Facet is an **Operating System for AI Memory** that enables:
 
-- **Command Scripts** - Create reusable tasks and agent teams through natural conversation
-- **Visual Monitoring** - Watch your projects and agents working in real-time
-- **Background Execution** - Set tasks running and come back to results
-- **Self-Improving** - Commands learn from feedback and get better over time
+### The Sarah Test
 
-### Off Means Off
+An interior designer marks a 2019 pricing document as "outdated" without deleting it. Facet keeps it for tax records but never uses it for pricing quotes. She "fine-tuned" her AI without writing code.
 
-**When you close Robert, everything stops. No cloud daemons, no persistent agents.**
+**How it works:**
+- **Transparent Attribution**: See exactly which documents the AI used for each answer
+- **Reactive Pruning**: Click "Mark as Outdated" when the AI makes a mistake—zero-cost curation at the moment of frustration
+- **Sophisticated Control**: Documents can be active (use for generation) vs. archived (keep for reference)
+- **Context Segregation**: Separate personal vs. professional contexts with explicit boundaries
 
-Unlike cloud automation platforms that run 24/7 with your credentials, Robert respects your boundaries. Close the app, and all agents, profiles, and sessions immediately stop. Your data stays on your machine, under your control.
+### Firewalled Architecture
 
-## Key Features
+Three-party model for privacy without sacrificing capability:
 
-### Full-Featured Web Browser
+1. **User (Local)**: Encryption keys, hot state, final control
+2. **Facet (Trusted Utility Cloud)**: Sync, heavy compute, anonymization—structurally aligned with protecting your data
+3. **Reasoning Provider (Commodity)**: OpenAI, Anthropic, local models—sees only anonymized context, never your full profile
 
-**A real browser with AI agent capabilities.**
+### GraphRAG: Knowledge Graphs, Not Just Search
 
-- **Browse the Web** - Use it like any browser: navigate, search, shop, research
-- **Direct Browser Control** - Agents can interact with any website
-- **Native Interactions** - Click, type, scroll, navigate, extract—everything a browser can do
-- **Manual + Automated** - Browse manually, automate tasks, or blend both
-- **Visual Debugging** - See exactly what agents are doing in real-time
+Standard RAG is a bag-of-words search. Facet builds **knowledge graphs**:
 
-### Visual-First Design
+- **Entities, not Keywords**: Map `Project Alpha → owned_by_Client_X → status_Active`
+- **Temporal Reasoning**: Answer "How has our strategy changed since last year?"
+- **Hierarchical Memory**: Hot/Warm/Cold tiers that mimic human memory
+- **Relationship Inference**: Understand document evolution and dependencies
 
-**See your automation work, don't just hope it works.**
+## Architecture
 
-- **Real-time Browser View** - Watch automation happen in a live browser window
-- **Color-coded Debug Logs** - Understand what's happening at every step
-- **Screenshot Capture** - Document states and outcomes automatically
-- **Event Tracking** - Complete audit trail of every action taken
-
-### Local Data Storage
-
-**Your browsing data belongs to you, always.**
-
-- **Local Browser Profiles** - All cookies, history, and sessions stay on your machine
-- **Encrypted Storage** - User profiles protected with strong encryption
-- **Multi-User Support** - Family-friendly with isolated workspaces per person
-- **Ephemeral Sessions** - Privacy mode that leaves no trace when closed
-- **Import/Export** - Move your commands and workflows between machines
-
-### Personal Knowledge Base & Agent Configuration
-
-**Build your own library of workflows and agent configurations.**
-
-- **Your Agent Library** - Configure specialized agents for different tasks (research, shopping, monitoring)
-- **Command Repository** - Build a personal library of reusable workflows
-- **Agent Context** - Each agent remembers your preferences, style, and requirements
-- **Parameterized Workflows** - Save templates with variables you fill in each time
-- **Self-Improving** - Agents learn from your feedback (👍 or 👎) and refine their approach
-- **Local Storage** - All knowledge, configurations, and history stay on your machine
-- **Watch & Learn** - See agents browse, click, and complete tasks in real-time
-
-### Vendor Independence
-
-**Never locked in, always in control.**
-
-- **Pure Inference Providers** - AI vendors only see task descriptions, not your full context
-- **Swap Providers Anytime** - Change from Claude to GPT to local models without losing data
-- **No Training on Your Data** - Stateless interactions mean no persistent profiling
-- **Open Architecture** - Community can add new AI provider integrations
-- **Local-First Option** - Run completely offline with local inference models
-
-## Current Status
-
-**Active Development** - Core platform complete, advanced features in progress
-
-### Implemented
-- ✅ Desktop browser application with native performance
-- ✅ Full browser automation capabilities
-- ✅ User profile management with strong encryption
-- ✅ Ephemeral and named browser profile support
-- ✅ AI agent workflow system with multiple agent types
-- ✅ Real-time visual feedback and event tracking
-- ✅ Screenshot and content extraction
-- ✅ Command creation and execution framework
-- ✅ Multi-user isolation with encrypted workspaces
-- ✅ Automated releases and updates
-
-### In Progress
-- 🔄 Generative UI for dynamic command forms
-- 🔄 Command refinement and versioning system
-- 🔄 Advanced browser interactions (click, type, scroll, forms)
-- 🔄 Project management and background task execution
-- 🔄 Local inference model integration
-
-## Supported Platforms
-
-- **macOS** - Primary development platform, fully supported
-- **Linux** - Supported with native performance
-- **Windows** - Planned support
-
-## Project Structure
+Facet is built as a modular Rust application:
 
 ```
-robert/
-├── README.md                # This file
-├── BUILD.md                 # Build instructions
-├── Cargo.toml               # Workspace configuration
-└── crates/                  # Rust workspace
-    ├── robert-webdriver/    # Browser automation library
-    │   ├── src/
-    │   │   ├── browser/     # Chrome CDP implementation
-    │   │   ├── error.rs     # Error types
-    │   │   └── lib.rs
-    │   └── tests/           # E2E tests
-    ├── robert-cli/          # CLI tool
-    │   └── src/main.rs
-    └── robert-app/          # Tauri desktop application
-        ├── src/             # Svelte frontend
-        ├── src-tauri/       # Rust backend
-        └── package.json     # Frontend dependencies
+┌──────────────────────────────────────────────────────────────┐
+│                   Firewalled Architecture                     │
+└──────────────────────────────────────────────────────────────┘
+
+User Device (Local)                  Facet Cloud (Trusted)
+┌─────────────────────┐             ┌─────────────────────┐
+│   facet-app        │             │  Sync & Backup      │
+│   (Tauri/Svelte)    │◄───────────►│  (E2E Encrypted)    │
+│                     │             │                     │
+│  • Chat Interface   │             │  • Zero-Knowledge   │
+│  • Context Sidebar  │             │  • Ephemeral Compute│
+│  • Graph Browser    │             │  • PII Stripping    │
+└──────────┬──────────┘             └──────────┬──────────┘
+           │                                   │
+           │                                   │
+     ┌─────▼──────────┐                       │
+     │  facet-core   │                       │
+     │                │                       │
+     │  • GraphRAG    │                       │
+     │  • Memory Mgmt │                       │
+     │  • Anonymizer  │                       │
+     └────────┬───────┘                       │
+              │                               │
+              │                               │
+     ┌────────▼────────┐                      │
+     │  facet-graph   │                      │
+     │  (SurrealDB)    │                      │
+     │                 │                      │
+     │  • Vector Store │                      │
+     │  • Entities     │                      │
+     │  • Relationships│                      │
+     └─────────────────┘                      │
+                                              │
+                                              ▼
+                              Reasoning Providers (Untrusted)
+                              ┌──────────────────────┐
+                              │  • OpenAI            │
+                              │  • Anthropic         │
+                              │  • Local Models      │
+                              │  (sees only anonymized│
+                              │   context, no keys)  │
+                              └──────────────────────┘
 ```
+
+## Components
+
+### Core Crates
+
+- **[facet-app](./crates/facet-app)** - Desktop application (Tauri + Svelte)
+  - Modern desktop UI for macOS, Windows, Linux
+  - Context sidebar with transparent attribution
+  - Graph visualization and exploration
+  - Spawns local facet-server or connects to remote
+
+- **[facet-server](./crates/facet-server)** - REST API Server (Warp + Tokio)
+  - Provides REST API for clients
+  - Manages authentication and sessions
+  - Instantiates facet-core for request handling
+  - Supports local and remote deployment modes
+
+- **[facet-core](./crates/facet-core)** - AI/RAG Engine
+  - GraphRAG implementation
+  - Hierarchical memory (Hot/Warm/Cold)
+  - Context control and boundary management
+  - Multi-provider orchestration
+
+- **[facet-graph](./crates/facet-graph)** - Database Layer (SurrealDB)
+  - Knowledge graph storage
+  - Vector embeddings for semantic search
+  - Entity and relationship management
+  - E2E encryption at rest
+
+- **[facet-cli](./crates/facet-cli)** - Command Line Tool
+  - Document ingestion
+  - Query interface
+  - Server management (start/stop/status)
+
+- **[types](./crates/types)** - Shared Types
+  - User profiles and authentication
+  - Cryptography utilities
+  - Serialization/deserialization
 
 ## Quick Start
 
 ### Prerequisites
-- **Rust** 1.70 or later
-- **Bun** (for frontend development)
-- **System libraries** (macOS: Xcode, Linux: GTK/WebKit)
 
-### Running the Desktop App
+- **Rust** 1.75+ (for building from source)
+- **Node.js** 18+ (for facet-app frontend)
+- **Chrome/Chromium** (auto-downloads on first use)
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/robert.git
-cd robert
-
-# Install frontend dependencies
-cd crates/robert-app
-bun install
-
-# Run in development mode
-bun run dev
-```
-
-### Running the CLI
+### Build and Run
 
 ```bash
-# Navigate to robert directory
-cd robert
+# Clone repository
+git clone https://github.com/yourusername/facet.git
+cd facet
 
-# Run the CLI (Chrome auto-downloads on first run)
-cargo run --bin robert -- example.com
+# Build all components
+cargo build --workspace
 
-# Extract text only
-cargo run --bin robert -- example.com --format text
-
-# Run headless
-cargo run --bin robert -- example.com --headless
+# Run desktop app
+cd crates/facet-app
+npm install
+npm run tauri dev
 ```
 
-See [BUILD.md](BUILD.md) for detailed build instructions.
+### Using the CLI
 
-## How It Works
+```bash
+# Build CLI
+cargo build --bin facet-cli
 
-### 1. Start the Browser
+# Ingest documents
+facet-cli ingest ~/Documents/notes.md
 
-Launch Robert as your web browser. Everything starts local and stays local—your browsing history, cookies, and sessions are protected by industry-standard encryption.
-
-```
-Your Password → Encrypted User Profile
-                ↓
-                Browser data (cookies, history, bookmarks)
-                Commands & workflows
-                Agent configurations
+# Query your knowledge base
+facet-cli query "What are the key points from my notes?"
 ```
 
-### 2. Browse Manually or Automate with AI
+## Key Features
 
-Use Robert like any browser, or ask AI agents to help:
+### Current (v0.5 Alpha)
+- ✅ Desktop application (Tauri)
+- ✅ Local knowledge base management
+- ✅ User profiles and authentication
+- ✅ Encrypted local storage
+- ✅ Basic GraphRAG implementation
 
-> "Search for winter jackets under $200 on REI and Patagonia, but skip Amazon. Show me the top 5 with free returns."
+### In Progress (v1.0)
+- 🚧 Multi-provider reasoning (OpenAI, Anthropic, local models)
+- 🚧 Privacy firewall (PII stripping, anonymization)
+- 🚧 E2E encrypted sync
+- 🚧 Hierarchical memory optimization
+- 🚧 Context control UI
 
-AI generates browser automation that you can reuse and refine.
+### Planned (v1.5+)
+- 📋 Team knowledge graphs (shared memory with access control)
+- 📋 Context namespacing (first-class personal/work separation)
+- 📋 Domain agents (pricing agent, research agent, meeting prep)
+- 📋 Advanced agentic workflows
+- 📋 Cross-platform expansion (Windows, Linux, iOS, Android)
 
-### 3. Watch Agents Work
+## Why Facet Wins
 
-When agents run tasks, you see them browse in real-time:
-- Pages load in the actual browser window
-- Color-coded logs explain each step
-- Screenshots document the journey
-- Abort anytime if something looks wrong
+### vs. ChatGPT/Claude Desktop
+**Conflict of Interest**: OpenAI's business model depends on user profiling. They cannot credibly offer provider-neutral switching or true data sovereignty.
 
-### 4. Refine & Reuse
+**Facet's Advantage**: Protecting user data *is* our business model. We have no conflict—we charge users to protect their context from reasoning providers.
 
-Give feedback (👍 or 👎) and commands improve. Build a library of automations that get smarter over time.
+### vs. Apple Intelligence/Microsoft Copilot
+**Platform Lock-In**: Apple Intelligence works beautifully—but only on Apple devices. Users live in heterogeneous environments (work Windows + personal Mac + iPhone).
 
-### 5. Your Browser, Your Choice of AI
+**Facet's Advantage**: Platform-agnostic by design. The Dropbox lesson: cross-platform interoperability matters. We work everywhere.
 
-Your browser data and commands stay local. Connect to any AI provider for inference:
-- Anthropic Claude
-- OpenAI GPT
-- Local models (Llama, Mistral)
-- Custom inference endpoints
+### vs. Notion AI
+**Walled Garden**: Only indexes Notion documents. Enterprise users have data in Jira, Slack, Figma, Linear, Google Docs, email, local files.
 
-No vendor lock-in. Your browsing data stays yours.
+**Facet's Advantage**: Universal indexing across *any* tool. Intelligent context sharding across teams, roles, and boundaries.
 
+### vs. Mem.ai
+**Retrieval, Not Action**: "Thought partner" = better search engine. Users still manually execute workflows.
 
-### Browser + Agent Platform Architecture
+**Facet's Advantage**: Domain-specific agents that execute end-to-end workflows. We act, not just retrieve.
 
-Robert separates your local browser data from remote AI inference:
+## Documentation
+
+- **[Product Vision](./docs/product/prd.md)** - Full product requirements
+- **[The Hypothesis](./docs/product/hypothesis.md)** - Why separating memory from reasoning matters
+- **[Architecture Overview](./docs/architecture/architecture-decisions.md)** - Technical architecture and ADRs
+- **[RAG Implementation](./docs/architecture/rag-overview.md)** - How GraphRAG works
+- **[Build Instructions](./docs/development/build-instructions.md)** - Build and development guide
+
+## Project Structure
 
 ```
-┌─────────────────────────────────────────────────┐
-│  Your Machine (Robert Browser)                  │
-│                                                 │
-│  ┌──────────────────────────────────────┐      │
-│  │  Local Browser Data (Never Leaves)   │      │
-│  │  • User profiles (encrypted)         │      │
-│  │  • Browsing history & cookies        │      │
-│  │  • Bookmarks & sessions              │      │
-│  │  • Command definitions               │      │
-│  │  • Screenshots & captures            │      │
-│  └──────────────────────────────────────┘      │
-│                    ↕                            │
-│  ┌──────────────────────────────────────┐      │
-│  │  Browser Engine                      │      │
-│  │  • Manual browsing                   │      │
-│  │  • Agent automation                  │      │
-│  │  • Workflow execution                │      │
-│  │  • Event tracking                    │      │
-│  └──────────────────────────────────────┘      │
-│                    ↕                            │
-│           Only task descriptions                │
-│           sent to inference ↓                   │
-└─────────────────────────────────────────────────┘
-                      ↓
-         ┌────────────────────────┐
-         │  AI Inference Provider │
-         │  (Your Choice)         │
-         │  • Claude API          │
-         │  • OpenAI API          │
-         │  • Local Models        │
-         │  • Custom Endpoints    │
-         └────────────────────────┘
+facet/
+├── crates/
+│   ├── facet-app/          # Desktop application
+│   ├── facet-core/         # Core AI/RAG engine
+│   ├── facet-graph/        # Database layer
+│   ├── facet-cli/          # CLI tool
+│   └── types/               # Shared types
+├── docs/
+│   ├── product/             # Product strategy and vision
+│   ├── architecture/        # Technical architecture
+│   ├── development/         # Build and dev guides
+│   └── features/            # Feature documentation
+└── README.md                # This file
 ```
+
+## Development
+
+### Running Tests
+
+```bash
+# All tests
+cargo test --workspace
+
+# Specific crate
+cargo test -p facet-core
+
+# Integration tests
+cargo test --workspace --test integration_tests
+```
+
+### Code Quality
+
+```bash
+# Format code
+cargo fmt --workspace
+
+# Lint
+cargo clippy --workspace
+
+# Type check
+cargo check --workspace
+```
+
+## Deployment Modes
+
+### Mode 1: Local Desktop (Default)
+Perfect for individual users—complete privacy, data never leaves your machine:
+
+```
+facet-app (Desktop)
+  └─► Local facet-core instance
+      └─► Local facet-graph database (~/.facet/data)
+```
+
+### Mode 2: Cloud Sync (Teams/Mobile)
+E2E encrypted sync across devices with ephemeral cloud compute:
+
+```
+facet-app (Mac) ◄──► Facet Cloud (E2EE) ◄──► facet-app (iPhone)
+         │                   │                         │
+         └───────────────────┴─────────────────────────┘
+                             │
+                    Shared encrypted graph
+```
+
+### Mode 3: Enterprise (Self-Hosted)
+Deploy on-premises or in your cloud for full control:
+
+```bash
+# Docker deployment
+docker run -p 8443:8443 \
+  -v /data/facet:/data \
+  -e DATABASE_PATH=/data \
+  facet-server
+```
+
+## Business Model
+
+We are not building a $20/month tool. We are building **Git for Corporate Intelligence.**
+
+### Revenue Progression
+
+1. **Individual ($10-20/mo)**: Customer acquisition, break-even
+   - Local memory + multi-provider access
+   - Free tier available (local-only, single device)
+
+2. **Team ($50/user/mo)**: First real revenue
+   - Shared knowledge graphs
+   - Context segregation (work vs. personal)
+   - Cross-device sync
+
+3. **Enterprise ($200-500/user/mo)**: High-margin, sticky
+   - Advanced context governance
+   - Role-based memory access
+   - Audit trails and compliance
+   - Team knowledge graphs as proprietary assets
+
+### The "Wedding Photos" Justification
+
+People pay for Google Photos before their internet bill. Why? The risk of losing wedding photos is unbearable.
+
+Now extrapolate to **business knowledge graphs**:
+- A designer's 10-year portfolio
+- A law firm's institutional precedents
+- A consultant's frameworks and case studies
+
+Once curated, it's irreplaceable intellectual capital. Users will pay $200-500/year to protect years of work. The switching cost is existential—losing your knowledge graph means losing professional memory.
+
+## The Stakes
+
+**If Facet succeeds**, it becomes one of the 3-5 products that define how humanity interfaces with AI—the trusted gateway that:
+- Keeps hyperscale providers in check (one-click provider switching)
+- Breaks the business model conflict (protecting data *is* our model)
+- Solves the interoperability problem (works everywhere)
+- Preserves user agency (you own your memory)
+
+**The alternative**: Fragmented AI experiences siloed across corporate platforms, forced ecosystem choices, no portability, surveillance-driven personalization as the only option.
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+### Development Workflow
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests: `cargo test --workspace`
+5. Run clippy: `cargo clippy --workspace`
+6. Format code: `cargo fmt --workspace`
+7. Submit a pull request
+
+## License
+
+MIT License - see [LICENSE](./LICENSE) for details.
+
+## Acknowledgments
+
+Built with:
+- [Tauri](https://tauri.app/) - Cross-platform desktop framework
+- [SurrealDB](https://surrealdb.com/) - Graph database
+- [FastEmbed](https://github.com/Anush008/fastembed-rs) - Vector embeddings
+- Rust, Svelte, and the amazing open source ecosystem
+
+---
+
+**The work ahead is technical, strategic, and urgent.**
+
+For investors, partners, or contributors: hello@facet.ai
