@@ -8,10 +8,10 @@ name = "facet"
 path = "src/main.rs"
 
 [dependencies]
-# Robert internal dependencies
-robert-server = { workspace = true }
-robert-core = { path = "../robert-core" }
-robert-types = { workspace = true }
+# Facet internal dependencies
+facet-server = { workspace = true }
+facet-core = { workspace = true }
+facet-types = { workspace = true }
 
 # CLI framework
 tokio = { workspace = true }
