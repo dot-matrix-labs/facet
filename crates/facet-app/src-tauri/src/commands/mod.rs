@@ -1,5 +1,4 @@
 mod agent;
-mod browser;
 mod developer_mode;
 mod feedback;
 mod logging;
@@ -7,7 +6,6 @@ mod profiles;
 pub mod query;
 
 pub use agent::*;
-pub use browser::*;
 pub use developer_mode::*;
 pub use feedback::*;
 pub use logging::*;

@@ -43,7 +43,6 @@ dirs = { workspace = true }
 # Logging
 log = { workspace = true }
 env_logger = { workspace = true }
-once_cell = "1"
 
 # User Profiles - Cryptography (Handled in facet-types)
 # argon2, aes-gcm, rand, zeroize removed (unused directly)
