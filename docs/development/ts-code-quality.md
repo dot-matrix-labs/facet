@@ -1,6 +1,6 @@
 # TypeScript Code Quality Standards
 
-This document outlines the code quality standards for the Robert browser automation app, detailing the tools used, our zero-tolerance policy for warnings, and the specific fixes applied to achieve full compliance.
+This document outlines the code quality standards for the Facet browser automation app, detailing the tools used, our zero-tolerance policy for warnings, and the specific fixes applied to achieve full compliance.
 
 ## Standards Overview
 

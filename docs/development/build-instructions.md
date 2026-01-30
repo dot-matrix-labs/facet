@@ -1,4 +1,4 @@
-# Robert CDP System - Build Instructions
+# Facet CDP System - Build Instructions
 
 ## Quick Start (No System Dependencies Required)
 
@@ -11,8 +11,8 @@ The CDP system (Chrome DevTools Protocol automation) **does not require Pango or
 cargo build
 
 # This builds:
-# - robert-webdriver (library)
-# - robert-cli (robert and robert-generate binaries)
+# - facet-webdriver (library)
+# - facet-cli (facet and facet-generate binaries)
 ```
 
 ### Run Tests
@@ -32,10 +32,10 @@ cargo test
 
 ```bash
 # Generate a CDP script with Claude
-cargo run --bin robert-generate -- "Take a screenshot of example.com" -o script.json
+cargo run --bin facet-generate -- "Take a screenshot of example.com" -o script.json
 
 # Execute the script (if you also want to run it)
-cargo run --bin robert-generate -- "Screenshot google.com" --execute --headless
+cargo run --bin facet-generate -- "Screenshot google.com" --execute --headless
 ```
 
 ---
@@ -45,9 +45,9 @@ cargo run --bin robert-generate -- "Screenshot google.com" --execute --headless
 ### Default Build (No System Dependencies)
 
 By default, `cargo build` builds:
-- ✅ `robert-webdriver` - CDP library
-- ✅ `robert-cli` - CLI tools (`robert` and `robert-generate`)
-- ❌ `robert-app` - **Excluded** (requires GTK/Pango)
+- ✅ `facet-webdriver` - CDP library
+- ✅ `facet-cli` - CLI tools (`facet` and `facet-generate`)
+- ❌ `facet-app` - **Excluded** (requires GTK/Pango)
 
 **No system libraries required!** Just Rust and Chrome/Chromium.
 
@@ -88,7 +88,7 @@ sudo pacman -S \
 **Then build:**
 ```bash
 # Build the Tauri app specifically
-cargo build -p robert-app
+cargo build -p facet-app
 
 # Or include it in workspace build
 cargo build --workspace
@@ -101,8 +101,8 @@ cargo build --workspace
 ### ✅ CDP System (No System Dependencies)
 
 **Packages:**
-- `robert-webdriver` - Core CDP functionality
-- `robert-cli` - CLI tools
+- `facet-webdriver` - Core CDP functionality
+- `facet-cli` - CLI tools
 
 **Runtime Requirements:**
 - Chrome/Chromium (auto-downloads on first use)
@@ -112,7 +112,7 @@ cargo build --workspace
 ```bash
 cargo build
 # or
-cargo build --bin robert --bin robert-generate
+cargo build --bin facet --bin facet-generate
 ```
 
 **Works On:**
@@ -128,7 +128,7 @@ cargo build --bin robert --bin robert-generate
 ### ⚠️ Tauri Desktop App (Requires System Dependencies)
 
 **Package:**
-- `robert-app` - Desktop UI
+- `facet-app` - Desktop UI
 
 **System Dependencies:**
 - GTK 3
@@ -141,7 +141,7 @@ cargo build --bin robert --bin robert-generate
 
 **Build Command:**
 ```bash
-cargo build -p robert-app
+cargo build -p facet-app
 ```
 
 **Works On:**
@@ -175,7 +175,7 @@ cargo build -p robert-app
 
 3. **Explicitly exclude Tauri**:
    ```bash
-   cargo build --workspace --exclude robert-app
+   cargo build --workspace --exclude facet-app
    ```
 
 ### Chrome not found
@@ -184,7 +184,7 @@ cargo build -p robert-app
 
 **Solution:** Don't worry! Chrome auto-downloads on first use:
 ```bash
-cargo run --bin robert-generate -- "test" -o test.json
+cargo run --bin facet-generate -- "test" -o test.json
 # Chrome will download automatically
 ```
 
@@ -224,7 +224,7 @@ cargo test --lib
 cargo test --test headless_integration
 
 # Run
-cargo run --bin robert-generate -- "Your automation" -o script.json
+cargo run --bin facet-generate -- "Your automation" -o script.json
 ```
 
 **No system dependencies needed!**
@@ -236,10 +236,10 @@ cargo run --bin robert-generate -- "Your automation" -o script.json
 sudo apt-get install libwebkit2gtk-4.1-dev libgtk-3-dev pango1.0-dev libsoup-3.0-dev
 
 # Build
-cargo build -p robert-app
+cargo build -p facet-app
 
 # Run Tauri dev
-cd crates/robert-app
+cd crates/facet-app
 npm install
 npm run tauri dev
 ```
@@ -289,7 +289,7 @@ jobs:
 | CDP Library | ❌ No | `cargo build` | Automation library |
 | CDP CLI Tools | ❌ No | `cargo build` | Command-line automation |
 | Headless Tests | ❌ No | `cargo test` | CI/CD testing |
-| Tauri Desktop App | ✅ Yes (GTK) | `cargo build -p robert-app` | Desktop GUI |
+| Tauri Desktop App | ✅ Yes (GTK) | `cargo build -p facet-app` | Desktop GUI |
 
 **TL;DR:** The CDP system works without any system dependencies. Pango is only needed for the optional Tauri desktop UI.
 
@@ -301,10 +301,10 @@ jobs:
 # ✅ These work without Pango
 cargo build                                  # Build CDP tools
 cargo test                                   # Run tests
-cargo run --bin robert-generate -- "..." -o script.json
+cargo run --bin facet-generate -- "..." -o script.json
 
 # ⚠️ This needs Pango
-cargo build -p robert-app                    # Build Tauri app
+cargo build -p facet-app                    # Build Tauri app
 cargo build --workspace                      # Build everything including Tauri
 ```
 

@@ -1,15 +1,15 @@
-# Robert - The Memory Layer for AI
+# Facet - The Memory Layer for AI
 ## Product Requirements Document
 
 ## Executive Summary
 
-**Robert** is the neutral, trusted "Context OS" that sits between users and AI reasoning providers—combining **sophisticated memory control** with **agentic autonomy**. While tools like ChatGPT and Claude vertically integrate memory with reasoning, and Mem.ai offers "thought partnership" without action, Robert unbundles the AI stack AND executes workflows autonomously.
+**Facet** is the neutral, trusted "Context OS" that sits between users and AI reasoning providers—combining **sophisticated memory control** with **agentic autonomy**. While tools like ChatGPT and Claude vertically integrate memory with reasoning, and Mem.ai offers "thought partnership" without action, Facet unbundles the AI stack AND executes workflows autonomously.
 
 The AI market is bifurcating: **Reasoning** (OpenAI, Anthropic, Google) is becoming commoditized infrastructure, competing on price and intelligence per token. **Memory**—the proprietary, highly sensitive context that defines who the user is and what they know—remains locked in provider black boxes.
 
-**The critical gap**: Current AI tools (ChatGPT, Mem.ai, Notion AI) are **retrieval engines, not execution engines**. Users ask questions, get answers, then manually execute workflows. Robert provides **domain-specific autonomous agents** that execute end-to-end workflows within user-defined boundaries.
+**The critical gap**: Current AI tools (ChatGPT, Mem.ai, Notion AI) are **retrieval engines, not execution engines**. Users ask questions, get answers, then manually execute workflows. Facet provides **domain-specific autonomous agents** that execute end-to-end workflows within user-defined boundaries.
 
-Robert solves this through a **Firewalled Architecture + Agentic Execution**: Memory stays Personal (user-owned, structured, portable), while Reasoning remains Commoditized (rented, ephemeral, interchangeable). We manage the user's digital brain, structure it into a knowledge graph, and **autonomously execute workflows** using the reasoning model of their choice.
+Facet solves this through a **Firewalled Architecture + Agentic Execution**: Memory stays Personal (user-owned, structured, portable), while Reasoning remains Commoditized (rented, ephemeral, interchangeable). We manage the user's digital brain, structure it into a knowledge graph, and **autonomously execute workflows** using the reasoning model of their choice.
 
 ## Product Vision
 
@@ -52,11 +52,11 @@ We believe AI should be:
 
 **ContextOS: An Operating System for AI Memory**
 
-Robert is not just a chat client; it's a Memory Layer that enables:
+Facet is not just a chat client; it's a Memory Layer that enables:
 
-- **The Sarah Test**: An interior designer marks a 2019 pricing document as "outdated" without deleting it. Robert keeps it for tax records but never uses it for pricing quotes. She "fine-tuned" her AI without writing code.
+- **The Sarah Test**: An interior designer marks a 2019 pricing document as "outdated" without deleting it. Facet keeps it for tax records but never uses it for pricing quotes. She "fine-tuned" her AI without writing code.
 
-- **Firewalled Architecture**: Three-party model—User (local keys, hot state) → Robert (trusted utility cloud for sync/compute) → Reasoning Provider (untrusted, sees only anonymized context).
+- **Firewalled Architecture**: Three-party model—User (local keys, hot state) → Facet (trusted utility cloud for sync/compute) → Reasoning Provider (untrusted, sees only anonymized context).
 
 - **GraphRAG**: Knowledge graphs instead of simple vector search. Entities, relationships, temporal reasoning. Answers questions like "How has our strategy changed since last year?"—impossible for standard RAG.
 
@@ -66,15 +66,15 @@ Robert is not just a chat client; it's a Memory Layer that enables:
 
 ### Competitive Landscape
 
-**Why competitors can't build Robert:**
+**Why competitors can't build Facet:**
 
-| Player | Conflict | Robert's Advantage |
+| Player | Conflict | Facet's Advantage |
 |--------|----------|-------------------|
 | **OpenAI/Anthropic** | Business model relies on mining user data. Cannot credibly offer provider-neutral switching. | We have no conflict: protecting data *is* the business model. |
 | **Apple/Microsoft/Google** | Platform lock-in is their strategy. Structurally cannot bridge ecosystems. | Platform-agnostic by design. The Dropbox lesson. |
 | **Dropbox** | Most natural competitor and likely acquirer. Should build this. | Speed to market. Purpose-built, AI-native, no legacy business. |
 
-**Robert's differentiators:**
+**Facet's differentiators:**
 - ✅ **ContextOS** - Sophisticated control over memory boundaries
 - ✅ **Platform-agnostic** - Works everywhere, not just Apple/Microsoft ecosystems
 - ✅ **Structural neutrality** - No business model conflict with data sovereignty
@@ -83,7 +83,7 @@ Robert is not just a chat client; it's a Memory Layer that enables:
 
 ### Vision Statement
 
-> "Just as the Browser unbundled the OS from the Web, Robert unbundles Memory from the Model—becoming the trusted gateway that ensures AI serves the user, not the other way around."
+> "Just as the Browser unbundled the OS from the Web, Facet unbundles Memory from the Model—becoming the trusted gateway that ensures AI serves the user, not the other way around."
 
 ## Target Users
 
@@ -164,7 +164,7 @@ Robert is not just a chat client; it's a Memory Layer that enables:
 - ✅ **macOS desktop application** (macOS 11+, Apple Silicon optimized)
 - ✅ **Local-first architecture** (Local inference or direct API calls)
 - ✅ **Native .app bundle** with DMG installer
-- ✅ **Headless CLI** (`robert-cli`) for server/scripted environments
+- ✅ **Headless CLI** (`facet-cli`) for server/scripted environments
 
 #### User Interface
 - ✅ **Tauri-based desktop app** with Svelte frontend
@@ -467,7 +467,7 @@ Open iPhone app → Context synced → Continue research
 ### Phase 2: Team Infection (Months 9-18)
 **Target**: 1,000 Team Customers (5-10 users each)
 
-**Strategy**: Bottoms-up. Individual users bring Robert to teams.
+**Strategy**: Bottoms-up. Individual users bring Facet to teams.
 
 **Sales Motion**:
 1. User curates personal graph
@@ -482,8 +482,8 @@ Open iPhone app → Context synced → Continue research
 
 **Sales Motion**:
 1. CISO discovers employees using ChatGPT with company data
-2. Robert offers audit + compliance solution
-3. Deploy Robert as "official AI gateway"
+2. Facet offers audit + compliance solution
+3. Deploy Facet as "official AI gateway"
 4. Enterprise pays $200-500/user/mo
 
 ## Success Metrics
@@ -508,14 +508,14 @@ Open iPhone app → Context synced → Continue research
 
 ### Privacy Metrics
 - **External Audit**: Confirms reasoning providers cannot reconstruct user identity
-- **User Trust**: 90% of users "trust" Robert with sensitive data (survey)
+- **User Trust**: 90% of users "trust" Facet with sensitive data (survey)
 - **Opt-In Cloud**: <10% initially (grows with trust to 40%)
 
 ## Competitive Analysis
 
 ### Memory/Context Platforms
 
-| Feature | **Robert (v1.0)** | **Notion AI** | **Obsidian + Copilot** | **Mem.ai** | **ChatGPT Memory** |
+| Feature | **Facet (v1.0)** | **Notion AI** | **Obsidian + Copilot** | **Mem.ai** | **ChatGPT Memory** |
 |---------|------------------|--------------|----------------------|-----------|------------------|
 | **Context Control** | ✅ ContextOS | ❌ Black box | ⚠️ Manual | ❌ Automatic | ❌ Black box |
 | **Multi-Provider** | ✅ OpenAI/Anthropic/Local | ❌ Locked to OpenAI | ❌ GitHub only | ❌ Proprietary | ❌ OpenAI only |
@@ -542,7 +542,7 @@ Open iPhone app → Context synced → Continue research
 
 | Risk | Impact | Probability | Mitigation |
 |------|--------|-------------|------------|
-| **Chrome/Gemini Nano threat** | Medium | High | Embrace it. Casual users stay on Chrome, prosumers upgrade to Robert for ContextOS. |
+| **Chrome/Gemini Nano threat** | Medium | High | Embrace it. Casual users stay on Chrome, prosumers upgrade to Facet for ContextOS. |
 | **Dropbox builds this** | High | Medium | Speed to market. We're purpose-built, they must pivot organization. Acquisition target. |
 | **Users won't curate** | High | Medium | Reactive pruning at moment of frustration (Sarah test). Zero-cost curation when motivated. |
 | **Local AI won't scale** | High | Low | Cloud-assisted compute for heavy tasks. Ephemeral containers, not data retention. |
@@ -572,8 +572,8 @@ Open iPhone app → Context synced → Continue research
                         Local Memory             Trusted Proxy
                               │                           │
                     ┌─────────▼──────────┐    ┌──────────▼─────────┐
-                    │ Hot State (Device) │    │ Robert Cloud       │
-                    │ - Encryption keys  │    │ - E2E sync         │
+                     │ Hot State (Device) │    │ Facet Cloud        │
+                     │ - Encryption keys  │    │ - E2E sync         │
                     │ - Active context   │    │ - Ephemeral compute│
                     │ - Graph (hot tier) │    │ - Anonymization    │
                     └─────────┬──────────┘    └──────────┬─────────┘
@@ -661,7 +661,7 @@ Open iPhone app → Context synced → Continue research
 - **Firewalled Architecture**: Memory (Personal) decoupled from Reasoning (Commoditized)
 - **Reactive Pruning**: Curation at moment of failure, not proactive organization
 - **WAC (Weekly Active Context)**: Metric tracking users querying documents >7 days old
-- **Zero-Knowledge Sync**: E2EE cloud storage where Robert holds no keys
+- **Zero-Knowledge Sync**: E2EE cloud storage where Facet holds no keys
 - **Ephemeral Compute**: Stateless cloud workers for heavy tasks, data destroyed after processing
 - **Anonymization Proxy**: PII stripping + token obfuscation before reasoning providers
 
@@ -671,44 +671,3 @@ Open iPhone app → Context synced → Continue research
 **Last Updated**: 2025-12-02
 **Status**: Approved for Development
 **Target Release**: v1.0 - Q1 2026
-
----
-
-## Cuts
-
-The following content represents earlier product directions that have been superseded by the ContextOS / Memory Layer vision. Preserved for historical reference.
-
-### Deprecated: Browser Automation Product Vision
-
-*The original PRD positioned Robert as a browser automation tool focused on visual feedback and local-first execution. This direction has been replaced by the ContextOS / Memory Layer for AI positioning.*
-
-**Original Executive Summary** (Deprecated):
-> Robert is an open-source, local-first browser automation tool that brings the power of automation to everyone—not just programmers. While tools like Zapier and IFTTT require API knowledge, Claude agents are complex to create, and GPT's interface provides no visibility, Robert lets users **watch automation happen in real-time**, learn by observation, and maintain full control with the ability to abort operations at any moment.
-
-**Browser Automation Features** (Deprecated - may be revived in v3.0 as agentic workflows):
-- Chrome automation via CDP
-- Visual script builder
-- Markdown-based automation scripts
-- Screenshot and text capture
-- Browser profile management
-- Ephemeral sessions
-
-**User Profiles and Multi-User Support** (Deprecated):
-- Password-protected user profiles
-- Browser profile isolation
-- Command system with generative UI
-- AI-assisted command refinement
-
-**Chat-Driven AI Workflow System** (Deprecated):
-- Injected chat interface on web pages
-- AI-generated CDP scripts
-- Template-based prompts
-- Feedback loop for continuous improvement
-
-**Workflow Learning System** (Deprecated - future feature):
-- Workflow graph (`.workflow.md`)
-- Step frame format (`.frames.json`)
-- Confidence-based navigation
-- Self-improving system
-
-*Note: The browser automation capabilities remain technically viable and may be reintroduced as part of agentic workflows in v3.0+, but are no longer the primary product focus.*

@@ -1,12 +1,12 @@
-# Robert: The Case for Separating Memory from Reasoning
+# Facet: The Case for Separating Memory from Reasoning
 
 ## I. The Core Thesis: The Firewalled Architecture
 
-**Robert bets that the future of AI demands a "Firewalled Architecture" where Memory is decoupled from Reasoning.**
+**Facet bets that the future of AI demands a "Firewalled Architecture" where Memory is decoupled from Reasoning.**
 
 It is naive to think high-performance AI can run entirely on a laptop. Conversely, it is dangerous to hand over all user context to hyperscale reasoning providers whose business models depend on data mining.
 
-**Robert is the "Privacy Proxy" layer.** We act as the Swiss Bank Account for user context—providing cloud-scale utilities (sync, backup, heavy processing) while mathematically firewalling that data from the reasoning models (OpenAI, Anthropic) that process it.
+**Facet is the "Privacy Proxy" layer.** We act as the Swiss Bank Account for user context—providing cloud-scale utilities (sync, backup, heavy processing) while mathematically firewalling that data from the reasoning models (OpenAI, Anthropic) that process it.
 
 **The formula is: Personal + Firewalled.**
 - **Personal**: The user owns the encryption keys and the graph. Hot state lives on device.
@@ -16,7 +16,7 @@ It is naive to think high-performance AI can run entirely on a laptop. Conversel
 
 **The three-party model**:
 1. **The User (Local)**: Encryption keys, hot state, final rendering
-2. **Robert (Trusted Utility Cloud)**: Sync, heavy compute (embeddings), anonymization. Crucially: Blind to content or structurally misaligned with mining it
+2. **Facet (Trusted Utility Cloud)**: Sync, heavy compute (embeddings), anonymization. Crucially: Blind to content or structurally misaligned with mining it
 3. **The Reasoning Provider (Commodity Cloud)**: Raw intelligence. Untrusted.
 
 ## II. The Current Landscape: Why Hyperscale Providers Want Vertical Integration
@@ -60,7 +60,7 @@ Market forces favor separation:
 
 ### Skeptic Argument #1: "Big Tech will build this—either AI providers or OS vendors"
 
-**Response**: Both face structural conflicts that create Robert's opening:
+**Response**: Both face structural conflicts that create Facet's opening:
 
 **AI Providers (OpenAI, Anthropic) cannot credibly be neutral:**
 - OpenAI's planned advertising model requires user profiling
@@ -73,13 +73,13 @@ Market forces favor separation:
 - Users live in heterogeneous environments (work Windows + personal Mac + iPhone)
 - **OS vendors structurally cannot bridge their own ecosystems** due to competitive dynamics
 - Just as iCloud doesn't seamlessly work with Android, Apple Intelligence won't truly integrate across platforms
-- Like Dropbox solving cross-platform storage and Figma solving cross-platform collaboration, Robert solves cross-platform AI memory
+- Like Dropbox solving cross-platform storage and Figma solving cross-platform collaboration, Facet solves cross-platform AI memory
 
-**What about Dropbox itself?** Dropbox won storage by being cross-platform and should logically build this. **We expect Dropbox will build something like Robert.** Our strategy: build it first and faster. Dropbox would be a natural acquirer—they need to evolve beyond storage, and Robert is the strategic product that extends their cross-platform advantage into the AI era. See Section V for positioning.
+**What about Dropbox itself?** Dropbox won storage by being cross-platform and should logically build this. **We expect Dropbox will build something like Facet.** Our strategy: build it first and faster. Dropbox would be a natural acquirer—they need to evolve beyond storage, and Facet is the strategic product that extends their cross-platform advantage into the AI era. See Section V for positioning.
 
 **The key insight**: ChatGPT *could* build a local client, but won't separate memory from reasoning (business model conflict). Apple *could* build AI memory, but won't make it work on Windows (platform conflict). Dropbox *could* and likely *will* build cross-platform AI memory—which is why speed to market matters. These structural conflicts create a window for a neutral, platform-agnostic product purpose-built for this moment.
 
-**Counter-risk we acknowledge**: Big Tech could make integration so seamless within their ecosystems that most users don't care about interoperability. Success requires Robert to be demonstrably better and prove that cross-platform matters.
+**Counter-risk we acknowledge**: Big Tech could make integration so seamless within their ecosystems that most users don't care about interoperability. Success requires Facet to be demonstrably better and prove that cross-platform matters.
 
 ### Skeptic Argument #2: "Users don't actually care about data ownership"
 
@@ -94,13 +94,13 @@ Market forces favor separation:
 - They have no incentive to help you extract "your" context when leaving a job
 - Enterprises won't adopt AI where employee personal queries live in the same system as company IP
 - **Concrete example**: If Sarah (interior designer) marks a 2019 pricing document as "archived for generative tasks," OpenAI loses training data and profile richness. They're incentivized to use ALL her data, even when it harms her outcomes.
-- Robert's business model requires solving this; OpenAI's business model requires preventing it
+- Facet's business model requires solving this; OpenAI's business model requires preventing it
 
-Robert doesn't sell privacy—it sells **capability unlocking** (context control, data portability) that happens to require data sovereignty.
+Facet doesn't sell privacy—it sells **capability unlocking** (context control, data portability) that happens to require data sovereignty.
 
 ### Skeptic Argument #3: "Local memory systems can't compete with hyperscale providers' context engines"
 
-**Response**: This is the central technical challenge (see Section VI). Traditional RAG is insufficient—Robert requires a sophisticated local memory architecture that goes beyond simple retrieval. However:
+**Response**: This is the central technical challenge (see Section VI). Traditional RAG is insufficient—Facet requires a sophisticated local memory architecture that goes beyond simple retrieval. However:
 - Most personalization doesn't require Google-scale infrastructure
 - Local knowledge graphs + semantic memory + smart context assembly can achieve competitive performance
 - Hybrid architectures (local memory + cloud reasoning) can close the gap
@@ -118,7 +118,7 @@ Robert doesn't sell privacy—it sells **capability unlocking** (context control
      - iPhone + Linux development machine
      - ChromeOS at school + Android tablet
    - **OS vendors cannot bridge their own ecosystems** due to competitive dynamics. Just as iCloud doesn't seamlessly sync with Google Drive, Apple Intelligence won't truly integrate with Windows.
-   - Like Figma conquering multi-user collaboration in hybrid environments, Robert's value is **platform-agnostic AI memory** that works everywhere.
+   - Like Figma conquering multi-user collaboration in hybrid environments, Facet's value is **platform-agnostic AI memory** that works everywhere.
 
 2. **Claude Desktop, ChatGPT Desktop**: Moving toward local context, but face an insurmountable conflict of interest:
    - OpenAI's business model depends on user profiling (required for planned advertising revenue)
@@ -129,7 +129,7 @@ Robert doesn't sell privacy—it sells **capability unlocking** (context control
 
 3. **Dropbox**: The most natural competitor and likely acquirer.
    - **Why Dropbox should build this**:
-     - Already won cross-platform storage with the exact value proposition Robert needs (works everywhere, user-controlled data)
+     - Already won cross-platform storage with the exact value proposition Facet needs (works everywhere, user-controlled data)
      - Strong brand for user trust and privacy
      - Sync infrastructure and local-first technology
      - Desperate need to evolve beyond commoditized storage ($16B market cap, down from $30B)
@@ -139,7 +139,7 @@ Robert doesn't sell privacy—it sells **capability unlocking** (context control
      - **AI-native product thinking**: ContextOS requires knowledge graphs, semantic memory, and context control—fundamentally different from file sync. We start with the right mental model.
    - **The acquisition thesis**:
      - Dropbox needs a strategic product to move upmarket and avoid commoditization
-     - Robert is the natural evolution of "cross-platform file sync" → "cross-platform AI memory"
+     - Facet is the natural evolution of "cross-platform file sync" → "cross-platform AI memory"
      - Acqui-hire gets them a built product, AI team, and time-to-market advantage
      - **We are building Dropbox's next product line**
    - **Risk**: Dropbox moves faster than expected, or acquires a competitor (us or someone else)
@@ -151,22 +151,22 @@ Robert doesn't sell privacy—it sells **capability unlocking** (context control
 2. **Specialized vertical AI apps**: Fragmented solutions for specific workflows
 3. **Browser extensions**: Lightweight but limited in capability
 
-### Robert's Differentiation
+### Facet's Differentiation
 - **ContextOS: Sophisticated Context Control**: The killer feature reasoning providers can't build
   - Segregate personal vs. professional contexts (ChatGPT mixes everything together)
   - Fine-grained control: what memories are active when
   - Data portability: when you change jobs, your portable context comes with you; employer-specific stays behind
   - Multi-user environments: shared team knowledge bases with proper access control
-  - **Why competitors can't do this**: Reasoning providers benefit from context mixing (better user profiles). Robert's business model *requires* context control.
+  - **Why competitors can't do this**: Reasoning providers benefit from context mixing (better user profiles). Facet's business model *requires* context control.
 
 - **Platform-agnostic by design**: The Dropbox lesson applied to AI memory
   - Works across Windows, macOS, Linux, iOS, Android
   - OS vendors are structurally unable to provide this (competitive dynamics prevent ecosystem bridging)
   - Users live in multi-platform worlds; AI memory must travel with them
-  - Like Figma winning by enabling collaboration in hybrid environments, Robert wins by enabling AI continuity across platforms
+  - Like Figma winning by enabling collaboration in hybrid environments, Facet wins by enabling AI continuity across platforms
 
 - **Structural neutrality**: Not owned by a reasoning provider; no business model conflict with data sovereignty
-  - Robert's business model *requires* protecting user data (it's the value proposition)
+  - Facet's business model *requires* protecting user data (it's the value proposition)
   - Reasoning providers' business models *require* capturing user data (it's the moat)
   - This isn't a feature difference—it's an existential alignment with user interests
 
@@ -175,7 +175,7 @@ Robert doesn't sell privacy—it sells **capability unlocking** (context control
 
 ### Competitive Risks
 - **Market timing**: Too early = education burden; too late = incumbents entrenched
-- **The Chrome threat**: Google is integrating Gemini Nano into Chrome. If Chrome adds a "Local Memory" tab that does 60% of what Robert does for free, we lose the casual market and are pushed entirely into prosumer/enterprise niche. **Our response**: We embrace this. Individual users are not a revenue driver—they're a customer acquisition strategy for business users. See Kill Question #3 for business model.
+- **The Chrome threat**: Google is integrating Gemini Nano into Chrome. If Chrome adds a "Local Memory" tab that does 60% of what Facet does for free, we lose the casual market and are pushed entirely into prosumer/enterprise niche. **Our response**: We embrace this. Individual users are not a revenue driver—they're a customer acquisition strategy for business users. See Kill Question #3 for business model.
 - **Dropbox moves fast**: They have capital, brand, and distribution. If they prioritize this, they could out-execute us
 - **Distribution**: Hyperscale providers and OS vendors have built-in user bases
 - **Brand**: Users associate "AI" with ChatGPT/Claude, not client software
@@ -190,21 +190,21 @@ Robert doesn't sell privacy—it sells **capability unlocking** (context control
 
 **The Reality**: Indexing 5,000 PDFs locally kills battery life and UX. Mobile devices can't run effective vector databases. Pure local-only is a trap for hobbyist tools, not enterprise products.
 
-**The Robert Solution: Personal + Firewalled Cloud Compute**
+**The Facet Solution: Personal + Firewalled Cloud Compute**
 
 We are **"Local-First, Cloud-Assisted"**—not "local-only."
 
 **Ephemeral Processing for Heavy Compute**:
 When a user adds a massive corpus (10GB legal docs, 5 years of project files):
-1. Data is encrypted client-side → sent to Robert Cloud
-2. Robert Cloud generates embeddings/graph nodes in a **stateless, ephemeral container**
+1. Data is encrypted client-side → sent to Facet Cloud
+2. Facet Cloud generates embeddings/graph nodes in a **stateless, ephemeral container**
 3. Vectors/graph structure returned to user device
 4. **Source data and container are immediately destroyed** (provably, with audit trail)
 5. User now has locally-stored graph, but didn't burn their battery building it
 
 **Zero-Knowledge Sync**:
-- Robert maintains an **End-to-End Encrypted (E2EE)** copy of the user's Knowledge Graph
-- **Zero-knowledge architecture**: Robert (the company) hosts encrypted blobs but holds no keys
+- Facet maintains an **End-to-End Encrypted (E2EE)** copy of the user's Knowledge Graph
+- **Zero-knowledge architecture**: Facet (the company) hosts encrypted blobs but holds no keys
 - We cannot see user memories, only encrypted bytes
 - Enables seamless handover: Start on Mac, finish on iPhone
 
@@ -240,9 +240,9 @@ When a user adds a massive corpus (10GB legal docs, 5 years of project files):
 
 **The Reality**: Metadata and phrasing leak identity. Even with local memory, raw queries to OpenAI can reveal user identity through timing patterns, rare tokens, and semantic fingerprinting.
 
-**The Robert Solution: The Privacy Firewall**
+**The Facet Solution: The Privacy Firewall**
 
-Before a prompt reaches OpenAI, it passes through Robert's cloud proxy layer:
+Before a prompt reaches OpenAI, it passes through Facet's cloud proxy layer:
 
 **PII Stripping**:
 - Regex and NER (Named Entity Recognition) models remove names, emails, phone numbers, addresses
@@ -299,30 +299,30 @@ To understand why ContextOS is transformative, consider a concrete example that 
 
 **Result**: She stops using the AI. The trust is broken.
 
-### Scenario B: The Robert Experience (ContextOS)
+### Scenario B: The Facet Experience (ContextOS)
 
 **Sarah asks**: "Draft a quote for the Miller Kitchen."
 
-**Robert's "Transparent Thought Process"** (visible in sidebar):
+**Facet's "Transparent Thought Process"** (visible in sidebar):
 ```
 Found: "2019_Pricing_Standard.pdf" (archived)
 Found: "2024_Pricing_Q1.xlsx" (active)
 Using current pricing data from 2024...
 ```
 
-**Robert answers**: "I found two pricing structures. Using the 2024 data, the estimate is $28,000."
+**Facet answers**: "I found two pricing structures. Using the 2024 data, the estimate is $28,000."
 
 **The "Correction" — The Magic Moment**:
 
 Sarah clicks the 2019 source in the sidebar and selects: **"Mark as Outdated"**
 
-**Robert's Memory Update**:
-- Robert does NOT delete the file (she needs it for tax records)
-- Robert tags that document as **archived** for all future generative tasks
+**Facet's Memory Update**:
+- Facet does NOT delete the file (she needs it for tax records)
+- Facet tags that document as **archived** for all future generative tasks
 - The document remains available for historical queries (e.g., "What did we charge in 2019?")
 - Future pricing queries automatically ignore outdated sources
 
-**The Result**: The next time Sarah asks about pricing, Robert automatically uses only current data. She just "fine-tuned" her context without writing code, training a model, or understanding embeddings.
+**The Result**: The next time Sarah asks about pricing, Facet automatically uses only current data. She just "fine-tuned" her context without writing code, training a model, or understanding embeddings.
 
 ### Why This Matters
 
@@ -342,15 +342,15 @@ Sarah doesn't care about "local-first architecture" or "privacy-preserving query
 
 ## VIII. The Architecture of ContextOS: How It Works
 
-**Thesis**: Standard RAG is a retrieval mechanism. Robert is a Memory Operating System.
+**Thesis**: Standard RAG is a retrieval mechanism. Facet is a Memory Operating System.
 
-To deliver the Sarah experience described above, Robert requires a fundamentally different architecture than current AI assistants. Here's how we build it:
+To deliver the Sarah experience described above, Facet requires a fundamentally different architecture than current AI assistants. Here's how we build it:
 
 ### Layer 1: The Structure (GraphRAG)
 
 **The Problem**: Standard RAG sees documents as "bags of words." It cannot answer "How has my pricing strategy changed since 2019?" because it retrieves disjointed snippets with no understanding of temporal relationships or document evolution.
 
-**The Robert Solution**: We implement **GraphRAG** (Graph Retrieval-Augmented Generation).
+**The Facet Solution**: We implement **GraphRAG** (Graph Retrieval-Augmented Generation).
 
 Instead of just vectorizing text, we extract:
 - **Entities**: Clients, Projects, Prices, People, Concepts
@@ -373,7 +373,7 @@ Miller Project
 
 **The Problem**: Context windows are finite (even 200K tokens). Infinite context is expensive and noisy. Dumping all user data into every query is slow, costly, and produces worse results.
 
-**The Robert Solution**: We use a **Paging Architecture** similar to an OS managing RAM vs. Disk.
+**The Facet Solution**: We use a **Paging Architecture** similar to an OS managing RAM vs. Disk.
 
 **Three Memory Tiers**:
 
@@ -394,7 +394,7 @@ Miller Project
    - Contents: Complete document store, archived materials, historical context
    - Technique: Graph traversal + vector search on retrieved nodes
 
-**The User Value**: When Sarah marks the 2019 pricing as "archived," Robert:
+**The User Value**: When Sarah marks the 2019 pricing as "archived," Facet:
 - Moves it from Warm Memory (where it might be retrieved) to Cold Storage
 - Updates the graph edge: `2019_Pricing.pdf --[archived_for: "generative_tasks"]-> Cold`
 - Still retrieves it for explicit historical queries: "What did we charge in 2019?"
@@ -406,7 +406,7 @@ Miller Project
 
 **The Problem**: Users cannot debug a neural network. Black box AI systems erode trust when they retrieve the wrong context. Current solutions: delete the file (lose it) or retrain the model (impossible for users).
 
-**The Robert Solution**: **Transparent Attribution UI** with actionable feedback.
+**The Facet Solution**: **Transparent Attribution UI** with actionable feedback.
 
 **Three Components**:
 
@@ -426,7 +426,7 @@ Miller Project
      - "Delete Permanently" → removes from all tiers
 
 3. **Feedback Loop (Edge Weight Updates)**:
-   - When Sarah prunes `2019_Pricing.pdf`, Robert updates the Knowledge Graph:
+   - When Sarah prunes `2019_Pricing.pdf`, Facet updates the Knowledge Graph:
      ```
      UPDATE edge WHERE source="2019_Pricing.pdf"
        AND relation="relevant_for"
@@ -458,9 +458,9 @@ Miller Project
 **Credibility Check**: This architecture is not science fiction:
 - **GraphRAG**: Active research area (Microsoft, Neo4j)
 - **Hierarchical Memory**: Implemented in MemGPT, validated in production
-- **Transparent Attribution**: Existing in tools like Perplexity (sources shown), Robert extends it to control
+- **Transparent Attribution**: Existing in tools like Perplexity (sources shown), Facet extends it to control
 
-The difference is integration and user control. Robert is the first system to combine graph structure, hierarchical memory, and human-in-the-loop curation into a coherent Memory Operating System.
+The difference is integration and user control. Facet is the first system to combine graph structure, hierarchical memory, and human-in-the-loop curation into a coherent Memory Operating System.
 
 ## IX. Product Success Criteria
 
@@ -471,7 +471,7 @@ The difference is integration and user control. Robert is the first system to co
 ### Feature: Context Control (ContextOS)
 - **Success**: 75% of professional users maintain ≥2 contexts (personal/work); 85% successfully migrate personal context when changing jobs; <1% report accidental context leakage; 90% of users curate their active context (mark documents as archived, set temporal relevance)
 - **Delight factor**: "I keep my work AI separate from my personal AI, and when I left my job, I took my career context with me—not the company's IP"
-- **Enterprise delight**: "Our employees use Robert for work, and we're confident our proprietary data doesn't leak to their personal contexts"
+- **Enterprise delight**: "Our employees use Facet for work, and we're confident our proprietary data doesn't leak to their personal contexts"
 - **Real-world validation**: Sarah (interior designer) can mark outdated pricing as archived without deleting it, ensuring her AI never quotes 5-year-old rates to clients
 
 ### Feature: Multi-Provider Reasoning
@@ -483,7 +483,7 @@ The difference is integration and user control. Robert is the first system to co
 - **Delight factor**: "I described what I needed, came back 10 minutes later, and it was done"
 
 ### Feature: Privacy-Preserving Architecture
-- **Success**: Independent audit confirms no PII leakage; 90% of users "trust" Robert with sensitive data (survey)
+- **Success**: Independent audit confirms no PII leakage; 90% of users "trust" Facet with sensitive data (survey)
 - **Delight factor**: "I finally used AI for financial planning because I know my data stays local"
 
 ### Feature: Cross-Device Sync
@@ -492,7 +492,7 @@ The difference is integration and user control. Robert is the first system to co
 
 ## X. Pre-Empting the Kill Questions
 
-VCs in late 2025 are no longer asking "Is AI a bubble?" They are asking: **"Is this product a chore or a superpower?"** Here are the three objections that will determine whether Robert gets funded, and how we address them.
+VCs in late 2025 are no longer asking "Is AI a bubble?" They are asking: **"Is this product a chore or a superpower?"** Here are the three objections that will determine whether Facet gets funded, and how we address them.
 
 ### Kill Question #1: The "Gardening" Problem (Behavioral Risk)
 
@@ -502,9 +502,9 @@ VCs in late 2025 are no longer asking "Is AI a bubble?" They are asking: **"Is t
 
 Users don't curate data for fun; **they curate it at the moment of failure**—when the AI gives them a wrong answer and they're already frustrated and motivated to fix it.
 
-**Analogy**: You don't organize your email contacts for fun. You only update a contact when an email bounces. Robert uses **"Lazy Pruning"**—we only ask for feedback when the user experiences a problem and wants to fix it.
+**Analogy**: You don't organize your email contacts for fun. You only update a contact when an email bounces. Facet uses **"Lazy Pruning"**—we only ask for feedback when the user experiences a problem and wants to fix it.
 
-**Sarah's example (from Section VII)**: She doesn't proactively review her memory graph. She prunes the 2019 pricing document **only after** Robert quotes an outdated price and she panics. At that moment of pain, clicking "Mark as Outdated" takes 3 seconds and permanently fixes the problem.
+**Sarah's example (from Section VII)**: She doesn't proactively review her memory graph. She prunes the 2019 pricing document **only after** Facet quotes an outdated price and she panics. At that moment of pain, clicking "Mark as Outdated" takes 3 seconds and permanently fixes the problem.
 
 **The UX principle**: Make curation **0 cost at the moment of motivation, infinite cost otherwise**. Never ask users to "organize your memories" in a settings menu. Only offer pruning controls in-context when the AI retrieves wrong information.
 
@@ -520,7 +520,7 @@ We are **"Local-First, Cloud-Assisted"**—not "local-only."
 
 **The Cloud as CPU Utility, Not Data Lake**:
 
-If you dump 10GB of legal docs into Robert, we don't melt your laptop. We offload the embedding generation to a **stateless cloud worker** that:
+If you dump 10GB of legal docs into Facet, we don't melt your laptop. We offload the embedding generation to a **stateless cloud worker** that:
 1. Computes the vectors and graph structure
 2. Returns the processed graph to your device
 3. **Immediately destroys the source data**
@@ -547,7 +547,7 @@ If you dump 10GB of legal docs into Robert, we don't melt your laptop. We offloa
 
 **The Answer: Enterprise Network Effect—We're Git for Corporate Intelligence**
 
-Robert starts as a single-player tool, but the moat is **Multi-Player Memory**.
+Facet starts as a single-player tool, but the moat is **Multi-Player Memory**.
 
 **The value creation**:
 1. A small law firm curates a "Legal Precedent Graph" on one partner's machine
@@ -576,7 +576,7 @@ People pay for Google Photos subscriptions before they pay their internet bill. 
   - Goal: Break even or small loss on individuals
   - Why: Small business owners experiment with their personal accounts (like using personal Gmail for work)
   - The conversion path: Personal use → "I need this for my team" → Team sale
-  - Example: Sarah uses Robert personally, then brings it to her design firm
+  - Example: Sarah uses Facet personally, then brings it to her design firm
 - **Team ($50/user/mo)**: Shared knowledge bases with access control + sync across devices
   - **First real revenue**: Small businesses (5-50 employees)
   - Value prop: Context segregation (work vs. personal), shared team memory
@@ -587,11 +587,11 @@ People pay for Google Photos subscriptions before they pay their internet bill. 
   - Integration with corporate systems
 
 **Why this works**:
-- **The Chrome/Gemini threat is fine**: If Chrome offers 60% of Robert's features for free, that validates the category and drives individuals to try local AI memory. We capture them when they need the prosumer/enterprise features (context control, team sync, compliance).
+- **The Chrome/Gemini threat is fine**: If Chrome offers 60% of Facet's features for free, that validates the category and drives individuals to try local AI memory. We capture them when they need the prosumer/enterprise features (context control, team sync, compliance).
 - **Emotional value >> functional value**: People pay for Google Photos not because cloud storage is technically hard, but because losing wedding photos is emotionally unbearable. Business knowledge graphs trigger the same psychology—but with 10x the willingness to pay.
 - **Network effects**: The more a team curates their shared context, the more valuable it becomes, the higher the switching cost
 - **Data moat**: The curated knowledge graph IS the product. We don't need to own the LLM; we own the memory that makes the LLM useful
-- **Enterprise willingness to pay**: Companies already pay $30-50/user/mo for Slack, Notion, Figma. Robert becomes critical infrastructure—they'll pay $200+
+- **Enterprise willingness to pay**: Companies already pay $30-50/user/mo for Slack, Notion, Figma. Facet becomes critical infrastructure—they'll pay $200+
 - **Retention through irreplaceability**: Once a professional has invested years curating their knowledge graph, switching becomes existentially risky. This creates enterprise-grade retention (>95% annually).
 
 **Comparable**: GitHub doesn't own Git (open source). They monetize collaboration, private repos, and enterprise features around Git. We don't own LLMs (commoditized). We monetize collaboration, private memory, and enterprise features around AI memory.
@@ -601,7 +601,7 @@ People pay for Google Photos subscriptions before they pay their internet bill. 
 **The Chrome scenario doesn't hurt us, it helps us**:
 - Chrome with local memory validates that users want this
 - Casual users stay on Chrome (we don't want them—CAC doesn't justify revenue)
-- Prosumers and businesses hit Chrome's limitations (no context control, no team sync, no cross-platform) and upgrade to Robert
+- Prosumers and businesses hit Chrome's limitations (no context control, no team sync, no cross-platform) and upgrade to Facet
 - We avoid competing for low-value users and focus on high-value segments from day one
 
 **Our product strategy validates this approach**:
@@ -620,7 +620,7 @@ People pay for Google Photos subscriptions before they pay their internet bill. 
 - **Mac Apple Silicon first**: Target prosumers with $2K+ laptops (self-selecting for high-value users)
 - **Developer community**: Open source core, commercial enterprise features (GitHub model)
 - **Vertical pilots**: Start with specific professions (law firms, design agencies, consultancies) where context control is critical
-- **Product-led growth**: Individual users bring Robert to their teams (bottoms-up enterprise)
+- **Product-led growth**: Individual users bring Facet to their teams (bottoms-up enterprise)
 - **Content marketing**: Thought leadership on AI memory, context control, data sovereignty
 
 ### Trap 2: "Privacy is a sufficient value proposition"
@@ -641,28 +641,28 @@ People pay for Google Photos subscriptions before they pay their internet bill. 
 
 **Commercially**: A multi-trillion-dollar AI market bifurcates into reasoning (commoditized infrastructure) and memory/orchestration (high-value client layer). The memory layer has stronger moats (user data, trust, workflow integration).
 
-**Regulatorily**: Governments worldwide mandate data portability and interoperability (GDPR, DMA, future AI regulations). Hyperscale providers are forced to open APIs. Products like Robert become compliance-friendly alternatives.
+**Regulatorily**: Governments worldwide mandate data portability and interoperability (GDPR, DMA, future AI regulations). Hyperscale providers are forced to open APIs. Products like Facet become compliance-friendly alternatives.
 
 **Politically**: Public backlash against AI surveillance capitalism mirrors social media reckoning. Users demand alternatives that don't monetize their data. "Local-first AI" becomes a movement.
 
-**Technologically**: Reasoning models commoditize faster than expected. Differentiation moves up the stack to user experience, orchestration, and context management—exactly where Robert competes.
+**Technologically**: Reasoning models commoditize faster than expected. Differentiation moves up the stack to user experience, orchestration, and context management—exactly where Facet competes.
 
 ### In this scenario:
 
-**Very few products will become the gateway for people to experience AI's magic.** The browser analogy holds: billions use Chrome, Firefox, Safari—not hundreds of fragmented clients. **Robert has the opportunity to be one of those 3-5 products.**
+**Very few products will become the gateway for people to experience AI's magic.** The browser analogy holds: billions use Chrome, Firefox, Safari—not hundreds of fragmented clients. **Facet has the opportunity to be one of those 3-5 products.**
 
 ### The role of a neutral client:
 
 - **Keeps hyperscale providers in check**: Users can switch reasoning providers with one click, preventing lock-in and monopoly abuse
-- **Breaks the business model conflict**: Reasoning providers cannot credibly separate memory from reasoning without destroying their own revenue model (advertising, user profiling). Robert has no such conflict—protecting user data *is* the business model.
-- **Solves the interoperability problem**: OS vendors cannot bridge their own ecosystems. Just as Dropbox succeeded despite Apple/Microsoft/Google having "storage," Robert succeeds by making AI memory work everywhere.
-- **Creates strategic value for acquirers**: Dropbox (or Box, or another cross-platform player) needs Robert to evolve beyond storage. This is their next product line.
-- **Unlocks innovation**: Developers build on Robert's platform, not OpenAI's walled garden
+- **Breaks the business model conflict**: Reasoning providers cannot credibly separate memory from reasoning without destroying their own revenue model (advertising, user profiling). Facet has no such conflict—protecting user data *is* the business model.
+- **Solves the interoperability problem**: OS vendors cannot bridge their own ecosystems. Just as Dropbox succeeded despite Apple/Microsoft/Google having "storage," Facet succeeds by making AI memory work everywhere.
+- **Creates strategic value for acquirers**: Dropbox (or Box, or another cross-platform player) needs Facet to evolve beyond storage. This is their next product line.
+- **Unlocks innovation**: Developers build on Facet's platform, not OpenAI's walled garden
 - **Preserves user agency**: The AI revolution empowers individuals, not just corporations
 
 ### The alternative future:
 
-If Robert doesn't exist, users face:
+If Facet doesn't exist, users face:
 - Fragmented AI experiences across devices and platforms (Apple Intelligence on iPhone, Copilot on work laptop, ChatGPT on personal computer)
 - Data siloed across corporate platforms with no interoperability
 - Forced ecosystem choices: "all Apple" or "all Microsoft" to get consistent AI experience
@@ -677,9 +677,9 @@ If Robert doesn't exist, users face:
 3. Regulation will favor open ecosystems over vertical integration?
 4. Execution quality can overcome incumbent distribution advantages?
 
-**If yes to 3 of 4**: Robert addresses a real, large, and defensible market opportunity.
+**If yes to 3 of 4**: Facet addresses a real, large, and defensible market opportunity.
 
-**If yes to all 4**: Robert could define how humanity interfaces with AI for the next decade.
+**If yes to all 4**: Facet could define how humanity interfaces with AI for the next decade.
 
 The bet is not certain. But the upside—building the trusted gateway to AI that keeps power balanced between users and providers—justifies the risk.
 

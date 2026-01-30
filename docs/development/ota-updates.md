@@ -1,10 +1,10 @@
 # Over-the-Air (OTA) Automatic Updates
 
-This document describes the OTA automatic update system implemented for Robert, the browser automation desktop app.
+This document describes the OTA automatic update system implemented for Facet, the browser automation desktop app.
 
 ## Overview
 
-Robert uses Tauri v2's updater plugin to provide secure, cryptographically-signed automatic updates. The system:
+Facet uses Tauri v2's updater plugin to provide secure, cryptographically-signed automatic updates. The system:
 
 - **Checks for updates** automatically on app startup (after 3 second delay)
 - **Shows custom UI** for update notifications and progress
@@ -30,13 +30,13 @@ Robert uses Tauri v2's updater plugin to provide secure, cryptographically-signe
    - `.github/workflows/release.yml` - Build and release workflow
    - Generates updater bundles (`.app.tar.gz` + `.sig`)
    - Creates `latest.json` manifest
-   - Uploads to `lucky-tensor/robert-releases` repository
+   - Uploads to `lucky-tensor/facet-releases` repository
 
 ## Configuration
 
 ### Tauri Configuration
 
-Located in `crates/robert-app/src-tauri/tauri.conf.json`:
+Located in `crates/facet-app/src-tauri/tauri.conf.json`:
 
 ```json
 {
@@ -46,7 +46,7 @@ Located in `crates/robert-app/src-tauri/tauri.conf.json`:
   "plugins": {
     "updater": {
       "endpoints": [
-        "https://github.com/lucky-tensor/robert-releases/releases/latest/download/latest.json"
+        "https://github.com/lucky-tensor/facet-releases/releases/latest/download/latest.json"
       ],
       "pubkey": "YOUR_PUBLIC_KEY_HERE",
       "windows": {
@@ -61,7 +61,7 @@ Located in `crates/robert-app/src-tauri/tauri.conf.json`:
 
 ### Capabilities
 
-Located in `crates/robert-app/src-tauri/capabilities/default.json`:
+Located in `crates/facet-app/src-tauri/capabilities/default.json`:
 
 ```json
 {
@@ -83,13 +83,13 @@ Located in `crates/robert-app/src-tauri/capabilities/default.json`:
 **IMPORTANT:** You must generate signing keys before building releases with OTA updates.
 
 ```bash
-cd crates/robert-app
-bunx tauri signer generate -w ../../.tauri-keys/robert.key
+cd crates/facet-app
+bunx tauri signer generate -w ../../.tauri-keys/facet.key
 ```
 
 This will prompt for a password and generate:
-- `../../.tauri-keys/robert.key` - **Private key** (KEEP SECRET!)
-- `../../.tauri-keys/robert.key.pub` - **Public key** (safe to distribute)
+- `../../.tauri-keys/facet.key` - **Private key** (KEEP SECRET!)
+- `../../.tauri-keys/facet.key.pub` - **Public key** (safe to distribute)
 
 ### Configuring Keys
 
@@ -97,7 +97,7 @@ This will prompt for a password and generate:
 
 ```bash
 # Copy the entire content of the public key file
-cat .tauri-keys/robert.key.pub
+cat .tauri-keys/facet.key.pub
 ```
 
 Paste the content into the `pubkey` field in `tauri.conf.json`.
@@ -106,9 +106,9 @@ Paste the content into the `pubkey` field in `tauri.conf.json`.
 
 Go to your repository settings → Secrets and variables → Actions:
 
-- **TAURI_SIGNING_PRIVATE_KEY**: Paste the entire content of `.tauri-keys/robert.key`
+- **TAURI_SIGNING_PRIVATE_KEY**: Paste the entire content of `.tauri-keys/facet.key`
 - **TAURI_SIGNING_PRIVATE_KEY_PASSWORD**: Your key password
-- **RELEASES_REPO_TOKEN**: GitHub Personal Access Token with `repo` scope for `lucky-tensor/robert-releases`
+- **RELEASES_REPO_TOKEN**: GitHub Personal Access Token with `repo` scope for `lucky-tensor/facet-releases`
 
 **Note:** The workflow uses `TAURI_SIGNING_PRIVATE_KEY` but maps it to the `TAURI_SIGNING_PRIVATE_KEY` environment variable that Tauri expects.
 
@@ -118,17 +118,17 @@ For local builds with updater artifacts:
 
 ```bash
 # Set environment variables
-export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/robert.key)
+export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/facet.key)
 export TAURI_SIGNING_PRIVATE_KEY_PASSWORD="your_password"
 
 # Build
-cd crates/robert-app
+cd crates/facet-app
 bunx tauri build
 ```
 
 ## Update Manifest Format
 
-The `latest.json` file hosted on `robert-releases` follows this format:
+The `latest.json` file hosted on `facet-releases` follows this format:
 
 ```json
 {
@@ -138,11 +138,11 @@ The `latest.json` file hosted on `robert-releases` follows this format:
   "platforms": {
     "darwin-aarch64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6...",
-      "url": "https://github.com/lucky-tensor/robert-releases/releases/download/0.1.1/Robert_0.1.1_aarch64.app.tar.gz"
+      "url": "https://github.com/lucky-tensor/facet-releases/releases/download/0.1.1/Facet_0.1.1_aarch64.app.tar.gz"
     },
     "darwin-x86_64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6...",
-      "url": "https://github.com/lucky-tensor/robert-releases/releases/download/0.1.1/Robert_0.1.1_x64.app.tar.gz"
+      "url": "https://github.com/lucky-tensor/facet-releases/releases/download/0.1.1/Facet_0.1.1_x64.app.tar.gz"
     }
   }
 }
@@ -155,9 +155,9 @@ The `latest.json` file hosted on `robert-releases` follows this format:
 ### 1. Prepare Release
 
 Update version numbers in:
-- `crates/robert-app/src-tauri/Cargo.toml`
-- `crates/robert-app/src-tauri/tauri.conf.json`
-- `crates/robert-app/package.json`
+- `crates/facet-app/src-tauri/Cargo.toml`
+- `crates/facet-app/src-tauri/tauri.conf.json`
+- `crates/facet-app/package.json`
 
 ### 2. Create Release Tag
 
@@ -177,16 +177,16 @@ The workflow automatically:
    - Generates DMG installers
    - Generates updater bundles (`.app.tar.gz`)
    - Signs bundles (`.app.tar.gz.sig`)
-3. **Uploads to `robert-releases`:**
+3. **Uploads to `facet-releases`:**
    - DMG files for user downloads
    - Updater bundles for OTA updates
 4. **Generates `latest.json`** manifest
-5. **Uploads manifest** to `robert-releases`
+5. **Uploads manifest** to `facet-releases`
 6. **Publishes release** (removes draft status)
 
 ### 4. Verify Release
 
-Check `lucky-tensor/robert-releases` for:
+Check `lucky-tensor/facet-releases` for:
 - ✅ DMG files uploaded
 - ✅ Updater bundles (`.app.tar.gz`) uploaded
 - ✅ `latest.json` present and valid
@@ -195,7 +195,7 @@ Check `lucky-tensor/robert-releases` for:
 
 ### Automatic Check on Startup
 
-1. User opens Robert app
+1. User opens Facet app
 2. After 3 seconds, app checks for updates silently
 3. If update available → modal appears
 4. If no update → app continues normally
@@ -221,9 +221,9 @@ To test the update flow without publishing:
 
 1. Build a release with signing:
 ```bash
-export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/robert.key)
+export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/facet.key)
 export TAURI_SIGNING_PRIVATE_KEY_PASSWORD="password"
-cd crates/robert-app
+cd crates/facet-app
 bunx tauri build
 ```
 
@@ -283,7 +283,7 @@ find target -name "*.app.tar.gz.sig"
 ## Security Considerations
 
 1. **Private Key Protection:**
-   - Never commit `.tauri-keys/robert.key` to git
+   - Never commit `.tauri-keys/facet.key` to git
    - Store securely in password manager
    - Limit access to CI/CD secrets
 

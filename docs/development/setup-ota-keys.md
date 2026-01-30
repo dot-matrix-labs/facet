@@ -6,7 +6,7 @@ This guide walks you through setting up the cryptographic signing keys required 
 
 - Bun installed
 - Access to repository secrets (for CI/CD)
-- Access to `lucky-tensor/robert-releases` repository
+- Access to `lucky-tensor/facet-releases` repository
 
 ## Step 1: Generate Signing Keys
 
@@ -17,8 +17,8 @@ From the repository root:
 mkdir -p .tauri-keys
 
 # Generate keypair
-cd crates/robert-app
-bunx tauri signer generate -w ../../.tauri-keys/robert.key
+cd crates/facet-app
+bunx tauri signer generate -w ../../.tauri-keys/facet.key
 ```
 
 When prompted:
@@ -26,18 +26,18 @@ When prompted:
 2. **Press Enter** to confirm
 
 This creates:
-- `.tauri-keys/robert.key` - Private key (KEEP SECRET!)
-- `.tauri-keys/robert.key.pub` - Public key (safe to distribute)
+- `.tauri-keys/facet.key` - Private key (KEEP SECRET!)
+- `.tauri-keys/facet.key.pub` - Public key (safe to distribute)
 
 ## Step 2: Update tauri.conf.json
 
 1. **Copy the public key content:**
 
 ```bash
-cat .tauri-keys/robert.key.pub
+cat .tauri-keys/facet.key.pub
 ```
 
-2. **Edit `crates/robert-app/src-tauri/tauri.conf.json`:**
+2. **Edit `crates/facet-app/src-tauri/tauri.conf.json`:**
 
 Find the line:
 ```json
@@ -52,13 +52,13 @@ Replace with the actual public key content (including the dashes):
 3. **Save and commit:**
 
 ```bash
-git add crates/robert-app/src-tauri/tauri.conf.json
+git add crates/facet-app/src-tauri/tauri.conf.json
 git commit -m "chore: add OTA update public key"
 ```
 
 ## Step 3: Configure GitHub Secrets
 
-### Main Repository (lucky-tensor/robert)
+### Main Repository (lucky-tensor/facet)
 
 Go to repository → Settings → Secrets and variables → Actions → New repository secret
 
@@ -68,7 +68,7 @@ Add these secrets:
 
 ```bash
 # Copy the ENTIRE content of the private key file
-cat .tauri-keys/robert.key
+cat .tauri-keys/facet.key
 ```
 
 - **Name:** `TAURI_SIGNING_PRIVATE_KEY`
@@ -85,7 +85,7 @@ Create a GitHub Personal Access Token:
 
 1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
 2. Click "Generate new token (classic)"
-3. Name: "Robert Releases Repo Access"
+3. Name: "Facet Releases Repo Access"
 4. Scopes: Check `repo` (full control of private repositories)
 5. Click "Generate token"
 6. **Copy the token** (you won't see it again!)
@@ -102,11 +102,11 @@ Test that signing works locally:
 
 ```bash
 # Set environment variables
-export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/robert.key)
+export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/facet.key)
 export TAURI_SIGNING_PRIVATE_KEY_PASSWORD="your_password_here"
 
 # Build
-cd crates/robert-app
+cd crates/facet-app
 bunx tauri build
 
 # Verify updater artifacts were created
@@ -116,8 +116,8 @@ find ../../target -name "*.app.tar.gz.sig"
 
 You should see output like:
 ```
-../../target/aarch64-apple-darwin/release/bundle/macos/Robert.app.tar.gz
-../../target/aarch64-apple-darwin/release/bundle/macos/Robert.app.tar.gz.sig
+../../target/aarch64-apple-darwin/release/bundle/macos/Facet.app.tar.gz
+../../target/aarch64-apple-darwin/release/bundle/macos/Facet.app.tar.gz.sig
 ```
 
 ### CI/CD Test
@@ -129,7 +129,7 @@ git push origin test-ota-0.1.2
 ```
 
 2. Check GitHub Actions workflow progress
-3. Verify assets appear in `lucky-tensor/robert-releases`
+3. Verify assets appear in `lucky-tensor/facet-releases`
 
 ## Step 5: Security Best Practices
 
@@ -144,7 +144,7 @@ git push origin test-ota-0.1.2
    - Ensure `.tauri-keys/` is in `.gitignore` (already done)
    - Set restrictive permissions:
    ```bash
-   chmod 600 .tauri-keys/robert.key
+   chmod 600 .tauri-keys/facet.key
    ```
 
 ### Access Control
@@ -193,8 +193,8 @@ If you need to rotate keys (compromised, best practice, etc.):
 
 After completing setup:
 
-- [ ] `.tauri-keys/robert.key` exists (gitignored)
-- [ ] `.tauri-keys/robert.key.pub` exists (gitignored)
+- [ ] `.tauri-keys/facet.key` exists (gitignored)
+- [ ] `.tauri-keys/facet.key.pub` exists (gitignored)
 - [ ] Public key added to `tauri.conf.json`
 - [ ] `TAURI_SIGNING_PRIVATE_KEY` GitHub secret set
 - [ ] `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` GitHub secret set

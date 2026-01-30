@@ -2,7 +2,7 @@
 
 ## Branch: `ota-updates`
 
-This document summarizes the over-the-air automatic update implementation for Robert.
+This document summarizes the over-the-air automatic update implementation for Facet.
 
 ## What Was Implemented
 
@@ -28,7 +28,7 @@ This document summarizes the over-the-air automatic update implementation for Ro
   },
   "plugins": {
     "updater": {
-      "endpoints": ["https://github.com/lucky-tensor/robert-releases/releases/latest/download/latest.json"],
+      "endpoints": ["https://github.com/lucky-tensor/facet-releases/releases/latest/download/latest.json"],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6...",  // Ed25519 public key
       "windows": {
         "installMode": "passive"
@@ -80,7 +80,7 @@ Added permissions for updater, dialog, and process plugins.
 - Reads signature content for manifest generation
 - Stores paths and signatures as environment variables
 
-**Enhanced Upload to robert-releases:**
+**Enhanced Upload to facet-releases:**
 - Uploads DMG files for direct downloads
 - Uploads updater bundles (.app.tar.gz) for OTA updates
 - Handles duplicate asset deletion
@@ -88,14 +88,14 @@ Added permissions for updater, dialog, and process plugins.
 
 **New Job: `generate-updater-manifest`:**
 - Runs after all builds complete
-- Fetches release assets from robert-releases
+- Fetches release assets from facet-releases
 - Downloads signature files to read content
 - Generates `latest.json` manifest with:
   - Version number
   - Release notes
   - Publication date
   - Platform-specific URLs and signatures
-- Uploads manifest to robert-releases
+- Uploads manifest to facet-releases
 
 **Updated Dependencies:**
 - `finalize-release` now depends on `generate-updater-manifest`
@@ -133,7 +133,7 @@ Added permissions for updater, dialog, and process plugins.
    - After 3 second delay, calls `checkForUpdates()`
 
 2. **Update Check**
-   - Fetches `latest.json` from robert-releases
+   - Fetches `latest.json` from facet-releases
    - Compares remote version with current version
    - If newer version exists, sets `updateInfo` state
 
@@ -167,9 +167,9 @@ Added permissions for updater, dialog, and process plugins.
    - Signs bundles with private key
    - Uploads to both repositories:
      - Main repo: DMG files
-     - robert-releases: DMG + updater bundles
+     - facet-releases: DMG + updater bundles
    - Generates `latest.json` manifest
-   - Uploads manifest to robert-releases
+   - Uploads manifest to facet-releases
    - Publishes release
 
 3. **Users Receive Updates**
@@ -203,7 +203,7 @@ Added permissions for updater, dialog, and process plugins.
 
 1. **Install Frontend Dependencies:**
    ```bash
-   cd crates/robert-app
+   cd crates/facet-app
    bun install
    ```
 
@@ -214,9 +214,9 @@ Added permissions for updater, dialog, and process plugins.
 
 3. **Test Build Locally:**
    ```bash
-   export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/robert.key)
+   export TAURI_SIGNING_PRIVATE_KEY=$(cat .tauri-keys/facet.key)
    export TAURI_SIGNING_PRIVATE_KEY_PASSWORD="password"
-   cd crates/robert-app
+   cd crates/facet-app
    bunx tauri build
    ```
    Verify `.app.tar.gz` and `.sig` files are generated.
@@ -226,7 +226,7 @@ Added permissions for updater, dialog, and process plugins.
 1. **Create Test Release:**
    - Tag: `test-ota-0.1.2`
    - Monitor workflow execution
-   - Verify assets in robert-releases
+   - Verify assets in facet-releases
    - Check `latest.json` format
 
 2. **Test Update Flow:**
@@ -262,20 +262,20 @@ Added permissions for updater, dialog, and process plugins.
 ## Files Changed
 
 ### Added Files
-- `crates/robert-app/src/lib/updater.ts`
-- `crates/robert-app/src/components/UpdateModal.svelte`
+- `crates/facet-app/src/lib/updater.ts`
+- `crates/facet-app/src/components/UpdateModal.svelte`
 - `docs/OTA_UPDATES.md`
 - `docs/SETUP_OTA_KEYS.md`
 - `docs/OTA_IMPLEMENTATION_SUMMARY.md`
-- `crates/robert-app/bun.lock` (generated)
+- `crates/facet-app/bun.lock` (generated)
 
 ### Modified Files
-- `crates/robert-app/package.json`
-- `crates/robert-app/src-tauri/Cargo.toml`
-- `crates/robert-app/src-tauri/tauri.conf.json`
-- `crates/robert-app/src-tauri/capabilities/default.json`
-- `crates/robert-app/src-tauri/src/lib.rs`
-- `crates/robert-app/src/App.svelte`
+- `crates/facet-app/package.json`
+- `crates/facet-app/src-tauri/Cargo.toml`
+- `crates/facet-app/src-tauri/tauri.conf.json`
+- `crates/facet-app/src-tauri/capabilities/default.json`
+- `crates/facet-app/src-tauri/src/lib.rs`
+- `crates/facet-app/src/App.svelte`
 - `.github/workflows/release.yml`
 
 ## Commit Message
@@ -284,7 +284,7 @@ Added permissions for updater, dialog, and process plugins.
 feat: implement over-the-air (OTA) automatic updates
 
 - Add tauri-plugin-updater, dialog, and process dependencies
-- Configure updater in tauri.conf.json with robert-releases endpoint
+- Configure updater in tauri.conf.json with facet-releases endpoint
 - Add updater permissions to capabilities
 - Create custom UpdateModal component with progress UI
 - Implement updater utility module with TypeScript
@@ -292,7 +292,7 @@ feat: implement over-the-air (OTA) automatic updates
 - Enable automatic silent update check on startup (3s delay)
 - Modify release workflow to generate updater artifacts (.tar.gz + .sig)
 - Add workflow job to generate and upload latest.json manifest
-- Upload updater bundles to lucky-tensor/robert-releases
+- Upload updater bundles to lucky-tensor/facet-releases
 - Add comprehensive OTA updates documentation
 - Add setup guide for signing keys
 
@@ -302,7 +302,7 @@ The update system provides:
 - Manual update checks via header button
 - Cryptographic signature verification (Ed25519)
 - Automatic app relaunch after update
-- Integration with lucky-tensor/robert-releases for distribution
+- Integration with lucky-tensor/facet-releases for distribution
 ```
 
 ## Next Steps
