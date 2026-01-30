@@ -7,6 +7,11 @@ description = "Remote execution server for Facet desktop application - forwards 
 license = "MIT"
 
 [dependencies]
+# Facet internal dependencies
+facet-core = { path = "../facet-core" }
+facet-types = { workspace = true }
+
+# Web framework
 warp = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true, features = ["derive"] }

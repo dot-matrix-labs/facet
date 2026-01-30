@@ -16,7 +16,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 doctest = false
 
 [build-dependencies]
-tauri-build = { version = "2.5", features = [] }
+tauri-build = { workspace = true }
 
 [dependencies]
 tauri = { workspace = true }
@@ -29,6 +29,7 @@ serde_json = { workspace = true }
 
 # Facet dependencies
 facet-types = { workspace = true}
+facet-server = { workspace = true }
 
 tokio = { workspace = true }
 anyhow = { workspace = true }
@@ -46,10 +47,6 @@ env_logger = { workspace = true }
 # User Profiles - Cryptography (Handled in facet-types)
 # argon2, aes-gcm, rand, zeroize removed (unused directly)
 
-# User Profiles - Utilities
-# uuid, once_cell removed (except once_cell used)
-once_cell = { workspace = true }
-facet-server = { workspace = true }
 # Markdown command system (Phase 3 refactor)
 # pulldown-cmark, serde_yaml removed (unused directly)
 

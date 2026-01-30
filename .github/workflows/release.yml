@@ -223,6 +223,10 @@ jobs:
             target: aarch64-apple-darwin
           - platform: macos-latest
             target: x86_64-apple-darwin
+          - platform: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+          - platform: ubuntu-22.04
+            target: aarch64-unknown-linux-gnu
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -244,6 +248,31 @@ jobs:
         with:
           workspaces: crates/robert-app/src-tauri
           save-if: true
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            gcc-aarch64-linux-gnu
+
+      - name: Configure cross-compilation for ARM64
+        if: runner.os == 'Linux' && matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          mkdir -p .cargo
+          cat > .cargo/config.toml << 'EOF'
+          [target.aarch64-unknown-linux-gnu]
+          linker = "aarch64-linux-gnu-gcc"
+          EOF
 
       - name: Install frontend dependencies
         working-directory: crates/robert-app
@@ -305,6 +334,42 @@ jobs:
           echo "Updated bundle files:"
           ls -la "$BUNDLE_DIR/macos/"
 
+      - name: Rename updater artifacts (Linux)
+        if: runner.os == 'Linux'
+        working-directory: crates/robert-app
+        run: |
+          TARGET="${{ matrix.target }}"
+          BUNDLE_DIR="../../target/$TARGET/release/bundle"
+
+          # Determine architecture label for filename
+          if [ "$TARGET" = "aarch64-unknown-linux-gnu" ]; then
+            ARCH="aarch64"
+          else
+            ARCH="x64"
+          fi
+
+          # Get the productName from tauri.conf.json
+          PRODUCT_NAME=$(jq -r '.productName' src-tauri/tauri.conf.json)
+
+          echo "Looking for updater bundles in: $BUNDLE_DIR/appimage"
+          ls -la "$BUNDLE_DIR/appimage/" || true
+
+          # Rename AppImage updater files if they exist
+          if [ -f "$BUNDLE_DIR/appimage/${PRODUCT_NAME}.AppImage.tar.gz" ]; then
+            mv "$BUNDLE_DIR/appimage/${PRODUCT_NAME}.AppImage.tar.gz" \
+               "$BUNDLE_DIR/appimage/${PRODUCT_NAME}_${ARCH}_updater.AppImage.tar.gz"
+            echo "Renamed ${PRODUCT_NAME}.AppImage.tar.gz to ${PRODUCT_NAME}_${ARCH}_updater.AppImage.tar.gz"
+          fi
+
+          if [ -f "$BUNDLE_DIR/appimage/${PRODUCT_NAME}.AppImage.tar.gz.sig" ]; then
+            mv "$BUNDLE_DIR/appimage/${PRODUCT_NAME}.AppImage.tar.gz.sig" \
+               "$BUNDLE_DIR/appimage/${PRODUCT_NAME}_${ARCH}_updater.AppImage.tar.gz.sig"
+            echo "Renamed ${PRODUCT_NAME}.AppImage.tar.gz.sig to ${PRODUCT_NAME}_${ARCH}_updater.AppImage.tar.gz.sig"
+          fi
+
+          echo "Updated bundle files:"
+          ls -la "$BUNDLE_DIR/appimage/" || true
+
       - name: Upload artifacts to release
         uses: softprops/action-gh-release@v2
         with:
@@ -314,6 +379,10 @@ jobs:
             crates/robert-app/../../target/${{ matrix.target }}/release/bundle/dmg/*.dmg
             crates/robert-app/../../target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz
             crates/robert-app/../../target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz.sig
+            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/deb/*.deb
+            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage
+            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage.tar.gz
+            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage.tar.gz.sig
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASES_REPO_TOKEN }}
 
