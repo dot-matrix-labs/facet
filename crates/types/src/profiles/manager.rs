@@ -127,7 +127,7 @@ impl UserManager {
 - (Add your automation preferences here)
 
 ## Goals
-- (What do you want to accomplish with Robert?)
+- (What do you want to accomplish with Facet?)
 
 ## Language Style
 - (How do you prefer to communicate?)

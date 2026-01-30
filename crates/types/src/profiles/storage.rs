@@ -12,7 +12,7 @@
 ///
 /// File system structure:
 /// ```text
-/// ~/.robert/
+/// ~/.facet/
 /// ├── app-config.json          # Global application config
 /// ├── users/
 /// │   ├── alice/
@@ -42,8 +42,8 @@ use thiserror::Error;
 // Constants
 // ============================================================================
 
-/// Root directory name for Robert data
-const ROBERT_DIR: &str = ".robert";
+/// Root directory name for Facet data
+const ROBERT_DIR: &str = ".facet";
 
 /// Directory name for user profiles
 const USERS_DIR: &str = "users";
@@ -111,21 +111,21 @@ pub type Result<T> = std::result::Result<T, StorageError>;
 // Path Resolution
 // ============================================================================
 
-/// Get the root Robert directory path
+/// Get the root Facet directory path
 ///
-/// Returns `~/.robert/` or platform-specific equivalent.
-/// If `base_dir` is provided, uses `base_dir/.robert` instead.
+/// Returns `~/.facet/` or platform-specific equivalent.
+/// If `base_dir` is provided, uses `base_dir/.facet` instead.
 /// This enables dependency injection for testing without modifying global environment variables.
 ///
 /// # Parameters
 /// - `base_dir`: Optional base directory for testing. If None, uses the user's home directory.
 ///
 /// # Returns
-/// - `PathBuf`: Path to the Robert directory
+/// - `PathBuf`: Path to the Facet directory
 ///
 /// # Errors
 /// - Returns error if home directory cannot be determined and base_dir is None
-pub fn get_robert_dir(base_dir: Option<&Path>) -> Result<PathBuf> {
+pub fn get_facet_dir(base_dir: Option<&Path>) -> Result<PathBuf> {
     let root = match base_dir {
         Some(dir) => dir.to_path_buf(),
         None => dirs::home_dir().ok_or_else(|| {
@@ -138,21 +138,21 @@ pub fn get_robert_dir(base_dir: Option<&Path>) -> Result<PathBuf> {
 
 /// Get the users directory path
 ///
-/// Returns `~/.robert/users/` or `base_dir/.robert/users/` if base_dir is provided
+/// Returns `~/.facet/users/` or `base_dir/.facet/users/` if base_dir is provided
 pub fn get_users_dir(base_dir: Option<&Path>) -> Result<PathBuf> {
-    Ok(get_robert_dir(base_dir)?.join(USERS_DIR))
+    Ok(get_facet_dir(base_dir)?.join(USERS_DIR))
 }
 
 /// Get the temporary directory path
 ///
-/// Returns `~/.robert/.tmp/` or `base_dir/.robert/.tmp/` if base_dir is provided
+/// Returns `~/.facet/.tmp/` or `base_dir/.facet/.tmp/` if base_dir is provided
 pub fn get_tmp_dir(base_dir: Option<&Path>) -> Result<PathBuf> {
-    Ok(get_robert_dir(base_dir)?.join(TMP_DIR))
+    Ok(get_facet_dir(base_dir)?.join(TMP_DIR))
 }
 
 /// Get a specific user's directory path
 ///
-/// Returns `~/.robert/users/{username}/` or `base_dir/.robert/users/{username}/` if base_dir is provided
+/// Returns `~/.facet/users/{username}/` or `base_dir/.facet/users/{username}/` if base_dir is provided
 pub fn get_user_dir(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> {
     validate_username(username)?;
     Ok(get_users_dir(base_dir)?.join(username))
@@ -160,14 +160,14 @@ pub fn get_user_dir(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> 
 
 /// Get a user's browser profiles directory
 ///
-/// Returns `~/.robert/users/{username}/browser-profiles/`
+/// Returns `~/.facet/users/{username}/browser-profiles/`
 pub fn get_browser_profiles_dir(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> {
     Ok(get_user_dir(username, base_dir)?.join(BROWSER_PROFILES_DIR))
 }
 
 /// Get a specific browser profile directory
 ///
-/// Returns `~/.robert/users/{username}/browser-profiles/{profile_name}/`
+/// Returns `~/.facet/users/{username}/browser-profiles/{profile_name}/`
 pub fn get_browser_profile_dir(
     username: &str,
     profile_name: &str,
@@ -179,14 +179,14 @@ pub fn get_browser_profile_dir(
 
 /// Get a user's commands directory
 ///
-/// Returns `~/.robert/users/{username}/commands/`
+/// Returns `~/.facet/users/{username}/commands/`
 pub fn get_commands_dir(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> {
     Ok(get_user_dir(username, base_dir)?.join(COMMANDS_DIR))
 }
 
 /// Get a specific command file path
 ///
-/// Returns `~/.robert/users/{username}/commands/{command_name}.md`
+/// Returns `~/.facet/users/{username}/commands/{command_name}.md`
 pub fn get_command_path(
     username: &str,
     command_name: &str,
@@ -198,21 +198,21 @@ pub fn get_command_path(
 
 /// Get the salt file path for a user
 ///
-/// Returns `~/.robert/users/{username}/.salt`
+/// Returns `~/.facet/users/{username}/.salt`
 pub fn get_salt_path(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> {
     Ok(get_user_dir(username, base_dir)?.join(SALT_FILE))
 }
 
 /// Get the user config file path
 ///
-/// Returns `~/.robert/users/{username}/user.json`
+/// Returns `~/.facet/users/{username}/user.json`
 pub fn get_user_config_path(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> {
     Ok(get_user_dir(username, base_dir)?.join(USER_CONFIG_FILE))
 }
 
 /// Get the user profile markdown file path
 ///
-/// Returns `~/.robert/users/{username}/user-profile.md`
+/// Returns `~/.facet/users/{username}/user-profile.md`
 pub fn get_user_profile_path(username: &str, base_dir: Option<&Path>) -> Result<PathBuf> {
     Ok(get_user_dir(username, base_dir)?.join(USER_PROFILE_FILE))
 }
@@ -286,23 +286,23 @@ fn validate_command_name(command_name: &str) -> Result<()> {
 // Directory Management
 // ============================================================================
 
-/// Initialize the Robert directory structure
+/// Initialize the Facet directory structure
 ///
 /// Creates the root directory, users directory, and temporary directory
 /// if they don't already exist.
 ///
 /// # Parameters
 /// - `base_dir`: Optional base directory for testing. If None, uses the user's home directory.
-pub fn initialize_robert_dir(base_dir: Option<&Path>) -> Result<()> {
-    let robert_dir = get_robert_dir(base_dir)?;
+pub fn initialize_facet_dir(base_dir: Option<&Path>) -> Result<()> {
+    let facet_dir = get_facet_dir(base_dir)?;
     let users_dir = get_users_dir(base_dir)?;
     let tmp_dir = get_tmp_dir(base_dir)?;
 
-    fs::create_dir_all(&robert_dir)?;
+    fs::create_dir_all(&facet_dir)?;
     fs::create_dir_all(&users_dir)?;
     fs::create_dir_all(&tmp_dir)?;
 
-    log::info!("Initialized Robert directory: {}", robert_dir.display());
+    log::info!("Initialized Facet directory: {}", facet_dir.display());
 
     Ok(())
 }
@@ -310,10 +310,10 @@ pub fn initialize_robert_dir(base_dir: Option<&Path>) -> Result<()> {
 /// Create a new user directory structure
 ///
 /// Creates:
-/// - `~/.robert/users/{username}/`
-/// - `~/.robert/users/{username}/browser-profiles/`
-/// - `~/.robert/users/{username}/browser-profiles/default/`
-/// - `~/.robert/users/{username}/commands/`
+/// - `~/.facet/users/{username}/`
+/// - `~/.facet/users/{username}/browser-profiles/`
+/// - `~/.facet/users/{username}/browser-profiles/default/`
+/// - `~/.facet/users/{username}/commands/`
 ///
 /// # Parameters
 /// - `username`: The username for the new directory
@@ -585,7 +585,7 @@ fn create_default_user_profile(username: &str) -> String {
 - Example: Detail level, privacy concerns, technical comfort
 
 ## Goals
-- (What do you want to accomplish with Robert?)
+- (What do you want to accomplish with Facet?)
 - Example: Automate research, streamline shopping, track competitors
 
 ## Language Style
@@ -808,9 +808,9 @@ mod tests {
     }
 
     #[test]
-    fn test_get_robert_dir() {
-        let robert_dir = get_robert_dir(None).unwrap();
-        assert!(robert_dir.ends_with(".robert"));
+    fn test_get_facet_dir() {
+        let facet_dir = get_facet_dir(None).unwrap();
+        assert!(facet_dir.ends_with(".facet"));
     }
 
     #[test]

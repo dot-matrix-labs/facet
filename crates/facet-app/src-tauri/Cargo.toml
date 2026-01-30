@@ -1,0 +1,54 @@
+[package]
+name = "facet-app"
+version = "0.1.1"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "facet_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+doctest = false
+
+[build-dependencies]
+tauri-build = { workspace = true }
+
+[dependencies]
+tauri = { workspace = true }
+tauri-plugin-opener = { workspace = true }
+tauri-plugin-updater = { workspace = true }
+tauri-plugin-dialog = { workspace = true }
+tauri-plugin-process = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+
+# Facet dependencies
+facet-types = { workspace = true}
+facet-server = { workspace = true }
+
+tokio = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }
+warp = { workspace = true }
+reqwest = { workspace = true }
+toml = { workspace = true }
+dirs = { workspace = true }
+
+# Logging
+log = { workspace = true }
+env_logger = { workspace = true }
+
+# User Profiles - Cryptography (Handled in facet-types)
+# argon2, aes-gcm, rand, zeroize removed (unused directly)
+
+# Markdown command system (Phase 3 refactor)
+# pulldown-cmark, serde_yaml removed (unused directly)
+
+[dev-dependencies]
+tempfile = { workspace = true }

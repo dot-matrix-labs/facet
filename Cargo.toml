@@ -1,27 +1,27 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/robert-app/src-tauri",
-    "crates/robert-cli",
-    "crates/robert-graph",
-    "crates/robert-core",
-    "crates/robert-downloader",
-    "crates/robert-server",
+    "crates/facet-cli",
+    "crates/facet-app/src-tauri",
+    "crates/facet-server",
+    "crates/facet-core",
+    "crates/facet-graph",
+    "crates/facet-downloader",
     "crates/types",
 ]
 # Exclude Tauri app from default builds (requires GTK/Pango system libraries)
-# To build the Tauri app: cargo build -p robert-app
+# To build the Tauri app: cargo build -p facet-app
 default-members = [
-    "crates/robert-cli",
-    "crates/robert-server",
+    "crates/facet-cli",
+    "crates/facet-server",
 ]
 
 [workspace.dependencies]
-# Robert internal crates
-robert-server = { path = "crates/robert-server" }
-robert-core = { path = "crates/robert-core" }
-robert-graph = { path = "crates/robert-graph" }
-robert-types = { path = "crates/types" }
+facet-server = { path = "crates/facet-server" }
+facet-types = { path = "crates/types" }
+facet-core = { path = "crates/facet-core" }
+facet-graph = { path = "crates/facet-graph" }
+facet-downloader = { path = "crates/facet-downloader" }
 
 # Shared dependencies across all crates
 tokio = { version = "1.0", features = ["full"] }
