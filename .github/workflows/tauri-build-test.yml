@@ -56,7 +56,7 @@ jobs:
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: crates/robert-app/src-tauri
+          workspaces: crates/facet-app/src-tauri
           shared-key: tauri-${{ matrix.platform }}-${{ matrix.target }}
           save-if: true
 
@@ -66,11 +66,11 @@ jobs:
           bun-version: latest
 
       - name: Install frontend dependencies
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: bun install
 
       - name: Build Tauri app (production, skip updater)
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: bunx tauri build --target ${{ matrix.target }} --bundles app,dmg
         # Skip updater bundles to avoid requiring signing keys for test builds
         env:
@@ -78,7 +78,7 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
       - name: Verify build artifacts (macOS)
         if: matrix.platform == 'macos-latest'
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: |
           echo "Checking for build artifacts..."
           ls -lah ../../target/${{ matrix.target }}/release/bundle/
@@ -93,7 +93,7 @@ jobs:
 
       - name: Verify build artifacts (Windows)
         if: matrix.platform == 'windows-latest'
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         shell: bash
         run: |
           echo "Checking for build artifacts..."
@@ -105,7 +105,7 @@ jobs:
 
       - name: Verify build artifacts (Linux)
         if: matrix.platform == 'ubuntu-latest'
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: |
           echo "Checking for build artifacts..."
           ls -lah ../../target/${{ matrix.target }}/release/bundle/

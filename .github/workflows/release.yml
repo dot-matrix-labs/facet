@@ -77,7 +77,7 @@ jobs:
       - name: Get version from tauri.conf.json
         id: get_version
         run: |
-          VERSION=$(jq -r '.version' crates/robert-app/src-tauri/tauri.conf.json)
+          VERSION=$(jq -r '.version' crates/facet-app/src-tauri/tauri.conf.json)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Extracted version: $VERSION"
 
@@ -246,7 +246,7 @@ jobs:
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: crates/robert-app/src-tauri
+          workspaces: crates/facet-app/src-tauri
           save-if: true
 
       - name: Install Linux dependencies
@@ -275,12 +275,12 @@ jobs:
           EOF
 
       - name: Install frontend dependencies
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: bun install
 
       - name: Update productName for canary builds
         if: ${{ env.IS_CANARY == 'true' }}
-        working-directory: crates/robert-app/src-tauri
+        working-directory: crates/facet-app/src-tauri
         run: |
           COMMIT_HASH="${{ needs.prepare-release.outputs.commit_hash }}"
           # Take first 4 characters of the 7-character hash
@@ -292,7 +292,7 @@ jobs:
           cat tauri.conf.json | jq -r '.productName'
 
       - name: Build Tauri app
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: bunx tauri build --target ${{ matrix.target }}
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
@@ -300,7 +300,7 @@ jobs:
 
       - name: Rename updater artifacts (macOS)
         if: matrix.platform == 'macos-latest'
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: |
           TARGET="${{ matrix.target }}"
           BUNDLE_DIR="../../target/$TARGET/release/bundle"
@@ -336,7 +336,7 @@ jobs:
 
       - name: Rename updater artifacts (Linux)
         if: runner.os == 'Linux'
-        working-directory: crates/robert-app
+        working-directory: crates/facet-app
         run: |
           TARGET="${{ matrix.target }}"
           BUNDLE_DIR="../../target/$TARGET/release/bundle"
@@ -376,13 +376,13 @@ jobs:
           repository: robert-agent/${{ needs.prepare-release.outputs.repo }}
           tag_name: ${{ needs.prepare-release.outputs.tag_name }}
           files: |
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/dmg/*.dmg
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz.sig
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/deb/*.deb
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage.tar.gz
-            crates/robert-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage.tar.gz.sig
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz.sig
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/deb/*.deb
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage.tar.gz
+            crates/facet-app/../../target/${{ matrix.target }}/release/bundle/appimage/*.AppImage.tar.gz.sig
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASES_REPO_TOKEN }}
 
