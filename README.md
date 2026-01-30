@@ -1,8 +1,8 @@
-# Robert: The Memory Layer for AI
+# Facet: The Memory Layer for AI
 
-> **Just as the Browser unbundled the OS from the Web, Robert unbundles Memory from the Model—becoming the trusted gateway that ensures AI serves the user, not the other way around.**
+> **Just as the Browser unbundled the OS from the Web, Facet unbundles Memory from the Model—becoming the trusted gateway that ensures AI serves the user, not the other way around.**
 
-Robert is the neutral, trusted **"Context OS"** that sits between users and AI reasoning providers—combining sophisticated memory control with platform-agnostic access. While tools like ChatGPT and Claude vertically integrate memory with reasoning, Robert separates them: your memory stays personal, portable, and under your control. The reasoning remains commoditized, ephemeral, and interchangeable.
+Facet is the neutral, trusted **"Context OS"** that sits between users and AI reasoning providers—combining sophisticated memory control with platform-agnostic access. While tools like ChatGPT and Claude vertically integrate memory with reasoning, Facet separates them: your memory stays personal, portable, and under your control. The reasoning remains commoditized, ephemeral, and interchangeable.
 
 ## The Problem
 
@@ -18,11 +18,11 @@ Current AI systems have fatal flaws:
 
 ## The Solution: ContextOS
 
-Robert is an **Operating System for AI Memory** that enables:
+Facet is an **Operating System for AI Memory** that enables:
 
 ### The Sarah Test
 
-An interior designer marks a 2019 pricing document as "outdated" without deleting it. Robert keeps it for tax records but never uses it for pricing quotes. She "fine-tuned" her AI without writing code.
+An interior designer marks a 2019 pricing document as "outdated" without deleting it. Facet keeps it for tax records but never uses it for pricing quotes. She "fine-tuned" her AI without writing code.
 
 **How it works:**
 - **Transparent Attribution**: See exactly which documents the AI used for each answer
@@ -35,12 +35,12 @@ An interior designer marks a 2019 pricing document as "outdated" without deletin
 Three-party model for privacy without sacrificing capability:
 
 1. **User (Local)**: Encryption keys, hot state, final control
-2. **Robert (Trusted Utility Cloud)**: Sync, heavy compute, anonymization—structurally aligned with protecting your data
+2. **Facet (Trusted Utility Cloud)**: Sync, heavy compute, anonymization—structurally aligned with protecting your data
 3. **Reasoning Provider (Commodity)**: OpenAI, Anthropic, local models—sees only anonymized context, never your full profile
 
 ### GraphRAG: Knowledge Graphs, Not Just Search
 
-Standard RAG is a bag-of-words search. Robert builds **knowledge graphs**:
+Standard RAG is a bag-of-words search. Facet builds **knowledge graphs**:
 
 - **Entities, not Keywords**: Map `Project Alpha → owned_by_Client_X → status_Active`
 - **Temporal Reasoning**: Answer "How has our strategy changed since last year?"
@@ -49,16 +49,16 @@ Standard RAG is a bag-of-words search. Robert builds **knowledge graphs**:
 
 ## Architecture
 
-Robert is built as a modular Rust application:
+Facet is built as a modular Rust application:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                   Firewalled Architecture                     │
 └──────────────────────────────────────────────────────────────┘
 
-User Device (Local)                  Robert Cloud (Trusted)
+User Device (Local)                  Facet Cloud (Trusted)
 ┌─────────────────────┐             ┌─────────────────────┐
-│   robert-app        │             │  Sync & Backup      │
+│   facet-app        │             │  Sync & Backup      │
 │   (Tauri/Svelte)    │◄───────────►│  (E2E Encrypted)    │
 │                     │             │                     │
 │  • Chat Interface   │             │  • Zero-Knowledge   │
@@ -68,7 +68,7 @@ User Device (Local)                  Robert Cloud (Trusted)
            │                                   │
            │                                   │
      ┌─────▼──────────┐                       │
-     │  robert-core   │                       │
+     │  facet-core   │                       │
      │                │                       │
      │  • GraphRAG    │                       │
      │  • Memory Mgmt │                       │
@@ -77,7 +77,7 @@ User Device (Local)                  Robert Cloud (Trusted)
               │                               │
               │                               │
      ┌────────▼────────┐                      │
-     │  robert-graph   │                      │
+     │  facet-graph   │                      │
      │  (SurrealDB)    │                      │
      │                 │                      │
      │  • Vector Store │                      │
@@ -100,31 +100,31 @@ User Device (Local)                  Robert Cloud (Trusted)
 
 ### Core Crates
 
-- **[robert-app](./crates/robert-app)** - Desktop application (Tauri + Svelte)
+- **[facet-app](./crates/facet-app)** - Desktop application (Tauri + Svelte)
   - Modern desktop UI for macOS, Windows, Linux
   - Context sidebar with transparent attribution
   - Graph visualization and exploration
-  - Spawns local robert-server or connects to remote
+  - Spawns local facet-server or connects to remote
 
-- **[robert-server](./crates/robert-server)** - REST API Server (Warp + Tokio)
+- **[facet-server](./crates/facet-server)** - REST API Server (Warp + Tokio)
   - Provides REST API for clients
   - Manages authentication and sessions
-  - Instantiates robert-core for request handling
+  - Instantiates facet-core for request handling
   - Supports local and remote deployment modes
 
-- **[robert-core](./crates/robert-core)** - AI/RAG Engine
+- **[facet-core](./crates/facet-core)** - AI/RAG Engine
   - GraphRAG implementation
   - Hierarchical memory (Hot/Warm/Cold)
   - Context control and boundary management
   - Multi-provider orchestration
 
-- **[robert-graph](./crates/robert-graph)** - Database Layer (SurrealDB)
+- **[facet-graph](./crates/facet-graph)** - Database Layer (SurrealDB)
   - Knowledge graph storage
   - Vector embeddings for semantic search
   - Entity and relationship management
   - E2E encryption at rest
 
-- **[robert-cli](./crates/robert-cli)** - Command Line Tool
+- **[facet-cli](./crates/facet-cli)** - Command Line Tool
   - Document ingestion
   - Query interface
   - Server management (start/stop/status)
@@ -139,21 +139,21 @@ User Device (Local)                  Robert Cloud (Trusted)
 ### Prerequisites
 
 - **Rust** 1.75+ (for building from source)
-- **Node.js** 18+ (for robert-app frontend)
+- **Node.js** 18+ (for facet-app frontend)
 - **Chrome/Chromium** (auto-downloads on first use)
 
 ### Build and Run
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/robert.git
-cd robert
+git clone https://github.com/yourusername/facet.git
+cd facet
 
 # Build all components
 cargo build --workspace
 
 # Run desktop app
-cd crates/robert-app
+cd crates/facet-app
 npm install
 npm run tauri dev
 ```
@@ -162,13 +162,13 @@ npm run tauri dev
 
 ```bash
 # Build CLI
-cargo build --bin robert-cli
+cargo build --bin facet-cli
 
 # Ingest documents
-robert-cli ingest ~/Documents/notes.md
+facet-cli ingest ~/Documents/notes.md
 
 # Query your knowledge base
-robert-cli query "What are the key points from my notes?"
+facet-cli query "What are the key points from my notes?"
 ```
 
 ## Key Features
@@ -194,27 +194,27 @@ robert-cli query "What are the key points from my notes?"
 - 📋 Advanced agentic workflows
 - 📋 Cross-platform expansion (Windows, Linux, iOS, Android)
 
-## Why Robert Wins
+## Why Facet Wins
 
 ### vs. ChatGPT/Claude Desktop
 **Conflict of Interest**: OpenAI's business model depends on user profiling. They cannot credibly offer provider-neutral switching or true data sovereignty.
 
-**Robert's Advantage**: Protecting user data *is* our business model. We have no conflict—we charge users to protect their context from reasoning providers.
+**Facet's Advantage**: Protecting user data *is* our business model. We have no conflict—we charge users to protect their context from reasoning providers.
 
 ### vs. Apple Intelligence/Microsoft Copilot
 **Platform Lock-In**: Apple Intelligence works beautifully—but only on Apple devices. Users live in heterogeneous environments (work Windows + personal Mac + iPhone).
 
-**Robert's Advantage**: Platform-agnostic by design. The Dropbox lesson: cross-platform interoperability matters. We work everywhere.
+**Facet's Advantage**: Platform-agnostic by design. The Dropbox lesson: cross-platform interoperability matters. We work everywhere.
 
 ### vs. Notion AI
 **Walled Garden**: Only indexes Notion documents. Enterprise users have data in Jira, Slack, Figma, Linear, Google Docs, email, local files.
 
-**Robert's Advantage**: Universal indexing across *any* tool. Intelligent context sharding across teams, roles, and boundaries.
+**Facet's Advantage**: Universal indexing across *any* tool. Intelligent context sharding across teams, roles, and boundaries.
 
 ### vs. Mem.ai
 **Retrieval, Not Action**: "Thought partner" = better search engine. Users still manually execute workflows.
 
-**Robert's Advantage**: Domain-specific agents that execute end-to-end workflows. We act, not just retrieve.
+**Facet's Advantage**: Domain-specific agents that execute end-to-end workflows. We act, not just retrieve.
 
 ## Documentation
 
@@ -227,12 +227,12 @@ robert-cli query "What are the key points from my notes?"
 ## Project Structure
 
 ```
-robert/
+facet/
 ├── crates/
-│   ├── robert-app/          # Desktop application
-│   ├── robert-core/         # Core AI/RAG engine
-│   ├── robert-graph/        # Database layer
-│   ├── robert-cli/          # CLI tool
+│   ├── facet-app/          # Desktop application
+│   ├── facet-core/         # Core AI/RAG engine
+│   ├── facet-graph/        # Database layer
+│   ├── facet-cli/          # CLI tool
 │   └── types/               # Shared types
 ├── docs/
 │   ├── product/             # Product strategy and vision
@@ -251,7 +251,7 @@ robert/
 cargo test --workspace
 
 # Specific crate
-cargo test -p robert-core
+cargo test -p facet-core
 
 # Integration tests
 cargo test --workspace --test integration_tests
@@ -276,16 +276,16 @@ cargo check --workspace
 Perfect for individual users—complete privacy, data never leaves your machine:
 
 ```
-robert-app (Desktop)
-  └─► Local robert-core instance
-      └─► Local robert-graph database (~/.robert/data)
+facet-app (Desktop)
+  └─► Local facet-core instance
+      └─► Local facet-graph database (~/.facet/data)
 ```
 
 ### Mode 2: Cloud Sync (Teams/Mobile)
 E2E encrypted sync across devices with ephemeral cloud compute:
 
 ```
-robert-app (Mac) ◄──► Robert Cloud (E2EE) ◄──► robert-app (iPhone)
+facet-app (Mac) ◄──► Facet Cloud (E2EE) ◄──► facet-app (iPhone)
          │                   │                         │
          └───────────────────┴─────────────────────────┘
                              │
@@ -298,9 +298,9 @@ Deploy on-premises or in your cloud for full control:
 ```bash
 # Docker deployment
 docker run -p 8443:8443 \
-  -v /data/robert:/data \
+  -v /data/facet:/data \
   -e DATABASE_PATH=/data \
-  robert-server
+  facet-server
 ```
 
 ## Business Model
@@ -337,7 +337,7 @@ Once curated, it's irreplaceable intellectual capital. Users will pay $200-500/y
 
 ## The Stakes
 
-**If Robert succeeds**, it becomes one of the 3-5 products that define how humanity interfaces with AI—the trusted gateway that:
+**If Facet succeeds**, it becomes one of the 3-5 products that define how humanity interfaces with AI—the trusted gateway that:
 - Keeps hyperscale providers in check (one-click provider switching)
 - Breaks the business model conflict (protecting data *is* our model)
 - Solves the interoperability problem (works everywhere)
@@ -375,4 +375,4 @@ Built with:
 
 **The work ahead is technical, strategic, and urgent.**
 
-For investors, partners, or contributors: hello@robert.ai
+For investors, partners, or contributors: hello@facet.ai
