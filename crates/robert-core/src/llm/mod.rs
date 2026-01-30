@@ -7,6 +7,10 @@ use anyhow::Result;
 //     Client,
 // };
 
+// Local module
+pub mod local;
+pub use local::LocalLlm;
+
 pub enum LlmProvider {
     // OpenAI(Client<async_openai::config::OpenAIConfig>, String),
     Claude(ClaudeClient),
